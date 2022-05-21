@@ -1,0 +1,38 @@
+.rightChatBar{
+
+    height: 80vh;
+    width: 18vw;
+    background-color:rgb(235, 253, 235);
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid darkgray;
+    border-radius: 2%;
+    
+
+}
+
+.rightChatBar input{
+    border: 0;
+    background-color: azure;
+}
+
+.rightChatBar button{
+    border: 0;
+    background-color: lightcoral;
+    border-radius: 50%;
+    font-size: medium;
+    padding: 2px;
+    
+    
+    
+}
+
+.rightChatBar button:hover{
+    background-color: rgb(250, 85, 85);
+
+}
+
+

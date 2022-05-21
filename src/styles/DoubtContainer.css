@@ -1,0 +1,12 @@
+.doubtContainer {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+.doubtPage {
+	width: 100%;
+	height: 100%;
+}
+.javaDoubts {
+	background-color: black;
+}

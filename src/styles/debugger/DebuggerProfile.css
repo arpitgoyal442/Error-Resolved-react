@@ -1,0 +1,53 @@
+.debuggerProfile_body {
+	height: 87vh;
+	width: 100vw;
+	/* background-color: aqua; */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.debuggerProfile_card {
+	border-radius: 10px;
+
+	height: auto;
+	width: 80%;
+	padding: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	background-color: var(--light);
+	flex-wrap: wrap;
+    
+	/* background-color:#88888821; */
+}
+
+.debuggerProfile_body_left {
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	flex: 0.3;
+
+	/* border-radius: 5px; */
+	padding: 10px;
+	/* background-color: aqua; */
+
+	/* background-color: antiquewhite; */
+}
+
+.debuggerProfile_body_left img {
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+}
+
+.debuggerProfile_body_right {
+	flex: 0.8;
+	/* border-radius: 10px; */
+	height: fit-content;
+
+	border-left: 2px solid gray;
+	/* background-color: aquamarine; */
+	/* width: 100%;
+    height: 100%; */
+}

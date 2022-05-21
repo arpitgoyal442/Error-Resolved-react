@@ -1,0 +1,138 @@
+.signin{
+
+	 width: 100vw;
+	height: 100vh ;
+	padding: 4rem;
+	
+	display: flex;
+
+	border-radius: 5px;
+	
+	 background-color: aliceblue;
+	
+}
+
+.signin_left{
+
+	background-color:#008891;
+	flex: 1;
+	border-top-right-radius:100% ;
+}
+
+.signin_right_card{
+
+
+
+	width: 80%;
+	height: 50%;
+	color:#008891;
+	display: flex;
+	flex-direction: column;
+	
+	
+
+	justify-content: space-evenly;
+	/* box-shadow: 2px 4px  rgb(0, 136, 145,0.5); */
+	z-index: 1;
+
+
+	
+	
+}
+
+.signin_right_card h1{
+
+	text-align: center;
+
+	margin-bottom: 50px;
+	
+
+	
+}
+
+.signin_right_card button{
+
+	text-align: center;
+
+	padding: 8px;
+	width: fit-content;
+	font-size: larger;
+	align-self: center;
+	/* display: block; */
+	margin: 10px;
+	background-color: #008891;
+	color: white;
+	border-radius: 5px
+}
+
+.signin_right{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: aliceblue;
+	
+  flex: 1;
+}
+
+.signin_right p{
+	text-align: center;
+}
+
+@media only screen and (max-width:720px){
+
+	.signin_left{
+		display: none;
+
+	}
+
+	
+
+	.signin{
+		/* background:linear-gradient(45deg,#96c893,#008891)
+		 */
+
+		 
+		 /* background-image: url("/doubt.svg"); */
+		 /* opacity: 0.8; */
+		 /* background-color: white; */
+		
+		
+
+	}
+
+	.signin_right{
+		/* border-radius: 10px; */
+		/* background-color: #008891; */
+		
+		
+		/* justify-content: flex-start; */
+		/* align-items: flex-start; */
+		
+		
+	}
+
+	.signin_right_card{
+
+		background-color: rgb(173, 173, 173);
+		height: fit-content;
+		padding: 10px;
+		
+		border-top-right-radius: 50%;
+		border-bottom-left-radius: 50%;
+		/* border-top-left-radius: 30%;
+		border-bottom-right-radius: 15%; */
+	}
+
+	.signin_right_card p{
+
+		font-size: medium;
+		font-weight: 500;
+	}
+
+	
+
+	
+
+
+
+}

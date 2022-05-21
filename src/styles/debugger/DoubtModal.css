@@ -1,0 +1,35 @@
+.modal{
+
+    height:auto;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+
+    background-color:aliceblue;
+   
+
+}
+
+
+
+.doubt_modal_studentname{
+  margin-left:30% ;
+  margin-bottom: 10px;
+}
+
+
+
+.modal p{
+
+    font-size: medium;
+    color: black;
+}
+
+.modal h2{
+     color:rgb(85, 84, 84); 
+     
+
+     font-weight: 650;
+
+     /* color: #02656c; */
+}

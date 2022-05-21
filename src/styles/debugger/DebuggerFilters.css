@@ -1,0 +1,59 @@
+.debuggerFilters {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	margin: 0.5rem 1rem;
+	background-color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px 1px #ccc;
+}
+.debuggerFilters__icon {
+	cursor: pointer;
+}
+.debuggerFilters__icon > .iconify {
+	font-size: 24px;
+}
+.debuggerFilters__modal{
+  margin: auto 1rem;
+  max-width: 500px;
+  background-color: rgba(255,255,255,1);
+  padding: 1rem;
+  border-radius: 10px;
+}
+.debuggerFilters__subhead{
+  margin: 5px 0;
+  font-weight: 600;
+}
+.debuggerFilters__options{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  column-gap: 0.5rem;
+}
+.debuggerFilters__options.language{
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+}
+.debuggerFilters__options > button{
+  cursor: pointer;
+  flex: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 1px solid #888;
+}
+.debuggerFilters__options > button.active{
+  background-color: var(--highlight);
+}
+.debuggerFilters__modal hr{
+  margin: 10px 0;
+  border: none;
+  border-bottom: 0.5px solid var(--darkest);
+  /* background-color: #888; */
+}
+@media screen and (min-width: 720px) {
+	.debuggerFilters {
+		display: none;
+	}
+}

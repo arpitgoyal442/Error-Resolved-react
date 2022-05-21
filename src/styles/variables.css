@@ -1,0 +1,9 @@
+html{
+  --lightest: #FFFFFF;
+  --light: #E7E6E1;
+  --darkest: #A9A9A9;
+  --highlight: #008891;
+  --secondary-highlight: #2BA3A3;
+  --active-background: #ea4335;
+  --navbar-height: 10vh;
+}

@@ -1,0 +1,43 @@
+.studentLeftbar{
+
+    display: flex;
+    height: 85.5vh;
+    align-items: center;
+    flex-direction: column;
+    /* background-color: black; */
+    justify-content:flex-start;
+    padding: 5px;
+    border-right: 5px solid darkgray;
+   
+
+}
+
+.studentLeftbar_main{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+    height: 50%;
+   
+    
+}
+
+.studentLeftbar_main button{
+
+    border-radius: 5%;
+    margin-right: 2px;
+    background-color: var(--highlight);
+    color: white;
+    font: 400;
+    border: 0;
+    font-size: large;
+
+}
+#studentLeftbar_add{
+    color: rgb(58, 58, 58);
+    align-self: center;
+}
+#studentLeftbar_add :hover{
+    cursor: pointer;
+    color:black;
+}

@@ -1,0 +1,63 @@
+.studentDoubtCard{
+  margin: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
+  padding-right: 3rem;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+  background-color: var(--light);
+  transition: all 100ms ease-in-out;
+}
+.studentDoubtCard:hover{
+  box-shadow: 0 4px 6px #0000001a;
+}
+.studentDoubtCard_date{
+  font-size: 12px;
+  position: absolute;
+  top: 0.5rem;
+  right: 3rem;
+}
+.studentDoubtCard_topic{
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+.studentDoubtCard_text{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+@media only screen and (max-width: 640px) {
+  .studentDoubtCard{
+    margin: 0.5rem 0;
+  }
+}
+
+
+.studentDoubtCard_options{
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+.studentDoubtCard:hover .studentDoubtCard_dropdown{
+  display: flex;
+}
+.studentDoubtCard_dropdown {
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+	position: absolute;
+  top: 2.5%;
+	right: 0.5rem;
+}
+
+.studentDoubtCard_dropdown .iconify-inline{
+  background-color: var(--highlight);
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  width: 30px;
+  height: 30px;
+}

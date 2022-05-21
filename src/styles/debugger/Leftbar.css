@@ -1,0 +1,67 @@
+.leftbar {
+    position: sticky;
+    top: 10vh;
+	flex: 0.2;
+    padding: 1rem;
+    max-height: 90vh;
+    overflow-y: scroll;
+}
+.leftbar ul {
+	height: 60%;
+	color: black;
+	overflow-y: scroll;
+	font-size: large;
+	list-style-type: none;
+}
+
+.leftbar::-webkit-scrollbar {
+	width: 5px;
+}
+.leftbar::-webkit-scrollbar-track {
+	background-color: lightgray !important;
+}
+
+.leftbar::-webkit-scrollbar-thumb {
+	background-color: var(--highlight) !important;
+}
+
+.leftbar ul li:hover {
+	color: var(--highlight);
+	cursor: pointer;
+}
+.leftbar__filterHead{
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.leftbar__filterCat {
+	display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.leftbar__filterCat.language{
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-left: -2px;
+}
+.leftbar__filter{
+    display: grid;
+    place-items: center;
+    flex: 1;
+    padding: 2px 10px;
+    margin: 2px;
+    vertical-align: middle;
+    border: 1px solid #000;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+.leftbar__filter.active{
+    background-color: var(--highlight);
+    color: white;
+}
+@media screen and (max-width: 720px) {
+    .leftbar{
+        display: none;
+    }
+}
