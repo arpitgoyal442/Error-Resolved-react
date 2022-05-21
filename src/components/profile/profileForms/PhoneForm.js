@@ -18,7 +18,7 @@ const PhoneForm = ({setShowModal}) => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    formStatus===1 ? sendOtp() : null;
+		if(formStatus===1) sendOtp();
   }
 
   return (

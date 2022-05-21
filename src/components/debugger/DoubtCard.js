@@ -22,7 +22,7 @@ function DoubtCard({ status }) {
 			<div className="doubtCard_navbar">
 				{/* <p>Active</p> */}
 				<ReactLoading
-					type={status == "active" ? "blank" : "bars"}
+					type={status === "active" ? "blank" : "bars"}
 					color="gray"
 					height="9%"
 					width="9%"
@@ -50,7 +50,7 @@ function DoubtCard({ status }) {
 					View
 				</button>
 
-				{status == "active" && <button className="doubtCard_request"> Request</button>}
+				{status === "active" && <button className="doubtCard_request"> Request</button>}
 			</div>
 
 			<Modal
