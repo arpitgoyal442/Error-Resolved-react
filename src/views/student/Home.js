@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import PlusIcon from "@heroicons/react/solid/PlusIcon";
@@ -15,12 +15,12 @@ function StudentHome() {
 			<main className="studentHome">
 				{/* mobile-view options panel */}
 				<div className="studentMobile">
-					{/* <Link href="/student/new-doubt"> */}
+					<Link to="/student/new-doubt">
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
 						</div>
-					{/* </Link> */}
+					</Link>
 					<div className="filters">
 						<div onClick={() => setFilter(1)} className={`filter_btn ${filter===1 && "active"}`}>All</div>
 						<div onClick={() => setFilter(2)} className={`filter_btn ${filter===2 && "active"}`}>Pending</div>
@@ -30,12 +30,12 @@ function StudentHome() {
 				</div>
 				{/* left */}
 				<div className="studentLeft">
-					{/* <Link href="/student/new-doubt"> */}
+				<Link to="/student/new-doubt">
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
 						</div>
-					{/* </Link> */}
+					 </Link> 
 					<div className="filters">
 						<button
 							onClick={() => setFilter(1)}

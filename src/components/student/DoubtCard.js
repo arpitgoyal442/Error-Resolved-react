@@ -1,5 +1,5 @@
 
-
+import { Link } from "react-router-dom";
 function StudentDoubtCard() {
 
 	return (
@@ -7,7 +7,7 @@ function StudentDoubtCard() {
 			<p className="studentDoubtCard_date">{new Date().toLocaleString("in")}</p>
 			<h4 className="studentDoubtCard_topic">Java</h4>
 			<ul className="studentDoubtCard_dropdown">
-				{/* <Link href="/student/doubt/123"> */}
+				<Link to="/student/doubt/123">
 					<div>
 					<span
 						className="iconify-inline"
@@ -16,8 +16,8 @@ function StudentDoubtCard() {
 						data-height="25"
 					></span>
 					</div>
-				{/* </Link> */}
-				{/* <Link href="/student/edit/123"> */}
+				</Link>
+				<Link to="/student/edit/123">
 					<div>
 					<span
 						className="iconify-inline"
@@ -26,7 +26,7 @@ function StudentDoubtCard() {
 						data-height="25"
 					></span>
 					</div>
-				{/* </Link> */}
+				</Link>
 				<span
 					className="iconify-inline"
 					data-icon="fluent:delete-24-filled"

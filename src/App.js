@@ -4,8 +4,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./views/Signin.js";
 import DebuggerHome from "./views/debugger/Home.js";
 import StudentHome from "./views/student/Home.js";
+import AddNewDoubt from "./views/student/NewDoubt.js"
+import StudentOpenDoubt from "./views/student/OpenDoubt.js"
 
-import OpenDoubt from "./views/debugger/OpenDoubt.js";
+import DebuggerOpenDoubt from "./views/debugger/OpenDoubt.js";
+import StudentEditDoubt from "./views/student/EditDoubt.js"
 
 //
 
@@ -42,9 +45,13 @@ function App() {
 				<Route exact path="/" element={<Signin />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
-				<Route exact path="/debugger/doubt/:id" element={<OpenDoubt />} />
+				<Route exact path="/debugger/doubt/:id" element={<DebuggerOpenDoubt />} />
 				<Route exact path="/debugger/profile" element={<Profile type="debugger" />} />
 				<Route exact path="/student/profile" element={<Profile type="student" />} />
+        <Route exact path="/student/new-doubt" element={<AddNewDoubt/>}/>
+        <Route exact path="/student/doubt/:id" element={<StudentOpenDoubt/>}/>
+        <Route exact path="/student/edit/:id" element={<StudentEditDoubt/>}/>
+
 			</Routes>
 		</BrowserRouter>
 	);
