@@ -1,6 +1,7 @@
 import Document from "../../components/doubtComponents/Document.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
+import Test from "../../components/Test.js"
 
 function DoubtPage() {
 	return (
@@ -12,7 +13,8 @@ function DoubtPage() {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
-							<Document />
+							{/* <Document /> */}
+							<Test/>
 						</div>
 					</div>
 					<div className="left_footer">
