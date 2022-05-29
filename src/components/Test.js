@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { Editor, EditorState, RichUtils, getDefaultKeyBinding } from "draft-js";
+import { useState, useEffect } from "react";
+import { Editor, EditorState, RichUtils, getDefaultKeyBinding, convertToRaw, convertFromRaw } from "draft-js";
+import { CheckCircleIcon } from "@heroicons/react/solid";
+import { Modifier } from "draft-js";
 
 const BLOCK_TYPES = [
   { label: 'Blockquote', style: 'blockquote' },
@@ -14,8 +16,18 @@ var INLINE_STYLES = [
   { label: 'Monospace', style: 'CODE' },
 ];
 
-const CodeEditor = () => {
-  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+const CodeEditor = ({setCodeEditing, setCodeString, editorState, setEditorState}) => {
+  useEffect(() => {
+    if(!editorState)
+      setEditorState(EditorState.createEmpty());
+  }, [])
+
+  const handleChange = (e) => {
+    setEditorState(e);
+    const blocks = convertToRaw(e.getCurrentContent()).blocks;
+    const value = blocks.map(block => (!block.text.trim() && '\n') || block.text).join('\n');
+    setCodeString(value)
+  }
 
   const handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
@@ -54,8 +66,21 @@ const CodeEditor = () => {
     }
     return getDefaultKeyBinding(e);
   }
+  const handleTab = (e) => {
+    const tabCharacter = "    ";
+    e.preventDefault();
+
+    let currentState = editorState;
+    let newContentState = Modifier.replaceText(
+      currentState.getCurrentContent(),
+      currentState.getSelection(),
+      tabCharacter
+    );
+      setEditorState(EditorState.push(currentState, newContentState, 'insert-characters'))
+  }
   return (
-    <div className="h-full flex flex-col">   
+    <div className="relative h-full flex flex-col">  
+    <CheckCircleIcon onClick={() => setCodeEditing(false)} className='absolute h-9 w-9 top-2 right-2 z-50 rounded-full cursor-pointer' /> 
     <div className="flex justify-center space-x-4 bg-gray-100">
     <BlockStyleControls
       editorState={editorState}
@@ -66,7 +91,7 @@ const CodeEditor = () => {
       />
       </div>
       <div className="p-2 flex-1">
-      <Editor style={{backgroundColor: "#ab321a"}} className="bg-red-500" placeholder="Your code here..." editorState={editorState} onChange={setEditorState} handleKeyCommand={handleKeyCommand} />
+      <Editor onTab={handleTab} keyBindingFn={mapKeyToEditorCommand} style={{backgroundColor: "#ab321a"}} className="bg-red-500" placeholder="Your code here..." editorState={editorState} onChange={handleChange} handleKeyCommand={handleKeyCommand} />
       </div>
     </div>
   )
@@ -77,8 +102,7 @@ export default CodeEditor
 const BlockStyleControls = (props) => {
   const { editorState } = props;
   const selection = editorState?.getSelection();
-  const blockType = editorState
-    .getCurrentContent()
+  const blockType = editorState?.getCurrentContent()
     .getBlockForKey(selection.getStartKey())
     .getType();
   return (
@@ -104,7 +128,7 @@ const InlineStyleControls = (props) => {
       {INLINE_STYLES.map((type) =>
         <StyleButton
           key={type.label}
-          active={currentStyle.has(type.style)}
+          active={currentStyle?.has(type.style)}
           label={type.label}
           onToggle={props.onToggle}
           style={type.style}

@@ -1,9 +1,15 @@
+import { EditorState } from "draft-js";
+import {useState} from "react";
 import Document from "../../components/doubtComponents/Document.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
 import Test from "../../components/Test.js"
+import Example from "../test.js";
 
 function DoubtPage() {
+	const [codeEditing, setCodeEditing] = useState(false);
+	const [editorState, setEditorState] = useState(EditorState.createEmpty());
+	const [codeString, setCodeString] = useState("\n");
 	return (
 		<>
 			<Navbar />
@@ -14,7 +20,7 @@ function DoubtPage() {
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<Test/>
+							{codeEditing ? <Test editorState={editorState} setEditorState={setEditorState} setCodeString={setCodeString} codeString={codeString} setCodeEditing={setCodeEditing} /> : <Example codeString={codeString} setCodeEditing={setCodeEditing} />}
 						</div>
 					</div>
 					<div className="left_footer">

@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Signin from "./views/Signin.js";
+import Signin from "./views/signin.js";
 import DebuggerHome from "./views/debugger/Home.js";
 import StudentHome from "./views/student/Home.js";
 import AddNewDoubt from "./views/student/NewDoubt.js"
