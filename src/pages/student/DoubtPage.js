@@ -1,8 +1,13 @@
+import { useRef } from "react";
 import Document from "../../components/doubtComponents/Document.js";
+import ScreenShare from "../../components/doubtComponents/ScreenShare.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
+import {shareScreen} from "../../components/doubtComponents/WebRTCFunctions";
 
-function DoubtPage() {
+const DoubtPage = (props) => {
+	const userStream = useRef();
+	const senders = useRef([]);
 	return (
 		<>
 			<Navbar />
@@ -12,7 +17,8 @@ function DoubtPage() {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
-							<Document />
+							{/* <Document /> */}
+							<ScreenShare senders={senders} userStream={userStream} />
 						</div>
 					</div>
 					<div className="left_footer">
@@ -28,9 +34,9 @@ function DoubtPage() {
 							data-width="30"
 							data-height="30"
 						/>
-						<span
+						<button onClick={() => shareScreen(senders, userStream)}
 							className="iconify-inline"
-							data-icon="wpf:video-call"
+							data-icon="carbon:screen"
 							data-width="30"
 							data-height="30"
 						/>

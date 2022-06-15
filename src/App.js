@@ -1,15 +1,16 @@
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Signin from "./views/signin.js";
-import DebuggerHome from "./views/debugger/Home.js";
-import StudentHome from "./views/student/Home.js";
-import AddNewDoubt from "./views/student/NewDoubt.js"
-import StudentOpenDoubt from "./views/student/OpenDoubt.js"
+import Signin from "./pages/signin.js";
+import DebuggerHome from "./pages/debugger/Home.js";
+import StudentHome from "./pages/student/Home.js";
+import AddNewDoubt from "./pages/student/NewDoubt.js"
+import StudentDoubtPage from "./pages/student/DoubtPage.js"
 import Test from "./components/Test.js"
+import Profile from "./pages/Profile.js";
 
-import DebuggerOpenDoubt from "./views/debugger/OpenDoubt.js";
-import StudentEditDoubt from "./views/student/EditDoubt.js"
+import DebuggerDoubtPage from "./pages/debugger/DoubtPage.js";
+import StudentEditDoubt from "./pages/student/EditDoubt.js"
 
 
 
@@ -36,7 +37,6 @@ import "./styles/debugger/DoubtModal.css";
 import "./styles/student/NotificationHandle.css";
 import "./styles/student/EditDoubt.css";
 import "./styles/test.css"
-import Profile from "./views/Profile.js";
 
 
 
@@ -47,14 +47,13 @@ function App() {
 				<Route exact path="/" element={<Signin />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
-				<Route exact path="/debugger/doubt/:id" element={<DebuggerOpenDoubt />} />
+				<Route exact path="/debugger/doubt/:id" element={<DebuggerDoubtPage />} />
 				<Route exact path="/debugger/profile" element={<Profile type="debugger" />} />
 				<Route exact path="/student/profile" element={<Profile type="student" />} />
 				<Route exact path="/student/new-doubt" element={<AddNewDoubt />} />
-				<Route exact path="/student/doubt/:id" element={<StudentOpenDoubt />} />
+				<Route exact path="/student/doubt/:id" element={<StudentDoubtPage />} />
 				<Route exact path="/student/edit/:id" element={<StudentEditDoubt />} />
 				<Route exact path="/test" element={<Test />} />
-
 			</Routes>
 		</BrowserRouter>
 	);
