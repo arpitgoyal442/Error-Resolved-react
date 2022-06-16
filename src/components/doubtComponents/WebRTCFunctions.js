@@ -44,9 +44,9 @@ export const handleNegotiationNeededEvent = (userId, peerRef, socketRef) => {
 		.catch((e) => console.log(e));
 };
 
-export const handleRecieveCall = (incoming, peerRef, userStream, senders, socketRef) => {
+export const handleRecieveCall = (incoming, peerRef, userStream, senders, socketRef, partnerVideo, otherUser) => {
   console.log("Receiving")
-	peerRef.current = createPeer();
+	peerRef.current = createPeer(incoming.target, peerRef, socketRef, otherUser, partnerVideo);
 	const desc = new RTCSessionDescription(incoming.sdp);
 	peerRef.current
 		.setRemoteDescription(desc)
@@ -105,6 +105,7 @@ export const shareScreen = (senders, userStream) => {
 			const screenTrack = stream.getTracks()[0];
 			if (senders.current?.length)
 				senders.current.find((sender) => sender.track.kind === "video").replaceTrack(screenTrack);
+			console.log(senders.current)
 			screenTrack.onended = function () {
 				senders.current
 					.find((sender) => sender.track.kind === "video")
