@@ -8,20 +8,20 @@ const topics = [
 	"Python",
 	"C",
 	"Node.js",
-	"Java",
-	"C++",
+	"c#",
+	"Golang",
 	"Python",
-	"C",
+	"Javascript",
 	"Ruby",
 	"Golang",
 	"C++",
 	"Python",
-	"C",
+	"Docker",
 	"BhaiLang",
 	"Django",
 	"Kubernetes",
 	"Java",
-	"C++",
+	"Php",
 	"Python",
 	"C",
 	"Node.js",
@@ -33,6 +33,48 @@ function Add() {
 		[screenshot, setScreenshot] = useState(null),
 		[shortDesc, setShortDesc] = useState(""),
 		[longDesc, setLongDesc] = useState("");
+
+	const addDoubt=()=>{
+
+		const doubt={
+			language:language,
+			price:50,
+			shortdes:shortDesc,
+			longdes:longDesc,
+			doubtfiles:screenshot
+		}
+
+		console.log(doubt);
+
+
+
+		// --To Send Data On Backend side --START
+		const myFormData=new FormData();
+
+		for(let i=0;i<screenshot.length;i++)
+		myFormData.append('myfiles',screenshot[i]);
+
+
+		myFormData.append('language',language);
+		myFormData.append('price',50);
+		myFormData.append('shortdes',shortDesc)
+		myFormData.append('longdes',longDesc)
+
+		axios.post("http://localhost:9000/doubt/add",myFormData
+			
+		).then((result)=>{
+
+			console.log(result);
+
+		}).catch((err)=>{
+
+			console.log(err);
+		})
+
+		// ---END
+	}
+
+
 	return (
 		<div className="addDoubt">
 			<Navbar />
@@ -65,7 +107,7 @@ function Add() {
 						<label className="addDoubt_heading">
 							Screenshot
 						</label>
-						<input type="file" onChange={(e) => setScreenshot(e.target.files[0])} />
+						<input multiple type="file" onChange={(e) => setScreenshot(e.target.files)} />
 					</div>
 
 					<div>
@@ -83,7 +125,7 @@ function Add() {
 					</div>
 
 					<div className="addDoubt_btnParent">
-						<button className="addDoubt_btn">Add</button>
+						<button onClick={addDoubt} className="addDoubt_btn">Add</button>
 					</div>
 				</div>
 			</div>
