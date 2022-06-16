@@ -1,9 +1,7 @@
-import { useRef } from "react";
-import Document from "../../components/doubtComponents/Document.js";
 import ScreenShare from "../../components/doubtComponents/ScreenShare.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
-import {shareScreen} from "../../components/doubtComponents/WebRTCFunctions";
+// import Document from "../../components/doubtComponents/Document.js";
 
 const DoubtPage = (props) => {
 	return (
