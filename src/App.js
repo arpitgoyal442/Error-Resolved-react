@@ -47,12 +47,12 @@ function App() {
 				<Route exact path="/" element={<Signin />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
-				<Route exact path="/debugger/doubt/:id" element={<DebuggerDoubtPage />} />
+				<Route exact path="/debugger/doubt/:doubtId" element={<DebuggerDoubtPage />} />
 				<Route exact path="/debugger/profile" element={<Profile type="debugger" />} />
 				<Route exact path="/student/profile" element={<Profile type="student" />} />
 				<Route exact path="/student/new-doubt" element={<AddNewDoubt />} />
-				<Route exact path="/student/doubt/:id" element={<StudentDoubtPage />} />
-				<Route exact path="/student/edit/:id" element={<StudentEditDoubt />} />
+				<Route exact path="/student/doubt/:doubtId" element={<StudentDoubtPage />} />
+				<Route exact path="/student/edit/:doubtId" element={<StudentEditDoubt />} />
 				<Route exact path="/test" element={<Test />} />
 			</Routes>
 		</BrowserRouter>

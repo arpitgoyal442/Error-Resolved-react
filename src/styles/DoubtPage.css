@@ -28,6 +28,7 @@
 }
 .doubtPage_mainBody {
 	flex: 1;
+	max-height: calc(100vh - var(--navbar-height) - 5rem);
 }
 .left_footer {
 	height: 5rem;

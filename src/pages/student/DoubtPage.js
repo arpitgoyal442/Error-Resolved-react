@@ -6,8 +6,6 @@ import Navbar from "../../components/Navbar.js";
 import {shareScreen} from "../../components/doubtComponents/WebRTCFunctions";
 
 const DoubtPage = (props) => {
-	const userStream = useRef();
-	const senders = useRef([]);
 	return (
 		<>
 			<Navbar />
@@ -18,10 +16,10 @@ const DoubtPage = (props) => {
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare senders={senders} userStream={userStream} />
+							<ScreenShare />
 						</div>
 					</div>
-					<div className="left_footer">
+					{/* <div className="left_footer">
 						<span
 							className="iconify-inline"
 							data-icon="wpf:video-call"
@@ -34,13 +32,13 @@ const DoubtPage = (props) => {
 							data-width="30"
 							data-height="30"
 						/>
-						<button onClick={() => shareScreen(senders, userStream)}
+						<button
 							className="iconify-inline"
 							data-icon="carbon:screen"
 							data-width="30"
 							data-height="30"
 						/>
-					</div>
+					</div> */}
 				</div>
 				<div className="right">
 					<div className="doubtPage_chatHead">
