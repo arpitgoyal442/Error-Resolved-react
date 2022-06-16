@@ -5,6 +5,7 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "@pdftron/webviewer": "^8.5.0",
+    "axios": "^0.27.2",
     "chart.js": "^3.7.1",
     "draft-js": "^0.11.7",
     "peerjs": "^1.4.6",
