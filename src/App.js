@@ -4,15 +4,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Signin from "./pages/signin.js";
 import DebuggerHome from "./pages/debugger/Home.js";
 import StudentHome from "./pages/student/Home.js";
-import AddNewDoubt from "./pages/student/NewDoubt.js"
-import StudentDoubtPage from "./pages/student/DoubtPage.js"
-import Test from "./components/Test.js"
+import AddNewDoubt from "./pages/student/NewDoubt.js";
+import StudentDoubtPage from "./pages/student/DoubtPage.js";
+import Test from "./components/Test.js";
 import Profile from "./pages/Profile.js";
 
 import DebuggerDoubtPage from "./pages/debugger/DoubtPage.js";
-import StudentEditDoubt from "./pages/student/EditDoubt.js"
-
-
+import StudentEditDoubt from "./pages/student/EditDoubt.js";
 
 import "./styles/Login.css";
 import "./styles/Navbar.css";
@@ -36,15 +34,21 @@ import "./styles/UserChart.css";
 import "./styles/debugger/DoubtModal.css";
 import "./styles/student/NotificationHandle.css";
 import "./styles/student/EditDoubt.css";
-import "./styles/test.css"
-
-
-
-
+import "./styles/test.css";
+import { useEffect } from "react";
+import { gapi } from "gapi-script";
 
 function App() {
+	useEffect(() => {
+		const start = () => {
+			gapi.client.init({
+				clientId: "742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com",
+				scope: "email profile",
+			});
+		};
+		gapi.load("client:auth2", start);
+	});
 	return (
-		
 		<BrowserRouter>
 			<Routes>
 				<Route exact path="/" element={<Signin />} />
@@ -59,7 +63,6 @@ function App() {
 				<Route exact path="/test" element={<Test />} />
 			</Routes>
 		</BrowserRouter>
-		
 	);
 }
 
