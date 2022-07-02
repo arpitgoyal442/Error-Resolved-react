@@ -126,3 +126,10 @@
 		width: 100%;
 	}
 }
+
+.priceinput{
+
+	background-color: #E7E6E1;
+	padding: 5px;
+	border: 1px solid black;
+}

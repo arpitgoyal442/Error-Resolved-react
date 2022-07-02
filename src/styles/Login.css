@@ -68,6 +68,7 @@
 	min-width:fit-content;
 	padding: 6px;
 	border-radius: 5px;
+	
 }
 
 .signin_right p{
@@ -76,6 +77,14 @@
 	color: #015a61;
 	
 
+}
+
+.signin_right_card_buttons{
+	flex: 0.3;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
 }
 
 

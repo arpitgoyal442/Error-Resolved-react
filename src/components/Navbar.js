@@ -3,6 +3,7 @@ import BellIcon from "@heroicons/react/solid/BellIcon";
 import DropdownContent from "./student/DropdownContent";
 
 function Navbar() {
+	
 	const [showNotification, setNotification] = useState(false),
 	navRef = useRef(null);
 	useEffect(() => {

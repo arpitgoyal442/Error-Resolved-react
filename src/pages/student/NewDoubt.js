@@ -25,20 +25,24 @@ const topics = [
 	"Python",
 	"C",
 	"Node.js",
+	'Other'
 ];
 
 function Add() {
 	const [language, setLanguage] = useState(topics[0]),
-		[difficulty, setDifficulty] = useState(1),
+		[price, setPrice] = useState(),
 		[screenshot, setScreenshot] = useState(null),
 		[shortDesc, setShortDesc] = useState(""),
 		[longDesc, setLongDesc] = useState("");
 
 	const addDoubt=()=>{
 
+		console.log(price);
+		  
+
 		const doubt={
 			language:language,
-			price:50,
+			price:price,
 			shortdes:shortDesc,
 			longdes:longDesc,
 			doubtfiles:screenshot
@@ -48,17 +52,17 @@ function Add() {
 
 
 
-		// --To Send Data On Backend side --START
+		// --To Send Data On Backend  --START
 		const myFormData=new FormData();
 
 		for(let i=0;i<screenshot.length;i++)
 		myFormData.append('myfiles',screenshot[i]);
 
 
-		myFormData.append('language',language);
-		myFormData.append('price',50);
-		myFormData.append('shortdes',shortDesc)
-		myFormData.append('longdes',longDesc)
+		myFormData.append('topic',language);
+		myFormData.append('price',price);
+		myFormData.append('shortDescription',shortDesc)
+		myFormData.append('longDescription',longDesc)
 
 		axios.post("http://localhost:9000/doubt/add",myFormData
 			
@@ -94,12 +98,11 @@ function Add() {
 					</div>
 					<div className="addDoubt_difficulty">
 						<label className="addDoubt_heading">
-							Difficulty*
+						     Price*
 						</label>
 						<div className="list">
-							<p className={difficulty===1?'active':undefined} onClick={() => setDifficulty(1)}>Easy</p>
-							<p className={difficulty===2?'active':undefined} onClick={() => setDifficulty(2)}>Medium</p>
-							<p className={difficulty===3?'active':undefined} onClick={() => setDifficulty(3)}>Hard</p>
+							<input  onInput={(e)=>{ setPrice(e.target.value)}}  className="priceinput" type="number" placeholder="ex. 50"/>
+							
 						</div>
 					</div>
 
