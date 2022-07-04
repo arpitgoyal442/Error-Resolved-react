@@ -1,9 +1,20 @@
 import ScreenShare from "../../components/doubtComponents/ScreenShare.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
-// import Document from "../../components/doubtComponents/Document.js";
+import Document from "../../components/doubtComponents/Document.js";
+
+import io from "socket.io-client";
+
+const socket = io.connect('http://localhost:3000');
 
 const DoubtPage = (props) => {
+
+
+	const sendClicked=()=>{
+
+		socket.emit('newMessage',"Hello World")
+	}
+
 	return (
 		<>
 			<Navbar />
@@ -13,30 +24,11 @@ const DoubtPage = (props) => {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
-							{/* <Document /> */}
-							<ScreenShare />
+							<Document />
+							{/* <ScreenShare /> */}
 						</div>
 					</div>
-					{/* <div className="left_footer">
-						<span
-							className="iconify-inline"
-							data-icon="wpf:video-call"
-							data-width="30"
-							data-height="30"
-						/>
-						<span
-							className="iconify-inline active"
-							data-icon="wpf:video-call"
-							data-width="30"
-							data-height="30"
-						/>
-						<button
-							className="iconify-inline"
-							data-icon="carbon:screen"
-							data-width="30"
-							data-height="30"
-						/>
-					</div> */}
+					
 				</div>
 				<div className="right">
 					<div className="doubtPage_chatHead">
@@ -97,7 +89,7 @@ const DoubtPage = (props) => {
 						></span>
 						<div className="inputBox">
 							<input className="send" type="text" placeholder="Write message..." />
-							<span
+							<span onClick={sendClicked}
 								className="iconify-inline"
 								data-icon="fluent:send-20-filled"
 								data-width="20"
