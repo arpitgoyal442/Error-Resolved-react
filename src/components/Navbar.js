@@ -1,19 +1,39 @@
 import React, { useState, useEffect, useRef } from "react";
 import BellIcon from "@heroicons/react/solid/BellIcon";
+import LogoutIcon from "@heroicons/react/outline/LogoutIcon"
+import UserIcon from "@heroicons/react/outline/UserIcon"
+
 import DropdownContent from "./student/DropdownContent";
+import { GoogleLogout } from 'react-google-login';
+
+
+
 
 function Navbar() {
-	
+
+	const [profileDropdown, setProfileDropdown] = useState(false);
 	const [showNotification, setNotification] = useState(false),
-	navRef = useRef(null);
+		navRef = useRef(null);
 	useEffect(() => {
-    const unsubscribe = window.addEventListener("scroll", handleScroll);
-    return unsubscribe;
-  }, [])
+		const unsubscribe = window.addEventListener("scroll", handleScroll);
+		return unsubscribe;
+	}, [])
 	const handleScroll = () => {
-    if(window.scrollY>0) navRef?.current?.classList?.add("navbar_shadow");
-    else navRef?.current?.classList?.remove("navbar_shadow");
-  }
+		if (window.scrollY > 0) navRef?.current?.classList?.add("navbar_shadow");
+		else navRef?.current?.classList?.remove("navbar_shadow");
+	}
+
+
+	const onLogout = () => {
+
+		window.localStorage.removeItem('userId')
+
+		window.location.href = "http://localhost:3000"
+
+
+	}
+
+
 	return (
 		<div className="navbar" ref={navRef}>
 			<h2>
@@ -23,18 +43,18 @@ function Navbar() {
 				RESOLVED
 			</h2>
 			<div className="navbarIcons">
-				<div
-					
-					className="dropdown"
-				>
-					<div  onClick={() => {
+
+				<div className="dropdown" >
+
+					<div onClick={() => {
 						showNotification ? setNotification(false) : setNotification(true);
 					}} className="w-8 h-8 relative">
 						<p className="grid place-items-center w-4 h-4 text-xs text-white font-semibold rounded-full bg-highlight absolute top-0 right-0 -translate-y-1/3">2</p>
 						<BellIcon />
 					</div>
+
 					<div
-						className="dropdown-content"
+						className="dropdown-content "
 						style={{ display: showNotification ? "block" : "none" }}
 					>
 						<ul>
@@ -53,9 +73,44 @@ function Navbar() {
 						</ul>
 					</div>
 				</div>
-				<div className="navbar_profile">
-					<img src="/profile_img.jpeg" alt="profile" />
+
+				<div className="dropdown">
+
+					<div onClick={() => {
+						profileDropdown ? setProfileDropdown(false) : setProfileDropdown(true);
+					}} className=" navbar_profile">
+
+
+						<img src="/profile_img.jpeg" alt="profile" />
+
+					</div>
+
+					<div
+						className="dropdown-content"
+						style={{ display: profileDropdown ? "block" : "none" }}
+					>
+						<ul>
+							<div>
+								<GoogleLogout
+									clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
+									// buttonText="Logout"
+									render={renderProps => (
+										<button onClick={renderProps.onClick} disabled={renderProps.disabled}><span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon"/> </span> Logout </button>
+									)}
+									onLogoutSuccess={onLogout}
+								>
+								</GoogleLogout>
+								{/* <span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon"/> </span> Logout */}
+							</div>
+
+							<div>
+								<span className="logouticon"> <UserIcon className="h-9 w-9 text-gray-500 logouticon" /> </span> Profile
+							</div>
+
+						</ul>
+					</div>
 				</div>
+
 			</div>
 		</div>
 	);
