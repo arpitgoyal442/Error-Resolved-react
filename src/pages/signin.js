@@ -35,6 +35,7 @@ function Signin() {
 
 				console.log(resdata.data);
 				window.localStorage.setItem("userId",resdata.data);
+				window.localStorage.setItem("userType",2);
 				window.location.href="http://localhost:3000/debugger"
 			
 			}
@@ -69,7 +70,9 @@ function Signin() {
 
 				console.log(resdata.data);
 				window.localStorage.setItem("userId",resdata.data);
-				window.location.href="http://localhost:3000/student"
+				window.localStorage.setItem("userType",1);
+				window.location.href="http://localhost:3000/student";
+			
 			
 			}
 			

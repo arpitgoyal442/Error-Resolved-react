@@ -3,11 +3,30 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import PlusIcon from "@heroicons/react/solid/PlusIcon";
 import DoubtCard from "../../components/student/DoubtCard";
+import { useEffect } from "react";
+import axios from "axios";
 
 function StudentHome() {
 	const [status, setStatus] = useState(1);
 	// 1 -> all, 2 -> pending, 3 -> unresolved, 4 -> resolved
 	const [filter, setFilter] = useState(1);
+
+	const [allDoubts,setAllDoubts]=useState([]);
+
+	useEffect(()=>{
+
+		let studentId=window.localStorage.getItem("userId");
+
+		axios.get("http://localhost:9000/student/doubts/"+studentId)
+		.then((data)=>{
+
+			setAllDoubts(data.data);
+			console.log(data.data);
+
+		})
+		.catch((err)=>{console.log(err)})
+
+	},[])
 
 	return (
 		<>
@@ -66,22 +85,15 @@ function StudentHome() {
 				{/* right */}
 				<div className="studentRight">
 					<div className="doubtCards">
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
-						<DoubtCard />
+
+						{allDoubts.map((doubt)=>{
+							return <DoubtCard doubtInfo={doubt} />
+						})}
+
+
+
+						
+						
 					</div>
 				</div>
 			</main>

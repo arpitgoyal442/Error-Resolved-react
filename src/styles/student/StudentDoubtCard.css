@@ -8,6 +8,10 @@
   background-color: var(--light);
   transition: all 100ms ease-in-out;
 }
+.studentDoubtCard h4{
+
+  font-weight: 500;
+}
 .studentDoubtCard:hover{
   box-shadow: 0 4px 6px #0000001a;
 }
@@ -54,12 +58,22 @@
 }
 
 .studentDoubtCard_dropdown .iconify-inline{
-  background-color: var(--highlight);
-  color: white;
+  /* background-color: var(--highlight); */
+  /* color: white; */
+ color: gray;
   border-radius: 50%;
-  padding: 5px;
+  /* padding: 5px; */
   width: 30px;
-  height: 30px;
+  height: 25px;
+
+  
 }
+
+.studentDoubtCard_dropdown .iconify-inline:hover{
+
+  color:black;
+}
+
+
 
 

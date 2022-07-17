@@ -50,6 +50,8 @@ function Add() {
 
 		console.log(doubt);
 
+		const studentId=window.localStorage.getItem("userId");
+
 
 
 		// --To Send Data On Backend  --START
@@ -61,8 +63,9 @@ function Add() {
 
 		myFormData.append('topic',language);
 		myFormData.append('price',price);
-		myFormData.append('shortDescription',shortDesc)
-		myFormData.append('longDescription',longDesc)
+		myFormData.append('shortDescription',shortDesc);
+		myFormData.append('longDescription',longDesc);
+		myFormData.append('studentId',studentId);
 
 		axios.post("http://localhost:9000/doubt/add",myFormData
 			
@@ -117,14 +120,14 @@ function Add() {
 						<label className="addDoubt_heading">
 							Short Description*
 						</label>
-						<textarea required value={shortDesc} onChange={(e) => setShortDesc(e.target.value)} cols="30" rows="2" maxLength={50}></textarea>
+						<textarea required value={shortDesc} onChange={(e) => setShortDesc(e.target.value)} cols="60" rows="2" maxLength={150}></textarea>
 					</div>
 
 					<div>
 						<label className="addDoubt_heading">
 							Long Description*
 						</label>
-						<textarea required value={longDesc} onChange={(e) => setLongDesc(e.target.value)} cols="30" rows="4"></textarea>
+						<textarea required value={longDesc} onChange={(e) => setLongDesc(e.target.value)} cols="60" rows="4"></textarea>
 					</div>
 
 					<div className="addDoubt_btnParent">

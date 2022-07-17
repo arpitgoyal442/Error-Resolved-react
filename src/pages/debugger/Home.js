@@ -1,17 +1,51 @@
 import Navbar from "../../components/Navbar.js"
 import Leftbar from "../../components/debugger/Leftbar";
 import DoubtCard from "../../components/debugger/DoubtCard";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Filters from "../../components/debugger/Filters";
+import axios from "axios";
+
+
 
 function DebuggerHome() {
-	/*
-		sort: 1->time, 2->price
-		solvingNow: false, true
-		active: -1->false, 0->all, 1->true
-		requested: -1->false, 0->all, 1->true
-		topic: array of strings
-	*/
+
+	// Make 1 state variable of type array
+	// Fetch all doubts after firt mounting of component
+	// Fetch all requested doubt by debugger
+
+	const [doubts,setDoubts]=useState([]);
+	const [requestedDoubts,setRequestedDoubts]=useState([])
+
+	useEffect(()=>{
+
+		// Fetch all Doubts
+		axios.get("http://localhost:9000/doubt/all")
+		.then((data)=>{
+			console.log(data.data);
+			setDoubts(data.data);
+		})
+		.catch((err)=>{console.log("Unable to Fetch Doubts"); console.log(err)});
+
+
+		// Fetch doubts already requested by this debugger
+		let debuggerId=window.localStorage.getItem("userId");
+		axios.get("http://localhost:9000/debugger/profile/"+debuggerId)
+		.then( 
+			data=>{
+				console.log(data.data.requestedDoubts);
+				 setRequestedDoubts(data.data.requestedDoubts);
+			}
+		)
+		.catch(err=>{console.log(err)});
+
+		
+
+		     
+		
+	},[]);
+
+
+	
 	const [sort, setSort] = useState(1),
 		[solvingNow, setSolvingNow] = useState(false),
 		[active, setActive] = useState(0),
@@ -48,8 +82,19 @@ function DebuggerHome() {
 						setTopic={setTopic}
 					/>
 					<div onClick={() => setShowModal(true)} className="debuggerHome_doubtsContainer">
-						<DoubtCard status="active" />
-						<DoubtCard />
+
+
+
+						{doubts.map(doubt=>{
+
+							return <DoubtCard aboutDoubt={doubt} isRequested={  ( requestedDoubts.includes(doubt._id) )?true:false } />
+
+						})}
+
+
+
+						{/* <DoubtCard status="active" /> */}
+						{/* <DoubtCard />
 						<DoubtCard  status="active"/>
 						<DoubtCard />
 						<DoubtCard status="active" />
@@ -61,7 +106,7 @@ function DebuggerHome() {
 						<DoubtCard />
 						<DoubtCard />
 						<DoubtCard />
-						<DoubtCard />
+						<DoubtCard /> */}
 					</div>
 				</div>
 			</div>

@@ -38,6 +38,28 @@ import "./styles/test.css";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 
+// Socket.io **START
+
+import {io} from "socket.io-client";
+const socket=io("http://localhost:5000");
+
+socket.on("connect",()=>{
+
+	console.log(socket.id);
+
+
+});
+
+socket.emit("chat",{name:"arpro"});
+
+socket.on("chat",(payload)=>{
+
+	console.log(payload);
+})
+
+
+// Socket.io **END
+
 function App() {
 	useEffect(() => {
 		const start = () => {

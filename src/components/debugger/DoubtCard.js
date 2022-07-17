@@ -6,8 +6,11 @@ import { useState } from "react";
 import DoubtModal from "./DoubtModal.js";
 Modal.setAppElement("#root");
 
-function DoubtCard({ status }) {
+function DoubtCard(props) {
 	const [modal, setModal] = useState(false);
+
+	console.log("props passed are");
+	console.log(props.isRequested);
 
 	const OnModal = () => {
 		setModal(true);
@@ -17,31 +20,40 @@ function DoubtCard({ status }) {
 		setModal(false);
 	};
 
+	const makeRequest=()=>{
+
+		if(props.isRequested)
+		alert("Already Requested");
+
+		else {
+			//make a request here
+		}
+
+	}
+
 	return (
 		<div className="doubtCard">
 			<div className="doubtCard_navbar">
 				{/* <p>Active</p> */}
 				<ReactLoading
-					type={status === "active" ? "blank" : "bars"}
+					type={props.aboutDoubt.status=== "active" ? "blank" : "bars"}
 					color="gray"
 					height="9%"
 					width="9%"
 				/>
-				<h2>Java</h2>
-				<p>12-3-2022</p>
+				<h2>{props.aboutDoubt.topic}</h2>
+				<p>{props.aboutDoubt.postedTime}</p>
 			</div>
 
 			<div className="doubtCard_body">
 				<div>
 					<h5 className="heading">Amount</h5>
-					<p>₹40</p>
+					<p>₹ {props.aboutDoubt.price}</p>
 				</div>
 				<div>
 					<h5 className="heading">Description</h5>
 					<p className="doubtCard_text">
-						Having Trouble in question &quot;geek collects the balls&quot; from GFG . I think my
-						approach is correct but not getting correct output.Want help to know whats wrong in my
-						approach.
+						{props.aboutDoubt.shortDescription}
 					</p>
 				</div>
 			</div>
@@ -50,7 +62,7 @@ function DoubtCard({ status }) {
 					View
 				</button>
 
-				{status === "active" && <button className="doubtCard_request"> Request</button>}
+				{props.aboutDoubt.status === "active" && <button onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
 			</div>
 
 			<Modal

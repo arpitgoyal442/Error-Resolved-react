@@ -4,9 +4,11 @@
 	font-weight: 600;
 	margin-right: 2rem;
 }
-.addDoubt_body {
+.addDoubt{
 	width: 100%;
-	height: 91vh;
+	height: 100vh;
+}
+.addDoubt_body {
 	
 	 background-color: #E7E6E1; 
 }
