@@ -1,11 +1,13 @@
 .modal{
 
-    height:auto;
+    
+    height: fit-content;
     width: 100%;
     margin: 0;
     padding: 10px;
+    background-color: aliceblue;
+  
 
-    background-color:aliceblue;
    
 
 }
@@ -14,7 +16,7 @@
 
 .doubt_modal_studentname{
   margin-left:30% ;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 
@@ -23,13 +25,13 @@
 
     font-size: medium;
     color: black;
+    margin-bottom: 20px;
 }
 
 .modal h2{
-     color:rgb(85, 84, 84); 
+     /* color:rgb(85, 84, 84);  */
      
 
-     font-weight: 650;
+     font-weight: 500;
 
-     /* color: #02656c; */
 }

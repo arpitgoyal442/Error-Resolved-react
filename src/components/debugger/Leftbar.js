@@ -1,29 +1,29 @@
 const topics = [
 	"Java",
 	"C++",
-	"Python",
 	"C",
+	"c#",
 	"Node.js",
-	"Java",
-	"C++",
+	
+	"Ruby",
 	"Python",
-	"C",
-	"Node.js",
-	"Java",
-	"C++",
-	"Python",
-	"C",
-	"Node.js",
+	
+	"HTML",
+	"CSS",
+	
+	
+	
+	"React.js",
 	"Django",
 	"Kubernetes",
-	"Java",
-	"C++",
-	"Python",
-	"C",
-	"Node.js",
+	
+	"Other"
+	
+	
 ];
 
 function Leftbar({ sort, setSort, solvingNow, setSolvingNow, active, setActive, requested, setRequested, topic, setTopic }) {
+	
   const filterTopic = (t) => {
     if (topic.includes(t)) {
       setTopic((prev) => prev.filter((top) => top !== t));

@@ -31,6 +31,12 @@ function DoubtCard(props) {
 
 	}
 
+	const openDoubt=()=>{
+
+		window.open("http://localhost:3000/debugger/doubt/"+props.aboutDoubt._id)
+		// window.location.href="http://localhost:3000/debugger/doubt/"+props.aboutDoubt._id
+	}
+
 	return (
 		<div className="doubtCard">
 			<div className="doubtCard_navbar">
@@ -62,7 +68,8 @@ function DoubtCard(props) {
 					View
 				</button>
 
-				{props.aboutDoubt.status === "active" && <button onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
+				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
+				{props.solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
 			</div>
 
 			<Modal
@@ -77,24 +84,29 @@ function DoubtCard(props) {
 					},
 					content: {
 						padding: "0",
-						marginLeft: "27vw",
-						marginTop: "10vh",
-						marginBottom: "10vh",
+						marginLeft: "28%",
+						marginRight:"35%",
+						marginTop: "35vh",
+						
+
+						height:"fit-content",
+						maxHeight:"400px",
 
 						border: "1px solid black",
 						background: "#fff",
 
 						WebkitOverflowScrolling: "touch",
 						borderRadius: "4px",
-						//  overflowY:"auto",
+						
 
 						scrollbarWidth: "0",
 
-						width: "50%",
+						width: "40%",
+						
 					},
 				}}
 			>
-				<DoubtModal offModal={offModal} />
+				<DoubtModal offModal={offModal} doubtInfo={props.aboutDoubt} />
 			</Modal>
 		</div>
 	);
