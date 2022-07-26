@@ -67,6 +67,8 @@ function Add() {
 		myFormData.append('longDescription',longDesc);
 		myFormData.append('studentId',studentId);
 
+		console.log(myFormData);
+		
 		axios.post("http://localhost:9000/doubt/add",myFormData
 			
 		).then((result)=>{

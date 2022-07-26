@@ -11,6 +11,7 @@
 .addDoubt_body {
 	
 	 background-color: #E7E6E1; 
+	 height: 91.5vh;
 }
 .addDoubt_mainHead {
 	width: 100%;
@@ -87,6 +88,17 @@
 	display: flex;
 	justify-content: center;
 }
+
+.editDoubt_btn{
+	font-size: 20px;
+	padding: 0.25rem 2rem;
+	border: none;
+	border-radius: 10px;
+	color: white;
+	background-color: var(--highlight);
+
+}
+
 .addDoubt_btn {
 	font-size: 20px;
 	padding: 0.25rem 2rem;
@@ -125,6 +137,9 @@
 		padding: 0.5rem;
 	}
 	.addDoubt_btn {
+		width: 100%;
+	}
+	.editDOubt_btn{
 		width: 100%;
 	}
 }

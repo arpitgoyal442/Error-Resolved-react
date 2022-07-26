@@ -16,7 +16,7 @@ function StudentDoubtCard({doubtInfo}) {
 					></span>
 					</div>
 				</Link>
-				<Link to="/student/edit/123">
+				<Link to="/student/edit/123" state={{aboutDoubt:doubtInfo}}>
 					<div>
 					<span
 						className="iconify-inline"

@@ -1,5 +1,9 @@
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
+import { useLocation } from 'react-router-dom'
+import { useEffect } from "react";
+import axios from "axios";
+
 
 const topics = [
 	"Java",
@@ -7,31 +11,105 @@ const topics = [
 	"Python",
 	"C",
 	"Node.js",
-	"Java",
-	"C++",
-	"Python",
-	"C",
 	"Ruby",
 	"Golang",
-	"C++",
-	"Python",
-	"C",
+	"AWS",
 	"BhaiLang",
 	"Django",
 	"Kubernetes",
-	"Java",
-	"C++",
-	"Python",
-	"C",
-	"Node.js",
+	"Other"
+	
+	
 ];
 
 function EditDoubt() {
-	const [language, setLanguage] = useState(topics[0]),
-		[difficulty, setDifficulty] = useState(1),
+
+
+	// ! How to show previous files !
+
+
+	const [language, setLanguage] = useState(topics[1]),
+	[price, setPrice] = useState(),
+		
 		[screenshot, setScreenshot] = useState(null),
 		[shortDesc, setShortDesc] = useState(""),
 		[longDesc, setLongDesc] = useState("");
+
+		const location = useLocation()
+		const { aboutDoubt} = location.state;
+		console.log(aboutDoubt);
+
+	
+    useEffect(()=>{
+
+	 setShortDesc(aboutDoubt.shortDescription);
+	 setLongDesc(aboutDoubt.longDescription);
+	 setLanguage(aboutDoubt.topic);
+	 setPrice(aboutDoubt.price);
+	
+	// eslint-disable-next-line
+	},[]);
+
+
+	let onEditClick=()=>{
+		
+
+		console.log(screenshot);
+
+
+
+		const doubt={
+			language:language,
+			price:price,
+			shortdes:shortDesc,
+			longdes:longDesc,
+			
+		}
+
+		console.log(doubt);
+
+
+		// --To Send Data On Backend  --START
+		let myFormData=new FormData();
+
+		
+		if(screenshot!=null)
+		{
+		for(let i=0;i<screenshot.length;i++)
+		myFormData.append('myfiles',screenshot[i]);
+		}
+		
+
+
+       
+		myFormData.append('topic',language);
+		myFormData.append('price',price);
+		myFormData.append('shortDescription',shortDesc);
+		myFormData.append('longDescription',longDesc);
+
+		console.log(myFormData);
+		
+
+
+		axios.put("http://localhost:9000/doubt/"+aboutDoubt._id,myFormData).then((d)=>{
+
+		   
+
+
+			console.log(d);
+		}).catch(()=>{})
+
+
+
+
+
+
+	}
+
+
+		
+
+
 	return (
 		<div className="addDoubt">
 			<Navbar />
@@ -50,14 +128,12 @@ function EditDoubt() {
 						</div>
 					</div>
 					<div className="addDoubt_difficulty">
-						<label className="addDoubt_heading">
-							Amount*
+					<label className="addDoubt_heading">
+						     Price*
 						</label>
-						{/* <input className="list" type="text" /> */}
 						<div className="list">
-							<p className={difficulty===1?'active':undefined} onClick={() => setDifficulty(1)}>Easy</p>
-							<p className={difficulty===2?'active':undefined} onClick={() => setDifficulty(2)}>Medium</p>
-							<p className={difficulty===3?'active':undefined} onClick={() => setDifficulty(3)}>Hard</p>
+							<input value={price}  onInput={(e)=>{ setPrice(e.target.value)}}  className="priceinput" type="number" placeholder="ex. 50"/>
+							
 						</div>
 					</div>
 
@@ -65,14 +141,14 @@ function EditDoubt() {
 						<label className="addDoubt_heading">
 							Screenshot
 						</label>
-						<input type="file" onChange={(e) => setScreenshot(e.target.files[0])} />
+						<input multiple type="file" onChange={(e) => setScreenshot(e.target.files)} />
 					</div>
 
 					<div>
 						<label className="addDoubt_heading">
 							Short Description*
 						</label>
-						<textarea required value={shortDesc} onChange={(e) => setShortDesc(e.target.value)} cols="30" rows="2" maxLength={50}></textarea>
+						<textarea required value={shortDesc} onChange={(e) => setShortDesc(e.target.value)} cols="30" rows="2" maxLength={200}></textarea>
 					</div>
 
 					<div>
@@ -83,7 +159,7 @@ function EditDoubt() {
 					</div>
 
 					<div className="addDoubt_btnParent">
-						<button className="addDoubt_btn">Update</button>
+						<button onClick={onEditClick} className="editDoubt_btn">Update</button>
 					</div>
 				</div>
 			</div>
