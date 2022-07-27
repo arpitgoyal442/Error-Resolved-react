@@ -2,6 +2,10 @@ import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const topics = [
 	"Java",
 	"C++",
@@ -29,6 +33,7 @@ const topics = [
 ];
 
 function Add() {
+	
 	const [language, setLanguage] = useState(topics[0]),
 		[price, setPrice] = useState(),
 		[screenshot, setScreenshot] = useState(null),
@@ -36,6 +41,24 @@ function Add() {
 		[longDesc, setLongDesc] = useState("");
 
 	const addDoubt=()=>{
+
+
+		if( !price|| shortDesc.length===0||longDesc.length===0)
+		{
+			toast.warn('Missing Fields !!', {
+				position: "bottom-right",
+				autoClose: 3000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				
+				theme:"dark"
+				});
+
+				return;
+		}
+
 
 		console.log(price);
 		  
@@ -57,8 +80,11 @@ function Add() {
 		// --To Send Data On Backend  --START
 		const myFormData=new FormData();
 
+        if(screenshot)
+		{
 		for(let i=0;i<screenshot.length;i++)
 		myFormData.append('myfiles',screenshot[i]);
+		}
 
 
 		myFormData.append('topic',language);
@@ -72,10 +98,35 @@ function Add() {
 		axios.post("http://localhost:9000/doubt/add",myFormData
 			
 		).then((result)=>{
+			toast('Added Successfully', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				onClose:(e)=>{  window.location.replace("http://localhost:3000/student")},
+				theme:"dark"
+				});
+
+				
 
 			console.log(result);
 
 		}).catch((err)=>{
+
+			toast('Some Error Occured!', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				
+				theme:"dark"
+				});
+
+				
 
 			console.log(err);
 		})
@@ -88,6 +139,7 @@ function Add() {
 		<div className="addDoubt">
 			<Navbar />
 			<div className="addDoubt_body">
+				<ToastContainer/>
 				<h1 className="addDoubt_mainHead">Add Doubt</h1>
 
 				<div className="addDoubt_form">

@@ -4,6 +4,10 @@ import { useLocation } from 'react-router-dom'
 import { useEffect } from "react";
 import axios from "axios";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 const topics = [
 	"Java",
@@ -18,8 +22,8 @@ const topics = [
 	"Django",
 	"Kubernetes",
 	"Other"
-	
-	
+
+
 ];
 
 function EditDoubt() {
@@ -29,75 +33,97 @@ function EditDoubt() {
 
 
 	const [language, setLanguage] = useState(topics[1]),
-	[price, setPrice] = useState(),
-		
+		[price, setPrice] = useState(),
+
 		[screenshot, setScreenshot] = useState(null),
 		[shortDesc, setShortDesc] = useState(""),
 		[longDesc, setLongDesc] = useState("");
 
-		const location = useLocation()
-		const { aboutDoubt} = location.state;
-		console.log(aboutDoubt);
-
-	
-    useEffect(()=>{
-
-	 setShortDesc(aboutDoubt.shortDescription);
-	 setLongDesc(aboutDoubt.longDescription);
-	 setLanguage(aboutDoubt.topic);
-	 setPrice(aboutDoubt.price);
-	
-	// eslint-disable-next-line
-	},[]);
+	const location = useLocation()
+	const { aboutDoubt } = location.state;
+	console.log(aboutDoubt);
 
 
-	let onEditClick=()=>{
+	useEffect(() => {
+
+		setShortDesc(aboutDoubt.shortDescription);
+		setLongDesc(aboutDoubt.longDescription);
+		setLanguage(aboutDoubt.topic);
+		setPrice(aboutDoubt.price);
+
+		// eslint-disable-next-line
+	}, []);
+
+
+	let onEditClick = () => {
+
 		
+
 
 		console.log(screenshot);
 
 
 
-		const doubt={
-			language:language,
-			price:price,
-			shortdes:shortDesc,
-			longdes:longDesc,
-			
+		const doubt = {
+			language: language,
+			price: price,
+			shortdes: shortDesc,
+			longdes: longDesc,
+
 		}
 
 		console.log(doubt);
 
 
 		// --To Send Data On Backend  --START
-		let myFormData=new FormData();
+		let myFormData = new FormData();
 
-		
-		if(screenshot!=null)
-		{
-		for(let i=0;i<screenshot.length;i++)
-		myFormData.append('myfiles',screenshot[i]);
+
+		if (screenshot != null) {
+			for (let i = 0; i < screenshot.length; i++)
+				myFormData.append('myfiles', screenshot[i]);
 		}
-		
 
 
-       
-		myFormData.append('topic',language);
-		myFormData.append('price',price);
-		myFormData.append('shortDescription',shortDesc);
-		myFormData.append('longDescription',longDesc);
+
+
+		myFormData.append('topic', language);
+		myFormData.append('price', price);
+		myFormData.append('shortDescription', shortDesc);
+		myFormData.append('longDescription', longDesc);
 
 		console.log(myFormData);
-		
 
 
-		axios.put("http://localhost:9000/doubt/"+aboutDoubt._id,myFormData).then((d)=>{
 
-		   
+		axios.put("http://localhost:9000/doubt/" + aboutDoubt._id, myFormData).then((d) => {
+
+			toast('Updated Successfully', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				onClose:()=>{window.location.href="http://localhost:3000/student"; },
+				theme:"dark"
+				});
+
+				
+
+				
+
+
 
 
 			console.log(d);
-		}).catch(()=>{})
+		}).catch(() => { 
+			toast("Error Occured", {
+				position: "top-center",
+				autoClose: 1000,
+				
+			});
+		})
 
 
 
@@ -107,33 +133,36 @@ function EditDoubt() {
 	}
 
 
-		
+
 
 
 	return (
 		<div className="addDoubt">
 			<Navbar />
 			<div className="addDoubt_body">
+
 				<h1 className="addDoubt_mainHead">Edit Doubt</h1>
+				
 
 				<div className="addDoubt_form">
+				<ToastContainer />
 					<div className="addDoubt_language">
 						<label className="addDoubt_heading">
 							Language*
 						</label>
 						<div className="list">
 							{topics.map((t, i) => (
-								<p key={i} className={language===t?'active':undefined} onClick={() => setLanguage(t)}>{t}</p>
+								<p key={i} className={language === t ? 'active' : undefined} onClick={() => setLanguage(t)}>{t}</p>
 							))}
 						</div>
 					</div>
 					<div className="addDoubt_difficulty">
-					<label className="addDoubt_heading">
-						     Price*
+						<label className="addDoubt_heading">
+							Price*
 						</label>
 						<div className="list">
-							<input value={price}  onInput={(e)=>{ setPrice(e.target.value)}}  className="priceinput" type="number" placeholder="ex. 50"/>
-							
+							<input value={price} onInput={(e) => { setPrice(e.target.value) }} className="priceinput" type="number" placeholder="ex. 50" />
+
 						</div>
 					</div>
 

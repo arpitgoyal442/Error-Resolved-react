@@ -1,11 +1,61 @@
 
 import { Link } from "react-router-dom";
+import axios from "axios";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function StudentDoubtCard({doubtInfo}) {
+
+
+	const onDeleteClick=()=>{
+
+		axios.delete("http://localhost:9000/doubt/"+doubtInfo._id)
+		.then(()=>{
+
+
+
+			toast('Deleted Successfully', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				onClose:()=>{window.location.href="http://localhost:3000/student"; },
+				theme:"dark"
+				});
+
+
+
+
+		})
+		.catch(()=>{
+
+			toast.warn('Deletion Failed', {
+				position: "bottom-right",
+				autoClose: 2000,
+				hideProgressBar: true,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+			
+				theme:"dark"
+				});
+
+		})
+
+		
+
+	
+	}
 
 	return (
 		<div className="studentDoubtCard">
 			<p className="studentDoubtCard_date">{doubtInfo.postedTime}</p>
 			<h4 className="studentDoubtCard_topic">{doubtInfo.topic}</h4>
+			<ToastContainer/>
 			<ul className="studentDoubtCard_dropdown">
 				<Link to="/student/doubt/123">
 					<div>
@@ -25,11 +75,13 @@ function StudentDoubtCard({doubtInfo}) {
 					></span>
 					</div>
 				</Link>
-				<span
+				<div onClick={onDeleteClick}>
+				<span 
 					className="iconify-inline"
 					data-icon="fluent:delete-24-filled"
-					s
+					
 				></span>
+				</div>
 			</ul>
 			<p className="studentDoubtCard_text">
 				{doubtInfo.shortDescription}
