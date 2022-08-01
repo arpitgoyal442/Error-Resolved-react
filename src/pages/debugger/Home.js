@@ -21,21 +21,31 @@ function DebuggerHome() {
 		[topic, setTopic] = useState([]),
 		[showModal, setShowModal] = useState(false);
 
-	useEffect(()=>{
+	useEffect( ()=>{
+
+		console.log("Inside useEffect")
 
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
 
-		axios.get("http://localhost:9000/doubt/all",{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
+		 axios.get("http://localhost:9000/doubt/all",{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
 		.then((data)=>{
 			console.log(data.data);
 			setDoubts(data.data);
+			
 		})
 		.catch((err)=>{console.log("Unable to Fetch Doubts"); console.log(err)});
 
+		console.log("At end")
 
-		// Fetch doubts already requested by this debugger
+
 		
+	},[active,topic,requested,solvingNow,sort]);
+
+	// TO Fetch all the doubts  which are already requested by debugger
+	useEffect(()=>{
+		let userId=window.localStorage.getItem("userId")
+
 		axios.get("http://localhost:9000/debugger/profile/"+userId)
 		.then( 
 			data=>{
@@ -43,9 +53,8 @@ function DebuggerHome() {
 				 setRequestedDoubts(data.data.requestedDoubts);
 			}
 		)
-		.catch(err=>{console.log(err)});     
-		
-	},[active,topic,requested,solvingNow,sort]);
+		.catch(err=>{console.log(err)}); 
+	},[])
 
 	
 	
@@ -93,11 +102,7 @@ function DebuggerHome() {
 
 						})}
 
-						{/* {solvingNow && doubts.map(doubt=>
-						{
-
-						return  <StudentDoubtCard doubtInfo={doubt}/>
-						})} */}
+						
 
 
 					</div>

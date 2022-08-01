@@ -33,7 +33,7 @@ function EditDoubt() {
 
 
 	const [language, setLanguage] = useState(topics[1]),
-		[price, setPrice] = useState(),
+		[price, setPrice] = useState(null),
 
 		[screenshot, setScreenshot] = useState(null),
 		[shortDesc, setShortDesc] = useState(""),

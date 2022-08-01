@@ -18,7 +18,7 @@ function StudentDoubtCard({doubtInfo}) {
 
 			toast('Deleted Successfully', {
 				position: "bottom-right",
-				autoClose: 2000,
+				autoClose: 1500,
 				hideProgressBar: true,
 				closeOnClick: true,
 				pauseOnHover: true,

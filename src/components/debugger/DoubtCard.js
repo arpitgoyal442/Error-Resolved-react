@@ -4,13 +4,20 @@ import ReactLoading from "react-loading";
 import Modal from "react-modal";
 import { useState } from "react";
 import DoubtModal from "./DoubtModal.js";
+import axios from "axios";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 Modal.setAppElement("#root");
 
 function DoubtCard(props) {
-	const [modal, setModal] = useState(false);
 
-	console.log("props passed are");
-	console.log(props.isRequested);
+	const [modal, setModal] = useState(false);
+	const [Requested,setRequested]=useState(props.isRequested);
+
+	
 
 	const OnModal = () => {
 		setModal(true);
@@ -22,11 +29,52 @@ function DoubtCard(props) {
 
 	const makeRequest=()=>{
 
-		if(props.isRequested)
-		alert("Already Requested");
+
+		if(Requested)
+		{
+			toast.info('Already Requested Kindly wait for response', {
+				position: "bottom-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+			
+				theme:'dark'
+				});
+		}
 
 		else {
-			//make a request here
+			let debuggerId=window.localStorage.getItem("userId");
+			let doubtId=props.aboutDoubt._id;
+			let studentId=props.aboutDoubt.studentId;
+
+			axios.post("http://localhost:9000/debugger/request/"+debuggerId,{doubtId:doubtId,studentId:studentId})
+			.then((data)=>{
+
+				toast('Requested Successfully ', {
+					position: "bottom-right",
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+				
+					theme:'dark'
+					});
+
+					setRequested(true);
+				 
+				console.log("Successfull request");
+				console.log(data);
+			})
+			.catch((err)=>{
+
+				console.log("Error in request");
+				console.log(err);
+
+			})
+			
 		}
 
 	}
@@ -34,13 +82,14 @@ function DoubtCard(props) {
 	const openDoubt=()=>{
 
 		window.open("http://localhost:3000/debugger/doubt/"+props.aboutDoubt._id)
-		// window.location.href="http://localhost:3000/debugger/doubt/"+props.aboutDoubt._id
+		
 	}
 
 	return (
 		<div className="doubtCard">
 			<div className="doubtCard_navbar">
-				{/* <p>Active</p> */}
+			
+				
 				<ReactLoading
 					type={props.aboutDoubt.status=== "active" ? "blank" : "bars"}
 					color="gray"
@@ -50,6 +99,7 @@ function DoubtCard(props) {
 				<h2>{props.aboutDoubt.topic}</h2>
 				<p>{props.aboutDoubt.postedTime}</p>
 			</div>
+			<ToastContainer />
 
 			<div className="doubtCard_body">
 				<div>
@@ -68,7 +118,7 @@ function DoubtCard(props) {
 					View
 				</button>
 
-				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
+				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{Requested?"Requested":"Request"}</button>}
 				{props.solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
 			</div>
 
