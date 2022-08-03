@@ -4,6 +4,7 @@ const topics = [
 	"C",
 	"c#",
 	"Node.js",
+	"Javascript",
 	
 	"Ruby",
 	"Python",

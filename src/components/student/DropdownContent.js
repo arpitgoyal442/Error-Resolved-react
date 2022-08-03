@@ -5,7 +5,11 @@ import NotificationModal from "./NotificationModal";
 
 Modal.setAppElement("#root");
 
-function DropdownContent({ closeDropdown }) {
+function DropdownContent({ closeDropdown,notification }) {
+
+	console.log("Notification is");
+	console.log(notification);
+
 	const [modal, setModal] = useState(false);
 	const onModal = () => {
 		closeDropdown();
@@ -17,7 +21,9 @@ function DropdownContent({ closeDropdown }) {
 	return (
 		<div>
 			<p id="notificationTile" onClick={onModal}>
-				<b>Dhruv Pasricha</b> Is requesting to solve Java Doubt
+				
+				{notification.message}
+				
 			</p>
 			<hr />
 			<Modal
@@ -47,7 +53,7 @@ function DropdownContent({ closeDropdown }) {
 					},
 				}}
 			>
-				<NotificationModal offModal={offModal} />
+				<NotificationModal debuggerInfo={notification.debuggerData}  offModal={offModal} />
 			</Modal>
 
 			{/*  */}

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,6 +34,9 @@ const topics = [
 ];
 
 function Add() {
+
+	const navigate=useNavigate();
+	
 	
 	const [language, setLanguage] = useState(topics[0]),
 		[price, setPrice] = useState(),
@@ -105,7 +109,7 @@ function Add() {
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				onClose:(e)=>{  window.location.replace("http://localhost:3000/student")},
+				onClose:(e)=>{navigate('/student') },
 				theme:"dark"
 				});
 

@@ -6,35 +6,48 @@ import DoubtCard from "../../components/student/DoubtCard";
 import { useEffect } from "react";
 import axios from "axios";
 
+
+
 function StudentHome() {
+
+	
+
 	const [status, setStatus] = useState(1);
 	// 1 -> all, 2 -> pending, 3 -> unresolved, 4 -> resolved
 	const [filter, setFilter] = useState(1);
 
-	const [allDoubts,setAllDoubts]=useState([]);
 
+
+	const [allDoubts,setAllDoubts]=useState([]);
+	const [notifications,setNotifications]=useState([]);
+	const [imageUrl,setImageUrl]=useState("");
+
+
+
+
+
+	// To fetch All Doubts of Students
 	useEffect(()=>{
 
 		let studentId=window.localStorage.getItem("userId");
-
 		axios.get("http://localhost:9000/student/doubts/"+studentId)
 		.then((data)=>{
 
 			setAllDoubts(data.data);
-			console.log(data.data);
-
 		})
 		.catch((err)=>{console.log(err)})
-
 	},[])
+
+
+
 
 	return (
 		<>
-			<Navbar />
+			<Navbar  notifications={notifications} imageUrl={imageUrl} />
 			<main className="studentHome">
 				{/* mobile-view options panel */}
 				<div className="studentMobile">
-					<Link to="/student/new-doubt">
+					<Link to="/student/new-doubt" >
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
@@ -49,7 +62,7 @@ function StudentHome() {
 				</div>
 				{/* left */}
 				<div className="studentLeft">
-				<Link to="/student/new-doubt">
+				<Link to="/student/new-doubt" >
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>

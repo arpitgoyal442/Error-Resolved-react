@@ -1,8 +1,12 @@
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom"
 
 
 function Signin() {
+
+	const navigate=useNavigate();
+
 	const img_style = {
 		height: "505px",
 		width: "600px",
@@ -18,13 +22,17 @@ function Signin() {
 
 		console.log(data);
 
+		let userdata=data.profileObj;
+
 		const userData={
-			email:data.email,
-			name:data.name,
-			img:data.imageUrl,
+			email:userdata.email,
+			name:userdata.name,
+			img:userdata.imageUrl,
 			userType:2
 
 		}
+
+		console.log(userData);
 
 		// Make post request
 		axios.post('http://localhost:9000/login', userData)
@@ -34,9 +42,14 @@ function Signin() {
 			resdata=>{
 
 				console.log(resdata.data);
-				window.localStorage.setItem("userId",resdata.data);
+				
+				window.localStorage.setItem("userId",resdata.data._id);
 				window.localStorage.setItem("userType",2);
-				window.location.href="http://localhost:3000/debugger"
+				
+				navigate("/debugger");
+
+				console.log("User data: ");
+				console.log(resdata);
 			
 			}
 			
@@ -52,26 +65,35 @@ function Signin() {
 
 	const loginSuccessStudent=(data)=>{
 
-		console.log(data);
+
+		let userdata=data.profileObj;
+
 		const userData={
-			email:data.email,
-			name:data.name,
-			img:data.imageUrl,
+			email:userdata.email,
+			name:userdata.name,
+			img:userdata.imageUrl,
 			userType:1
 
 		}
+
+
+		
 
 		// Make post request
 		axios.post('http://localhost:9000/login', userData)
 		.then(
 
 
+
 			resdata=>{
 
+				
+
 				console.log(resdata.data);
-				window.localStorage.setItem("userId",resdata.data);
+				window.localStorage.setItem("userId",resdata.data._id);
 				window.localStorage.setItem("userType",1);
-				window.location.href="http://localhost:3000/student";
+				
+				navigate('/student');
 			
 			
 			

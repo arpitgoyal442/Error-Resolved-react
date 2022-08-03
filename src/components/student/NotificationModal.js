@@ -1,13 +1,13 @@
 import StarFilled from "@heroicons/react/solid/StarIcon";
 import StarEmpty from "@heroicons/react/outline/StarIcon";
 
-function notificationHandle() {
+function notificationHandle({debuggerInfo}) {
 	return (
 		<div className="notificationHandle">
 			<div className="notificationHandle_header">
 				<img src="/userimg.jpg" alt="" />
 				<div className="notificationHandle_header_right">
-					<h1>Dhruv Pasricha  
+					<h1>{debuggerInfo.name}
 					<div>
 							<StarFilled className="h-6 w-6 text-yellow-400 star" />
 							<StarFilled className="h-6 w-6 text-yellow-400 star" />

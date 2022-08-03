@@ -14,8 +14,13 @@ Modal.setAppElement("#root");
 
 function DoubtCard(props) {
 
+
+	console.log(props.aboutDoubt._id+"is in doubtCard ");
+
+
+
 	const [modal, setModal] = useState(false);
-	const [Requested,setRequested]=useState(props.isRequested);
+	
 
 	
 
@@ -30,7 +35,7 @@ function DoubtCard(props) {
 	const makeRequest=()=>{
 
 
-		if(Requested)
+		if(props.isRequested)
 		{
 			toast.info('Already Requested Kindly wait for response', {
 				position: "bottom-right",
@@ -52,6 +57,8 @@ function DoubtCard(props) {
 			axios.post("http://localhost:9000/debugger/request/"+debuggerId,{doubtId:doubtId,studentId:studentId})
 			.then((data)=>{
 
+				
+
 				toast('Requested Successfully ', {
 					position: "bottom-right",
 					autoClose: 1500,
@@ -63,7 +70,7 @@ function DoubtCard(props) {
 					theme:'dark'
 					});
 
-					setRequested(true);
+					
 				 
 				console.log("Successfull request");
 				console.log(data);
@@ -118,7 +125,7 @@ function DoubtCard(props) {
 					View
 				</button>
 
-				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{Requested?"Requested":"Request"}</button>}
+				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
 				{props.solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
 			</div>
 

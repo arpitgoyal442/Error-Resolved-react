@@ -5,19 +5,59 @@ import UserIcon from "@heroicons/react/outline/UserIcon"
 
 import DropdownContent from "./student/DropdownContent";
 import { GoogleLogout } from 'react-google-login';
+import axios from "axios";
 
 
 
 
 function Navbar() {
 
+	const [allNotifications, setAllNotifications] = useState([]);
+	const [imageUrl, setImageUrl] = useState([]);
+
+
+
 	const [profileDropdown, setProfileDropdown] = useState(false);
 	const [showNotification, setNotification] = useState(false),
 		navRef = useRef(null);
+
+	useEffect(() => {
+
+		let userType = window.localStorage.getItem("userType");
+		let userId = window.localStorage.getItem("userId");
+		let fetchUrl = "";
+		if (userType == 1)
+			fetchUrl = "http://localhost:9000/student/profile/" + userId;
+
+		else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
+
+		axios.get(fetchUrl)
+			.then((data) => {
+
+
+				console.log(data.data);
+
+
+				setAllNotifications(data.data.notifications);
+				setImageUrl(data.data.imageUrl);
+
+				console.log(allNotifications);
+				console.log(imageUrl)
+
+			})
+			.catch((err) => {
+
+				console.log(err);
+
+			})
+
+	}, [])
+
 	useEffect(() => {
 		const unsubscribe = window.addEventListener("scroll", handleScroll);
 		return unsubscribe;
 	}, [])
+
 	const handleScroll = () => {
 		if (window.scrollY > 0) navRef?.current?.classList?.add("navbar_shadow");
 		else navRef?.current?.classList?.remove("navbar_shadow");
@@ -57,19 +97,17 @@ function Navbar() {
 						className="dropdown-content "
 						style={{ display: showNotification ? "block" : "none" }}
 					>
+
+
+
 						<ul>
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
-							<DropdownContent closeDropdown={() => setNotification(false)} />
+							{/* <DropdownContent closeDropdown={() => setNotification(false)} /> */}
+							{allNotifications.map((notification,index) => {
+
+								return <li><DropdownContent key={index} notification={notification} closeDropdown={() => setNotification(false)} /></li>
+
+							})}
+
 						</ul>
 					</div>
 				</div>
@@ -81,7 +119,7 @@ function Navbar() {
 					}} className=" navbar_profile">
 
 
-						<img src="/profile_img.jpeg" alt="profile" />
+						<img src={imageUrl} alt="profile" />
 
 					</div>
 
@@ -95,7 +133,7 @@ function Navbar() {
 									clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
 									// buttonText="Logout"
 									render={renderProps => (
-										<button onClick={renderProps.onClick} disabled={renderProps.disabled}><span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon"/> </span> Logout </button>
+										<button onClick={renderProps.onClick} disabled={renderProps.disabled}><span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon" /> </span> Logout </button>
 									)}
 									onLogoutSuccess={onLogout}
 								>

@@ -5,10 +5,14 @@ import { useState,useEffect } from "react";
 import Filters from "../../components/debugger/Filters";
 import axios from "axios";
 import StudentDoubtCard from "../../components/student/DoubtCard.js";
+import {useLocation} from "react-router-dom";
 
 
 
 function DebuggerHome() {
+
+
+	const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
 
 	
 
@@ -21,6 +25,9 @@ function DebuggerHome() {
 		[topic, setTopic] = useState([]),
 		[showModal, setShowModal] = useState(false);
 
+	
+
+
 	useEffect( ()=>{
 
 		console.log("Inside useEffect")
@@ -31,13 +38,13 @@ function DebuggerHome() {
 		 axios.get("http://localhost:9000/doubt/all",{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
 		.then((data)=>{
 			console.log(data.data);
+
+			// Pending : Remove Doubts which are posted by this debugger(when he was loggedin as student)
+             
 			setDoubts(data.data);
 			
 		})
 		.catch((err)=>{console.log("Unable to Fetch Doubts"); console.log(err)});
-
-		console.log("At end")
-
 
 		
 	},[active,topic,requested,solvingNow,sort]);
@@ -54,13 +61,13 @@ function DebuggerHome() {
 			}
 		)
 		.catch(err=>{console.log(err)}); 
-	},[])
+	},[requested])
 
 	
 	
 	return (
 		<>
-			<Navbar />
+			<Navbar  />
 			<div className="debuggerHome">
 				<Filters
 					sort={sort}
@@ -92,10 +99,12 @@ function DebuggerHome() {
 
 
                          
-						{    doubts.map(doubt=>{
+						{    doubts.map( (doubt,index)=>{
 
                              
-							return <DoubtCard aboutDoubt={doubt}
+							return <DoubtCard  aboutDoubt={doubt}
+							
+							  key={index}  
 							 isRequested={  ( requestedDoubts.includes(doubt._id) )?true:false }
 							  solvingNow={(doubt.debuggerId===window.localStorage.getItem("userId"))?true:false}
 							   />

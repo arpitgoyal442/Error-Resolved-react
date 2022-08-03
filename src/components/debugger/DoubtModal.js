@@ -9,6 +9,7 @@ function modal({doubtInfo}){
         <div className="modal">
 
 
+
              <h2 className="doubt_modal_studentname">Arpit Goyal <span>
 							<StarFilled className="h-6 w-6 text-darkgray-400 star" />
 							<StarFilled className="h-6 w-6 text-darkgray-400 star" />
