@@ -15,13 +15,18 @@ function Navbar() {
 	const [allNotifications, setAllNotifications] = useState([]);
 	const [imageUrl, setImageUrl] = useState([]);
 
+	const [userData,setUserData]=useState();
+
 
 
 	const [profileDropdown, setProfileDropdown] = useState(false);
 	const [showNotification, setNotification] = useState(false),
+	
 		navRef = useRef(null);
 
-	useEffect(() => {
+	useEffect( () => {
+
+		console.log("inside useeff")
 
 		let userType = window.localStorage.getItem("userType");
 		let userId = window.localStorage.getItem("userId");
@@ -31,18 +36,24 @@ function Navbar() {
 
 		else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
 
-		axios.get(fetchUrl)
-			.then((data) => {
+		 axios.get(fetchUrl)
+			.then(  (data) => {
 
-
-				console.log(data.data);
-
+                
 
 				setAllNotifications(data.data.notifications);
 				setImageUrl(data.data.imageUrl);
 
-				console.log(allNotifications);
-				console.log(imageUrl)
+				let uData={
+
+					userId:data.data._id,
+					userName:data.data.name
+				}
+
+				setUserData(uData);
+				
+
+
 
 			})
 			.catch((err) => {
@@ -102,9 +113,9 @@ function Navbar() {
 
 						<ul>
 							{/* <DropdownContent closeDropdown={() => setNotification(false)} /> */}
-							{allNotifications.map((notification,index) => {
+							{ allNotifications.map((notification,index) => {
 
-								return <li><DropdownContent key={index} notification={notification} closeDropdown={() => setNotification(false)} /></li>
+								return <li><DropdownContent key={index} notification={notification} userData={userData} closeDropdown={() => setNotification(false)} /></li>
 
 							})}
 

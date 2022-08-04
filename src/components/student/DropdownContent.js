@@ -5,7 +5,9 @@ import NotificationModal from "./NotificationModal";
 
 Modal.setAppElement("#root");
 
-function DropdownContent({ closeDropdown,notification }) {
+function DropdownContent({ closeDropdown,notification , userData }) {
+
+	let userType=window.localStorage.getItem("userType");
 
 	console.log("Notification is");
 	console.log(notification);
@@ -26,7 +28,9 @@ function DropdownContent({ closeDropdown,notification }) {
 				
 			</p>
 			<hr />
-			<Modal
+			
+
+			{userType==1 && <   Modal
 				isOpen={modal}
 				onRequestClose={offModal}
 				shouldCloseOnOverlayClick={true}
@@ -53,8 +57,11 @@ function DropdownContent({ closeDropdown,notification }) {
 					},
 				}}
 			>
-				<NotificationModal debuggerInfo={notification.debuggerData}  offModal={offModal} />
-			</Modal>
+				<NotificationModal studentInfo={userData} debuggerInfo={notification.debuggerData} doubtInfo={notification.doubtData} offModal={offModal} />
+			</Modal> }
+
+
+			
 
 			{/*  */}
 		</div>

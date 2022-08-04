@@ -1,11 +1,35 @@
 import StarFilled from "@heroicons/react/solid/StarIcon";
 import StarEmpty from "@heroicons/react/outline/StarIcon";
+import axios from "axios";
 
-function notificationHandle({debuggerInfo}) {
+function notificationHandle({debuggerInfo,doubtInfo,studentInfo}) {
+
+
+	let onAccept=()=>{
+
+		let dataToSend={
+
+			debuggerId:debuggerInfo._id,
+			doubtId:doubtInfo._id,
+			doubtTopic:doubtInfo.topic,
+			studentId:studentInfo.userId,
+			studentName:studentInfo.userName
+
+		}
+
+		axios.post("http://localhost:9000/student/acceptrequest",dataToSend)
+		.then((data)=>{console.log(data)})
+		.catch((err)=>{console.log(err)});
+
+
+	}
+
+
+
 	return (
 		<div className="notificationHandle">
 			<div className="notificationHandle_header">
-				<img src="/userimg.jpg" alt="" />
+				<img src={debuggerInfo.imageUrl} alt="" />
 				<div className="notificationHandle_header_right">
 					<h1>{debuggerInfo.name}
 					<div>
@@ -24,7 +48,7 @@ function notificationHandle({debuggerInfo}) {
 							<b>Speciality :</b> Java , c++ , Competitive programming
 						</p>
 						<p>
-							<b>Total doubts solved:</b> 56
+							<b>Total doubts solved:</b> {debuggerInfo.doubtsSolved.length}
 						</p>
 					</div>
 				</div>
@@ -32,19 +56,16 @@ function notificationHandle({debuggerInfo}) {
 			<hr />
 
 			<div className="notificationHandle_body">
-				<h2>Doubt Description:</h2>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-					ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-					ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-					sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-					est laborum.
-				</p>
+				
+				
+					<h1>{doubtInfo.topic}</h1>
+					<br />
+					{doubtInfo.longDescription}
+				
 			</div>
 
 			<div className="notificationHandle_footer">
-				<button >Accept</button>
+				<button onClick={onAccept} >Accept</button>
 				<button>Decline</button>
 			</div>
 		</div>
