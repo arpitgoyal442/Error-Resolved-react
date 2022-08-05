@@ -9,8 +9,8 @@ function DropdownContent({ closeDropdown,notification , userData }) {
 
 	let userType=window.localStorage.getItem("userType");
 
-	console.log("Notification is");
-	console.log(notification);
+	// console.log("Notification is");
+	// console.log(notification);
 
 	const [modal, setModal] = useState(false);
 	const onModal = () => {

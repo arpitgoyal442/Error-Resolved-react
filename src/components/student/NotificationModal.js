@@ -1,8 +1,13 @@
 import StarFilled from "@heroicons/react/solid/StarIcon";
 import StarEmpty from "@heroicons/react/outline/StarIcon";
 import axios from "axios";
+import {useNavigate} from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function notificationHandle({debuggerInfo,doubtInfo,studentInfo}) {
+function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
+
+	const navigate=useNavigate();
 
 
 	let onAccept=()=>{
@@ -18,7 +23,21 @@ function notificationHandle({debuggerInfo,doubtInfo,studentInfo}) {
 		}
 
 		axios.post("http://localhost:9000/student/acceptrequest",dataToSend)
-		.then((data)=>{console.log(data)})
+		.then((data)=>{console.log(data);
+
+			toast('😀 Accepted Sucessfully', {
+				position: "bottom-right",
+				autoClose: 1000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				onClose:offModal,
+				theme:"dark"
+				});
+
+
+		})
 		.catch((err)=>{console.log(err)});
 
 
@@ -31,6 +50,7 @@ function notificationHandle({debuggerInfo,doubtInfo,studentInfo}) {
 			<div className="notificationHandle_header">
 				<img src={debuggerInfo.imageUrl} alt="" />
 				<div className="notificationHandle_header_right">
+				<ToastContainer/>
 					<h1>{debuggerInfo.name}
 					<div>
 							<StarFilled className="h-6 w-6 text-yellow-400 star" />
@@ -72,4 +92,4 @@ function notificationHandle({debuggerInfo,doubtInfo,studentInfo}) {
 	);
 }
 
-export default notificationHandle;
+export default NotificationHandle;

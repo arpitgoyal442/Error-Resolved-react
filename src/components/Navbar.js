@@ -13,7 +13,7 @@ import axios from "axios";
 function Navbar() {
 
 	const [allNotifications, setAllNotifications] = useState([]);
-	const [imageUrl, setImageUrl] = useState([]);
+	const [imageUrl, setImageUrl] = useState("");
 
 	const [userData,setUserData]=useState();
 
@@ -26,9 +26,9 @@ function Navbar() {
 
 	useEffect( () => {
 
-		console.log("inside useeff")
+		 async function fetchUserProfile(){
 
-		let userType = window.localStorage.getItem("userType");
+			let userType = window.localStorage.getItem("userType");
 		let userId = window.localStorage.getItem("userId");
 		let fetchUrl = "";
 		if (userType == 1)
@@ -36,31 +36,43 @@ function Navbar() {
 
 		else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
 
-		 axios.get(fetchUrl)
-			.then(  (data) => {
 
-                
+		        
 
-				setAllNotifications(data.data.notifications);
-				setImageUrl(data.data.imageUrl);
+		      let userProfile= await axios.get(fetchUrl).catch((err)=>{ return err;});
 
-				let uData={
+			  console.log(userProfile.data);
 
-					userId:data.data._id,
-					userName:data.data.name
-				}
-
-				setUserData(uData);
-				
+			  
 
 
 
-			})
-			.catch((err) => {
+			  setAllNotifications(userProfile.data.notifications);
+			   setImageUrl(userProfile.data.imageUrl);
 
-				console.log(err);
 
-			})
+			 
+
+			   let userData={
+
+						userId:userProfile.data._id,
+						userName:userProfile.data.name
+					}
+	
+					setUserData(userData);
+			 
+
+			  
+
+		 }
+
+		 fetchUserProfile();
+
+		 console.log(imageUrl);
+
+		
+
+			
 
 	}, [])
 
@@ -100,7 +112,7 @@ function Navbar() {
 					<div onClick={() => {
 						showNotification ? setNotification(false) : setNotification(true);
 					}} className="w-8 h-8 relative">
-						<p className="grid place-items-center w-4 h-4 text-xs text-white font-semibold rounded-full bg-highlight absolute top-0 right-0 -translate-y-1/3">2</p>
+						<p className="grid place-items-center w-4 h-4 text-xs text-white font-semibold rounded-full bg-highlight absolute top-0 right-0 -translate-y-1/3">{allNotifications.length}</p>
 						<BellIcon />
 					</div>
 
@@ -112,7 +124,7 @@ function Navbar() {
 
 
 						<ul>
-							{/* <DropdownContent closeDropdown={() => setNotification(false)} /> */}
+							
 							{ allNotifications.map((notification,index) => {
 
 								return <li><DropdownContent key={index} notification={notification} userData={userData} closeDropdown={() => setNotification(false)} /></li>

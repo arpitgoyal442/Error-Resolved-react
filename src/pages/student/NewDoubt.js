@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
+import React from 'react';
 import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -35,6 +36,7 @@ const topics = [
 
 function Add() {
 
+	
 	const navigate=useNavigate();
 	
 	
@@ -65,6 +67,8 @@ function Add() {
 
 
 		console.log(price);
+
+		
 		  
 
 		const doubt={
@@ -102,9 +106,12 @@ function Add() {
 		axios.post("http://localhost:9000/doubt/add",myFormData
 			
 		).then((result)=>{
+
+			
+
 			toast('Added Successfully', {
 				position: "bottom-right",
-				autoClose: 2000,
+				autoClose: 1200,
 				hideProgressBar: true,
 				closeOnClick: true,
 				pauseOnHover: true,
@@ -119,9 +126,10 @@ function Add() {
 
 		}).catch((err)=>{
 
+			
 			toast('Some Error Occured!', {
 				position: "bottom-right",
-				autoClose: 2000,
+				autoClose: 1200,
 				hideProgressBar: true,
 				closeOnClick: true,
 				pauseOnHover: true,
