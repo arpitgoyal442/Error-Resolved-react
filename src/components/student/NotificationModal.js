@@ -15,6 +15,7 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 		let dataToSend={
 
 			debuggerId:debuggerInfo._id,
+			debuggerName:debuggerInfo.name,
 			doubtId:doubtInfo._id,
 			doubtTopic:doubtInfo.topic,
 			studentId:studentInfo.userId,
@@ -68,7 +69,7 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 							<b>Speciality :</b> Java , c++ , Competitive programming
 						</p>
 						<p>
-							<b>Total doubts solved:</b> {debuggerInfo.doubtsSolved.length}
+							<b>Total doubts solved:</b> {debuggerInfo.doubtSolved}
 						</p>
 					</div>
 				</div>

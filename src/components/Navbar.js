@@ -15,64 +15,64 @@ function Navbar() {
 	const [allNotifications, setAllNotifications] = useState([]);
 	const [imageUrl, setImageUrl] = useState("");
 
-	const [userData,setUserData]=useState();
+	const [userData, setUserData] = useState();
 
 
 
 	const [profileDropdown, setProfileDropdown] = useState(false);
 	const [showNotification, setNotification] = useState(false),
-	
+
 		navRef = useRef(null);
 
-	useEffect( () => {
+	useEffect(() => {
 
-		 async function fetchUserProfile(){
+		async function fetchUserProfile() {
 
 			let userType = window.localStorage.getItem("userType");
-		let userId = window.localStorage.getItem("userId");
-		let fetchUrl = "";
-		if (userType == 1)
-			fetchUrl = "http://localhost:9000/student/profile/" + userId;
+			let userId = window.localStorage.getItem("userId");
+			let fetchUrl = "";
+			if (userType == 1)
+				fetchUrl = "http://localhost:9000/student/profile/" + userId;
 
-		else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
-
-
-		        
-
-		      let userProfile= await axios.get(fetchUrl).catch((err)=>{ return err;});
-
-			  console.log(userProfile.data);
-
-			  
+			else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
 
 
 
-			  setAllNotifications(userProfile.data.notifications);
-			   setImageUrl(userProfile.data.imageUrl);
+
+			let userProfile = await axios.get(fetchUrl).catch((err) => { return err; });
+
+			console.log(userProfile.data);
 
 
-			 
 
-			   let userData={
 
-						userId:userProfile.data._id,
-						userName:userProfile.data.name
-					}
-	
-					setUserData(userData);
-			 
 
-			  
+			setAllNotifications(userProfile.data.notifications);
+			setImageUrl(userProfile.data.imageUrl);
 
-		 }
 
-		 fetchUserProfile();
 
-		 console.log(imageUrl);
 
-		
+			let userData = {
 
-			
+				userId: userProfile.data._id,
+				userName: userProfile.data.name
+			}
+
+			setUserData(userData);
+
+
+
+
+		}
+
+		fetchUserProfile();
+
+		console.log(imageUrl);
+
+
+
+
 
 	}, [])
 
@@ -124,8 +124,8 @@ function Navbar() {
 
 
 						<ul>
-							
-							{ allNotifications.map((notification,index) => {
+
+							{allNotifications.map((notification, index) => {
 
 								return <li><DropdownContent key={index} notification={notification} userData={userData} closeDropdown={() => setNotification(false)} /></li>
 
@@ -142,7 +142,7 @@ function Navbar() {
 					}} className=" navbar_profile">
 
 
-						<img src={imageUrl} alt="profile" />
+						<img src={imageUrl}  referrerpolicy="no-referrer" alt="profile" />
 
 					</div>
 

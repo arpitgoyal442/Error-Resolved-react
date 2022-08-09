@@ -1,15 +1,121 @@
-import { EditorState } from "draft-js";
-import {useState} from "react";
-import Document from "../../components/doubtComponents/Document.js";
+import ScreenShare from "../../components/doubtComponents/ScreenShare.js";
 import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
-import Test from "../../components/Test.js"
-import Example from "../test.js";
+import Document from "../../components/doubtComponents/Document.js";
 
-function DoubtPage() {
-	const [codeEditing, setCodeEditing] = useState(false);
-	const [editorState, setEditorState] = useState(EditorState.createEmpty());
-	const [codeString, setCodeString] = useState("\n");
+
+
+import { useLocation } from "react-router-dom";
+
+import io from "socket.io-client";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+
+const socket = io.connect('http://localhost:3000');
+
+const DoubtPage = () => {
+
+	const [message, setMessage] = useState("");
+
+	let { aboutDoubt } = useLocation().state;
+
+	// console.log(aboutDoubt);
+
+	const [allMessages, setAllMessages] = useState([]);
+
+
+
+	useEffect(() => {
+
+		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
+
+			console.log(data.data.chats);
+			setAllMessages(data.data.chats)
+
+
+		}).catch((err) => {
+			console.log(err);
+		})
+
+		       var element = document.getElementsByClassName("doubtPage_messages")[0];
+				console.log(element)
+				element.scrollTop = element.scrollHeight;
+
+	}, [])
+
+
+	// What i want to send message  ->>   DoubtId , DebuggerId, DebuggerName , StudentId , StudentName
+
+
+	let studentId = aboutDoubt.studentId;
+	let studentName = aboutDoubt.studentName;
+	let doubtId = aboutDoubt._id;
+	let debuggerId = window.localStorage.getItem("userId");
+	let debuggerName = window.localStorage.getItem("userName");
+	let time = new Date().toLocaleTimeString();
+	let date = new Date().toLocaleDateString();
+
+
+
+
+
+
+	const sendMessage = () => {
+
+		let newMessage = {
+
+			receiverId: studentId,
+			receiverName: studentName,
+			senderId: debuggerId,
+
+			senderName: debuggerName,
+			message: message,
+			sentTime: time,
+			sentDate: date,
+
+		}
+
+
+
+		console.log(newMessage)
+
+
+		axios.post("http://localhost:9000/doubt/message/" + doubtId, newMessage)
+			.then((data) => {
+
+				console.log("Message Sent Success");
+				console.log(data);
+
+				setMessage("");
+				setAllMessages((pre) => [...pre, newMessage]);
+
+				
+
+				// console.log(element.scrollHeight);
+
+			}).catch((err) => {
+				console.log("Error in sending Message");
+
+				console.log(err);
+			})
+
+			// var element = document.getElementsByClassName("doubtPage_messages")[0];
+			// console.log(element)
+			// element.scrollTo(0,element.scrollHeight );
+
+	}
+
+
+
+
+
+
+
+
+
+
+
 	return (
 		<>
 			<Navbar />
@@ -19,30 +125,11 @@ function DoubtPage() {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">JAVA DOUBT</div>
 						<div className="doubtPage_mainBody">
-							{/* <Document /> */}
-							{codeEditing ? <Test editorState={editorState} setEditorState={setEditorState} setCodeString={setCodeString} codeString={codeString} setCodeEditing={setCodeEditing} /> : <Example codeString={codeString} setCodeEditing={setCodeEditing} />}
+							<Document />
+							{/* <ScreenShare /> */}
 						</div>
 					</div>
-					<div className="left_footer">
-						<span
-							className="iconify-inline"
-							data-icon="wpf:video-call"
-							data-width="30"
-							data-height="30"
-						/>
-						<span
-							className="iconify-inline active"
-							data-icon="wpf:video-call"
-							data-width="30"
-							data-height="30"
-						/>
-						<span
-							className="iconify-inline"
-							data-icon="wpf:video-call"
-							data-width="30"
-							data-height="30"
-						/>
-					</div>
+
 				</div>
 				<div className="right">
 					<div className="doubtPage_chatHead">
@@ -51,48 +138,41 @@ function DoubtPage() {
 					</div>
 					<hr />
 					<div className="doubtPage_messages">
-						<div className="date">{new Date().toLocaleDateString()}</div>
-						<div className="message sender">
+
+						{allMessages.map((message) => {
+
+
+
+
+							// if(message.senderId==window.localStorage.getItem("userId"))
+							return <div className={message.senderId == debuggerId ? "message receiver" : "message sender"}>
+								<h6>{message.senderName}</h6>
+								<p>{message.message}</p>
+								<span className="time">{message.sentTime}</span>
+								<br />
+							</div>;
+
+
+							// else return  
+							// <div className="message receiver">
+							// 	<p>{message.message}</p>
+							// 	<span className="time">{message.sentTime}</span>
+							// </div>
+
+						})}
+
+
+
+						{/* <div className="date">{new Date().toLocaleDateString()}</div> */}
+						{/* <div className="message sender">
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
 							<span className="time">{new Date().toLocaleTimeString()}</span>
 						</div>
-						<div className="message sender">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="date">{new Date().toLocaleDateString()}</div>
+
 						<div className="message receiver">
 							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
 							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message sender">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
-						<div className="message receiver">
-							<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, quas!</p>
-							<span className="time">{new Date().toLocaleTimeString()}</span>
-						</div>
+						</div> */}
 					</div>
 					<div className="sendMessage">
 						<span
@@ -102,13 +182,16 @@ function DoubtPage() {
 							data-height="20"
 						></span>
 						<div className="inputBox">
-							<input className="send" type="text" placeholder="Write message..." />
-							<span
-								className="iconify-inline"
-								data-icon="fluent:send-20-filled"
-								data-width="20"
-								data-height="20"
-							></span>
+							<input value={message} onChange={(e) => { setMessage(e.target.value) }} className="send" type="text" placeholder="Write message..." />
+							<div onClick={sendMessage}>
+								<span
+
+									className="iconify-inline"
+									data-icon="fluent:send-20-filled"
+									data-width="20"
+									data-height="20"
+								></span>
+							</div>
 						</div>
 					</div>
 				</div>

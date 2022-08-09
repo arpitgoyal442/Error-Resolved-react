@@ -6,6 +6,8 @@ import { useState } from "react";
 import DoubtModal from "./DoubtModal.js";
 import axios from "axios";
 
+import {useNavigate} from "react-router-dom";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement("#root");
 
 function DoubtCard(props) {
+
+	const navigate=useNavigate();
 
 
 	console.log(props.aboutDoubt._id+"is in doubtCard ");
@@ -88,7 +92,8 @@ function DoubtCard(props) {
 
 	const openDoubt=()=>{
 
-		window.open("http://localhost:3000/debugger/doubt/"+props.aboutDoubt._id)
+		navigate('/debugger/solve-doubt' ,{state:{aboutDoubt:props.aboutDoubt}});
+		
 		
 	}
 

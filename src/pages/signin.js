@@ -45,6 +45,7 @@ function Signin() {
 				
 				window.localStorage.setItem("userId",resdata.data._id);
 				window.localStorage.setItem("userType",2);
+				window.localStorage.setItem("userName",resdata.data.name);
 				
 				navigate("/debugger");
 
@@ -92,6 +93,7 @@ function Signin() {
 				console.log(resdata.data);
 				window.localStorage.setItem("userId",resdata.data._id);
 				window.localStorage.setItem("userType",1);
+				window.localStorage.setItem("userName",resdata.data.name);
 				
 				navigate('/student');
 			

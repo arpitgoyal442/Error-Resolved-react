@@ -82,6 +82,7 @@ function Add() {
 		console.log(doubt);
 
 		const studentId=window.localStorage.getItem("userId");
+		const studentName=window.localStorage.getItem("userName");
 
 
 
@@ -100,6 +101,7 @@ function Add() {
 		myFormData.append('shortDescription',shortDesc);
 		myFormData.append('longDescription',longDesc);
 		myFormData.append('studentId',studentId);
+		myFormData.append('studentName',studentName);
 
 		console.log(myFormData);
 		

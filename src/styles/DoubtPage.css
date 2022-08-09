@@ -80,7 +80,19 @@
 .doubtPage_messages {
 	padding-top: 0.5rem;
 	height: calc(100vh - var(--navbar-height) - 9.75rem);
-	overflow-y:scroll
+	overflow-y:scroll;
+	
+	
+}
+.doubtPage_messages h5
+{
+	display: inline-block;
+	/* background-color: var(--highlight); */
+
+	/* float: right; */
+	
+	/* color: white; */
+	padding: 2%;
 }
 
 .doubtPage_messages .date {
