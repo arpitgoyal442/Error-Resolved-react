@@ -5,49 +5,106 @@ import Document from "../../components/doubtComponents/Document.js";
 
 import { useLocation } from "react-router-dom";
 
-import io from "socket.io-client";
+
 import { useState } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect,useRef } from "react";
 
-const socket = io.connect('http://localhost:3000');
+
+import { socket } from "../../socket.js";
+
+
+
+
 
 const DoubtPage = () => {
 
-	const [message,setMessage]=useState("");
-	const [allMessages,setAllMessages]=useState([]);
+	const scrollRef=useRef();
 
-	const {aboutDoubt} =useLocation().state;
+	const [message, setMessage] = useState("");
+	const [allMessages, setAllMessages] = useState([]);
+	let { aboutDoubt } = useLocation().state;
+	const [currentUser,setCurentUser]=useState(null);
+	const[arriveMessage,setArriveMessage]=useState(null);
+
+
+
+	useEffect(() => {
+
+		setCurentUser(localStorage.getItem("userId"));
+
+		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
+
+			
+			setAllMessages(data.data.chats);
+
+		}).catch((err) => {
+			console.log(err);
+
+
+		})
+
+		// eslint-disable-next-line
+	}, [])
 
 	useEffect(()=>{
 
-		axios.get("http://localhost:9000/doubt/chats/"+aboutDoubt._id).then((data)=>{
+		if(socket)
+		{
+			socket.emit("add-user",currentUser);
+		}
 
-		console.log(data.data.chats);
-		setAllMessages(data.data.chats)
 
-		
-		}).catch((err)=>{
-			console.log(err);
-		})
+	},[currentUser])
+
+
+
+	useEffect(()=>{
+
+		if(socket)
+		{
+			socket.on("msg-recieve",data=>{
+				setArriveMessage(data);
+			})
+		}
+
+
 
 	},[])
 
-	console.log(aboutDoubt);
+
+	useEffect(()=>{
+
+		arriveMessage && setAllMessages((pre)=>[...pre,arriveMessage])
+
+
+	},[arriveMessage])
+
+
+	useEffect(()=>{
+
+		
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+
+	},[allMessages])
+
+
+
+
+	
 
 	let studentId=aboutDoubt.studentId;
 	let studentName=aboutDoubt.studentName;
 	let doubtId=aboutDoubt._id;
 	let debuggerId=aboutDoubt.debuggerId;
 	let debuggerName=aboutDoubt.debuggerName;
-	let time=new Date().toLocaleTimeString();
-    let date=new Date().toLocaleDateString();
+	
 
 	
 
-	const sendMessage=()=>{
+	const sendMessage=(e)=>{
 
-		
+		e.preventDefault();
 
 		let newMessage={
 
@@ -57,15 +114,12 @@ const DoubtPage = () => {
 			
 			senderName:studentName,
 			message:message,
-			sentTime:time,
-			sentDate:date,
-	
-	
-	
+			sentTime:new Date().toLocaleTimeString(),
+			sentDate:new Date().toLocaleDateString()
 	
 		}
 	
-		console.log(newMessage);
+		
 
 	
 
@@ -74,6 +128,10 @@ const DoubtPage = () => {
 
 			console.log("Message Sent Success");
 			console.log(data);
+			setAllMessages((pre)=>[...pre,newMessage]);
+			socket.emit("send-msg",newMessage.receiverId,newMessage);
+
+			setMessage("");
 
 		}).catch((err)=>{console.log("Error in sending Message");
 
@@ -92,9 +150,9 @@ const DoubtPage = () => {
 			<div className="doubtPage hidden md:grid">
 				<div className="left">
 					<div className="doubtPage_main">
-						<div className="doubtPage_mainHead">JAVA DOUBT</div>
+						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
-							<Document />
+							{/* <Document /> */}
 							{/* <ScreenShare /> */}
 						</div>
 					</div>
@@ -103,18 +161,18 @@ const DoubtPage = () => {
 				<div className="right">
 					<div className="doubtPage_chatHead">
 						<img src="/userimg.jpg" alt="njn" />
-						<p>Dhruv Pasricha</p>
+						<p>{aboutDoubt.debuggerName}</p>
 					</div>
 					<hr />
 					<div className="doubtPage_messages">
 
-						{allMessages.map( ( message)=>{ 
+						{allMessages.map( ( message,index)=>{ 
 
 							
 						
 
 							// if(message.senderId==window.localStorage.getItem("userId"))
-							return  <div  className={message.senderId==studentId?"message receiver":"message sender"}>
+							return  <div ref={scrollRef} key={index}  className={message.senderId==studentId?"message receiver":"message sender"}>
 								<h5>{message.senderName}</h5>
 							<p>{message.message}</p>
 							<span className="time">{message.sentTime}</span>
@@ -138,7 +196,7 @@ const DoubtPage = () => {
 							data-height="20"
 						></span>
 						<div className="inputBox">
-							<input onChange={(e)=>{setMessage(e.target.value)}} className="send" type="text" placeholder="Write message..." />
+							<input value={message} onChange={(e)=>{setMessage(e.target.value)}} className="send" type="text" placeholder="Write message..." />
 							<div onClick={sendMessage}>
 							<span 
 								className="iconify-inline"

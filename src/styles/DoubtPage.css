@@ -83,15 +83,14 @@
 	overflow-y:scroll;
 	
 	
+	
 }
+
+
 .doubtPage_messages h5
 {
 	display: inline-block;
-	/* background-color: var(--highlight); */
-
-	/* float: right; */
 	
-	/* color: white; */
 	padding: 2%;
 }
 

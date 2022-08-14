@@ -41,7 +41,7 @@ function Navbar() {
 
 			let userProfile = await axios.get(fetchUrl).catch((err) => { return err; });
 
-			console.log(userProfile.data);
+			// console.log(userProfile.data);
 
 
 
@@ -127,7 +127,7 @@ function Navbar() {
 
 							{allNotifications.map((notification, index) => {
 
-								return <li><DropdownContent key={index} notification={notification} userData={userData} closeDropdown={() => setNotification(false)} /></li>
+								return <li key={index}><DropdownContent   notification={notification} userData={userData} closeDropdown={() => setNotification(false)} /></li>
 
 							})}
 
@@ -142,7 +142,7 @@ function Navbar() {
 					}} className=" navbar_profile">
 
 
-						<img src={imageUrl}  referrerpolicy="no-referrer" alt="profile" />
+						<img src={imageUrl}  referrerPolicy="no-referrer"  alt="profile" />
 
 					</div>
 

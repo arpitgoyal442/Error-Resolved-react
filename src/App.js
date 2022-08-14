@@ -1,4 +1,5 @@
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Signin from "./pages/signin.js";
@@ -8,6 +9,7 @@ import AddNewDoubt from "./pages/student/NewDoubt.js";
 import StudentDoubtPage from "./pages/student/DoubtPage.js";
 import Test from "./components/Test.js";
 import Profile from "./pages/Profile.js";
+import Once from "./components/Once.js";
 
 import DebuggerDoubtPage from "./pages/debugger/DoubtPage.js";
 import StudentEditDoubt from "./pages/student/EditDoubt.js";
@@ -38,29 +40,11 @@ import "./styles/test.css";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 
-// Socket.io **START
-
-import {io} from "socket.io-client";
-const socket=io("http://localhost:5000");
-
-socket.on("connect",()=>{
-
-	console.log(socket.id);
 
 
-});
-
-socket.emit("chat",{name:"arpro"});
-
-socket.on("chat",(payload)=>{
-
-	console.log(payload);
-})
-
-
-// Socket.io **END
 
 function App() {
+
 	useEffect(() => {
 		const start = () => {
 			gapi.client.init({
@@ -70,7 +54,9 @@ function App() {
 		};
 		gapi.load("client:auth2", start);
 	});
+	
 	return (
+		
 		<BrowserRouter>
 			<Routes>
 				<Route exact path="/" element={<Signin />} />
@@ -83,12 +69,15 @@ function App() {
 				<Route exact path="/student/solve-doubt" element={<StudentDoubtPage />} />
 				<Route exact path="/student/edit-doubt" element={<StudentEditDoubt />} />
 				<Route exact path="/test" element={<Test />} />
+				<Route exact path="/once" element={<Once />}/>
 			</Routes>
 		</BrowserRouter>
+		
 	);
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
 
-export default App;
+export  default App;
+

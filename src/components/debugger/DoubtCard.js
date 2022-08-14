@@ -19,7 +19,7 @@ function DoubtCard(props) {
 	const navigate=useNavigate();
 
 
-	console.log(props.aboutDoubt._id+"is in doubtCard ");
+	// console.log(props.aboutDoubt._id+"is in doubtCard ");
 
 
 

@@ -12,6 +12,12 @@ import {useLocation} from "react-router-dom";
 function DebuggerHome() {
 
 
+	useEffect(()=>{
+
+		console.log("Only Once from Home");
+	},[]);
+
+
 	const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
 
 	
