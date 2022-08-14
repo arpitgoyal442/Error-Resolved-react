@@ -3,6 +3,8 @@ import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
 import Document from "../../components/doubtComponents/Document.js";
 
+import { useNavigate } from "react-router-dom";
+
 
 
 import { useLocation } from "react-router-dom";
@@ -27,6 +29,8 @@ const DoubtPage = () => {
 	let { aboutDoubt } = useLocation().state;
 	const [currentUser,setCurentUser]=useState(null);
 	const[arriveMessage,setArriveMessage]=useState(null);
+
+	
 
 
 

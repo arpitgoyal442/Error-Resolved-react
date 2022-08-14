@@ -5,20 +5,18 @@ import { useState,useEffect } from "react";
 import Filters from "../../components/debugger/Filters";
 import axios from "axios";
 import StudentDoubtCard from "../../components/student/DoubtCard.js";
-import {useLocation} from "react-router-dom";
+import { socket } from "../../socket.js";
+
 
 
 
 function DebuggerHome() {
 
 
-	useEffect(()=>{
-
-		console.log("Only Once from Home");
-	},[]);
+	
 
 
-	const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
+	// const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
 
 	
 
@@ -29,14 +27,15 @@ function DebuggerHome() {
 		[active, setActive] = useState(0),
 		[requested, setRequested] = useState(0),
 		[topic, setTopic] = useState([]),
-		[showModal, setShowModal] = useState(false);
+		[showModal, setShowModal] = useState(false),
+		[deletedDoubts,setDeletedDoubts]=useState([]);
 
 	
 
 
 	useEffect( ()=>{
 
-		console.log("Inside useEffect")
+		
 
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
@@ -68,6 +67,30 @@ function DebuggerHome() {
 		)
 		.catch(err=>{console.log(err)}); 
 	},[requested])
+
+
+	useEffect(()=>{
+
+		console.log("inside socket useEffect");
+
+		if(socket)
+		{
+			console.log("inside use effect "+socket)
+			socket.on("deleted-doubt",(doubtInfo)=>{
+
+				console.log("deleted-Doubt socket received");
+				console.log(doubtInfo);
+
+				setDeletedDoubts((pre)=>[...pre,doubtInfo._id]);
+
+			
+
+				
+
+			})
+		}
+
+	},[]);
 
 	
 	
@@ -107,13 +130,17 @@ function DebuggerHome() {
                          
 						{    doubts.map( (doubt,index)=>{
 
+							if(deletedDoubts.includes(doubt._id)==false)
+							{
+
                              
-							return <DoubtCard  aboutDoubt={doubt}
+							 return <DoubtCard  aboutDoubt={doubt}
 							
 							  key={index}  
 							 isRequested={  ( requestedDoubts.includes(doubt._id) )?true:false }
 							  solvingNow={(doubt.debuggerId===window.localStorage.getItem("userId"))?true:false}
 							   />
+							}
 
 						})}
 

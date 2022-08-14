@@ -1,12 +1,17 @@
 
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { socket } from "../../socket";
+
 
 function StudentDoubtCard({doubtInfo}) {
+
+	
 
 
 	const onDeleteClick=()=>{
@@ -15,15 +20,16 @@ function StudentDoubtCard({doubtInfo}) {
 		.then(()=>{
 
 
+			socket.emit("delete-doubt",doubtInfo);
 
 			toast('Deleted Successfully', {
 				position: "bottom-right",
-				autoClose: 1500,
+				autoClose: 1000,
 				hideProgressBar: true,
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				onClose:()=>{window.location.href="http://localhost:3000/student"; },
+				
 				theme:"dark"
 				});
 

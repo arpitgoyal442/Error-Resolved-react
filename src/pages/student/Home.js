@@ -5,6 +5,7 @@ import PlusIcon from "@heroicons/react/solid/PlusIcon";
 import DoubtCard from "../../components/student/DoubtCard";
 import { useEffect } from "react";
 import axios from "axios";
+import { socket } from "../../socket";
 
 
 
@@ -21,6 +22,7 @@ function StudentHome() {
 	const [allDoubts,setAllDoubts]=useState([]);
 	const [notifications,setNotifications]=useState([]);
 	const [imageUrl,setImageUrl]=useState("");
+	const [deletedDoubts,setDeletedDoubts]=useState([]);
 
 
 
@@ -36,6 +38,30 @@ function StudentHome() {
 			setAllDoubts(data.data);
 		})
 		.catch((err)=>{console.log(err)})
+	},[])
+
+	useEffect(()=>{
+
+		
+
+		if(socket)
+		{
+			
+			socket.on("deleted-doubt",(doubtInfo)=>{
+
+				// console.log("deleted-Doubt socket received");
+				// console.log(doubtInfo);
+
+				setDeletedDoubts((pre)=>[...pre,doubtInfo._id]);
+
+			
+
+				
+
+			})
+		}
+
+
 	},[])
 
 
@@ -99,8 +125,14 @@ function StudentHome() {
 				<div className="studentRight">
 					<div className="doubtCards">
 
-						{allDoubts.map((doubt)=>{
-							return <DoubtCard doubtInfo={doubt} />
+						{allDoubts.map((doubt,index)=>{
+
+							if(deletedDoubts.includes(doubt._id)==false)
+							{
+							  return <DoubtCard  key={index} doubtInfo={doubt} />
+							}
+
+							
 						})}
 
 
