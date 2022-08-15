@@ -41,24 +41,15 @@ function StudentHome() {
 	},[])
 
 	useEffect(()=>{
-
-		
-
 		if(socket)
 		{
 			
 			socket.on("deleted-doubt",(doubtInfo)=>{
-
-				// console.log("deleted-Doubt socket received");
-				// console.log(doubtInfo);
-
 				setDeletedDoubts((pre)=>[...pre,doubtInfo._id]);
+			});
+
 
 			
-
-				
-
-			})
 		}
 
 

@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import { socket } from "../../socket";
 
 
 const topics = [
@@ -38,6 +41,8 @@ function Add() {
 
 	
 	const navigate=useNavigate();
+
+	
 	
 	
 	const [language, setLanguage] = useState(topics[0]),
@@ -64,12 +69,6 @@ function Add() {
 
 				return;
 		}
-
-
-		console.log(price);
-
-		
-		  
 
 		const doubt={
 			language:language,
@@ -110,6 +109,7 @@ function Add() {
 		).then((result)=>{
 
 			
+			socket.emit("add-doubt",result.data);
 
 			toast('Added Successfully', {
 				position: "bottom-right",
@@ -122,9 +122,13 @@ function Add() {
 				theme:"dark"
 				});
 
+				console.log(result);
+
 				
 
-			console.log(result);
+				
+
+			
 
 		}).catch((err)=>{
 

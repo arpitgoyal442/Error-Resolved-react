@@ -14,6 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect,useRef } from "react";
 import { socket } from "../../socket.js";
+import { Icon } from '@iconify/react';
 
 
 
@@ -153,6 +154,9 @@ const DoubtPage = () => {
 
 	}
 
+
+	
+
 	    
 
 	return (
@@ -199,12 +203,7 @@ const DoubtPage = () => {
 
 					</div>
 					<div className="sendMessage">
-						<span
-							className="iconify-inline"
-							data-icon="akar-icons:attach"
-							data-width="20"
-							data-height="20"
-						></span>
+						
 						<div className="inputBox">
 							<input   value={message} onChange={(e) => { setMessage(e.target.value) }} className="send" type="text" placeholder="Write message..." />
 							<div  onClick={sendMessage}>
@@ -216,6 +215,7 @@ const DoubtPage = () => {
 									data-height="20"
 								></span>
 							</div>
+							
 						</div>
 					</div>
 				</div>

@@ -29,14 +29,12 @@ function DebuggerHome() {
 		[topic, setTopic] = useState([]),
 		[showModal, setShowModal] = useState(false),
 		[deletedDoubts,setDeletedDoubts]=useState([]);
+		
 
 	
 
 
 	useEffect( ()=>{
-
-		
-
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
 
@@ -71,26 +69,28 @@ function DebuggerHome() {
 
 	useEffect(()=>{
 
-		console.log("inside socket useEffect");
+		
 
 		if(socket)
 		{
-			console.log("inside use effect "+socket)
+			// To get doubt deletion updates
 			socket.on("deleted-doubt",(doubtInfo)=>{
-
-				console.log("deleted-Doubt socket received");
-				console.log(doubtInfo);
-
 				setDeletedDoubts((pre)=>[...pre,doubtInfo._id]);
+			});
 
-			
 
-				
-
+			// To Added newly added doubt Live 
+			socket.on("added-doubt",(doubt)=>{
+				setDoubts((pre)=>[...pre,doubt]);
 			})
+
+
+
 		}
 
 	},[]);
+
+
 
 	
 	
@@ -124,8 +124,6 @@ function DebuggerHome() {
 						setTopic={setTopic}
 					/>
 					<div onClick={() => setShowModal(true)} className="debuggerHome_doubtsContainer">
-
-
 
                          
 						{    doubts.map( (doubt,index)=>{

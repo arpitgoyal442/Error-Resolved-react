@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect,useRef } from "react";
+import { Icon } from '@iconify/react';
 
 
 import { socket } from "../../socket.js";
@@ -152,7 +153,7 @@ const DoubtPage = () => {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
-							{/* <Document /> */}
+							<Document />
 							{/* <ScreenShare /> */}
 						</div>
 					</div>
@@ -189,12 +190,7 @@ const DoubtPage = () => {
 						
 					</div>
 					<div className="sendMessage">
-						<span
-							className="iconify-inline"
-							data-icon="akar-icons:attach"
-							data-width="20"
-							data-height="20"
-						></span>
+						
 						<div className="inputBox">
 							<input value={message} onChange={(e)=>{setMessage(e.target.value)}} className="send" type="text" placeholder="Write message..." />
 							<div onClick={sendMessage}>
@@ -205,6 +201,11 @@ const DoubtPage = () => {
 								data-height="20"
 							></span>
 							</div>
+							<div className="doneAndPay">
+							<Icon icon="mdi:cash-check" color="darkgreen" width="35" height="35" />
+							<span class="doneAndPay_tooltip">Resolve And Pay</span>
+							</div>
+							
 						</div>
 					</div>
 				</div>
