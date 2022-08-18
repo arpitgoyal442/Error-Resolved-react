@@ -11,11 +11,18 @@ const ScreenShare = () => {
 		partnerVideo = useRef(null);
 	useEffect(() => {
 		if (userVideo.current && partnerVideo.current) startConnection();
+
+		return () => {
+			socketInstance?.current?.destroyConnection?.();
+		}
 	}, []);
 	const startConnection = () => {
 		const params = { quality: 15 };
-		if (!socketInstance.current)
-			socketInstance.current = createSocketConnectionInstance({ params }, userVideo, partnerVideo);
+		const userId = localStorage.getItem("userId");
+		if (userId && !socketInstance.current){
+			console.log("Start Connection")
+			socketInstance.current = createSocketConnectionInstance(userId, { params }, userVideo, partnerVideo);
+		}
 	};
 	const disconnectHandler = (props) => {
 		socketInstance.current?.destroyConnection();
@@ -32,9 +39,7 @@ const ScreenShare = () => {
 			setMediaType((prev) => !prev);
 		});
 	};
-	useEffect(() => {
-		console.log(userVideo.current?.src)
-	}, [userVideo.current])
+
 	return (
 		<div className="h-full flex flex-col">
 			<div className="flex-1 grid place-items-center relative p-4">

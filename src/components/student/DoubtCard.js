@@ -63,7 +63,7 @@ function StudentDoubtCard({doubtInfo}) {
 			<h4 className="studentDoubtCard_topic">{doubtInfo.topic}</h4>
 			<ToastContainer/>
 			<ul className="studentDoubtCard_dropdown">
-				<Link to="/student/solve-doubt" state={{aboutDoubt:doubtInfo}}>
+				<Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
 					<div>
 					<span
 						className="iconify-inline"

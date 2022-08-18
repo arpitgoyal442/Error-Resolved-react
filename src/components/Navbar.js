@@ -46,7 +46,6 @@ function Navbar() {
 
 
 
-
 			setAllNotifications(userProfile.data.notifications);
 			setImageUrl(userProfile.data.imageUrl);
 
@@ -67,13 +66,6 @@ function Navbar() {
 		}
 
 		fetchUserProfile();
-
-		console.log(imageUrl);
-
-
-
-
-
 	}, [])
 
 	useEffect(() => {

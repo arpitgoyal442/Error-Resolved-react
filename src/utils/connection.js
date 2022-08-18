@@ -8,7 +8,7 @@ const initializePeerConnection = () => {
 	return new Peer({ host: "peerjs-server.herokuapp.com", secure: true, port: 443 });
 };
 const initializeSocketConnection = () => {
-	return openSocket.connect("https://kj-webrtc.herokuapp.com", {
+	return openSocket.connect("http://localhost:9000", {
 		secure: true,
 		reconnection: true,
 		rejectUnauthorized: false,
@@ -22,11 +22,12 @@ class Connection {
 	streaming = false;
 	myPeer;
 	socket;
-	myID = "";
+	socketId = "";
+	userId = "";
 	userVideoRef;
 	partnerVideoRef;
-	constructor(settings, userVideoRef, partnerVideoRef) {
-		console.log(userVideoRef, partnerVideoRef);
+	constructor(userId, settings, userVideoRef, partnerVideoRef) {
+		this.userId = userId;
 		this.userVideoRef = userVideoRef;
 		this.partnerVideoRef = partnerVideoRef;
 		this.settings = settings;
@@ -37,12 +38,12 @@ class Connection {
 	}
 	initializeSocketEvents = () => {
 		this.socket.on("connect", () => {
-			console.log("socket connected");
+			// console.log("socket connected");
 		});
-		this.socket.on("user-disconnected", (userID) => {
-			console.log("user disconnected-- closing peers", userID);
-			peers[userID] && peers[userID].close();
-			this.removeVideo(userID);
+		this.socket.on("user-disconnected", (socketId) => {
+			console.log("user disconnected-- closing peers", socketId);
+			peers[socketId] && peers[socketId].close();
+			this.removeVideo(socketId);
 		});
 		this.socket.on("disconnect", () => {
 			console.log("socket disconnected --");
@@ -53,13 +54,14 @@ class Connection {
 	};
 	initializePeersEvents = () => {
 		this.myPeer.on("open", (id) => {
-			this.myID = id;
+			this.socketId = id;
 			const roomID = window.location.pathname.split("/")[3];
 			const userData = {
-				userID: id,
+				socketId: id,
 				roomID,
+				userId: this.userId
 			};
-			console.log("peers established and joined room", userData);
+			// console.log("peers established and joined room", userData);
 			this.socket.emit("join-room", userData);
 			this.setNavigatorToStream();
 		});
@@ -72,7 +74,7 @@ class Connection {
 		this.getVideoAudioStream().then((stream) => {
 			if (stream) {
 				this.streaming = true;
-				this.createVideo({ id: this.myID, stream });
+				this.createVideo({ id: this.socketId, stream });
 				this.setPeersListeners(stream);
 				this.newUserConnection(stream);
 			}
@@ -99,7 +101,7 @@ class Connection {
 		});
 	};
 	createVideo = (createObj) => {
-		if (createObj.id === this.myID) {
+		if (createObj.id === this.socketId) {
 			this.userVideoRef.current.srcObject = createObj.stream;
 		} else {
 			this.partnerVideoRef.current.srcObject = createObj.stream;
@@ -107,10 +109,12 @@ class Connection {
 		}
 	};
 	setPeersListeners = (stream) => {
+		console.log(stream)
 		this.myPeer.on("call", (call) => {
+			console.log("new call", call);
 			call.answer(stream);
 			call.on("stream", (userVideoStream) => {
-				console.log("user stream data", userVideoStream);
+				// console.log("user stream data", userVideoStream);
 				this.createVideo({ id: call.metadata.id, stream: userVideoStream });
 			});
 			call.on("close", () => {
@@ -126,25 +130,26 @@ class Connection {
 	};
 	newUserConnection = (stream) => {
 		this.socket.on("new-user-connect", (userData) => {
-			console.log("New User Connected", userData);
+			// if(this.userId !== userData.userId)
 			this.connectToNewUser(userData, stream);
 		});
 	};
 	connectToNewUser(userData, stream) {
-		const { userID } = userData;
-		const call = this.myPeer.call(userID, stream, { metadata: { id: this.myID } });
+		const { socketId } = userData;
+		const call = this.myPeer.call(socketId, stream, { metadata: { id: this.socketId } });
 		call.on("stream", (userVideoStream) => {
-			this.createVideo({ id: userID, stream: userVideoStream, userData });
+			console.log("user stream data", userVideoStream);
+			this.createVideo({ id: socketId, stream: userVideoStream, userData });
 		});
 		call.on("close", () => {
-			console.log("closing new user", userID);
-			this.removeVideo(userID);
+			console.log("closing new user", socketId);
+			this.removeVideo(socketId);
 		});
 		call.on("error", () => {
 			console.log("peer error ------");
-			this.removeVideo(userID);
+			this.removeVideo(socketId);
 		});
-		peers[userID] = call;
+		peers[socketId] = call;
 	}
 	removeVideo = (id) => {
 		delete this.videoContainer[id];
@@ -152,7 +157,7 @@ class Connection {
 		if (video) video.remove();
 	};
 	destoryConnection = () => {
-		const myMediaTracks = this.videoContainer[this.myID]?.stream.getTracks();
+		const myMediaTracks = this.videoContainer[this.socketId]?.stream.getTracks();
 		myMediaTracks?.forEach((track) => {
 			track.stop();
 		});
@@ -169,13 +174,13 @@ class Connection {
 				if (type === "displayMedia") {
 					this.toggleVideoTrack({ audio, video });
 				}
-				this.createVideo({ id: this.myID, stream });
+				this.createVideo({ id: this.socketId, stream });
 				this.replaceStream(stream);
 				resolve(true);
 			});
 		});
 	};
-	getMyVideo = (id = this.myID) => {
+	getMyVideo = (id = this.socketId) => {
 		return document.getElementById(id);
 	};
 	toggleVideoTrack = (status) => {
@@ -191,6 +196,7 @@ class Connection {
 		}
 	};
 	replaceStream = (mediaStream) => {
+		// mediaStream.removeTrack(mediaStream.getTracks()[0]);
 		Object.values(peers).forEach((peer) => {
 			peer.peerConnection?.getSenders().forEach((sender) => {
 				if (sender.track.kind === "audio") {
@@ -208,6 +214,6 @@ class Connection {
 	};
 }
 
-export function createSocketConnectionInstance(settings = {}, userVideo, partnerVideo) {
-	return (socketInstance = new Connection(settings, userVideo, partnerVideo));
+export function createSocketConnectionInstance(userId = "", settings = {}, userVideo, partnerVideo) {
+	return (socketInstance = new Connection(userId, settings, userVideo, partnerVideo));
 }

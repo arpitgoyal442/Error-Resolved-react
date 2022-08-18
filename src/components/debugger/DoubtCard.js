@@ -92,7 +92,7 @@ function DoubtCard(props) {
 
 	const openDoubt=()=>{
 
-		navigate('/debugger/solve-doubt' ,{state:{aboutDoubt:props.aboutDoubt}});
+		navigate(`/debugger/solve-doubt/${props.aboutDoubt._id}` ,{state:{aboutDoubt:props.aboutDoubt}});
 		
 		
 	}

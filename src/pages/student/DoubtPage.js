@@ -153,8 +153,8 @@ const DoubtPage = () => {
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
-							<Document />
-							{/* <ScreenShare /> */}
+							{/* <Document /> */}
+							<ScreenShare />
 						</div>
 					</div>
 					
@@ -203,7 +203,7 @@ const DoubtPage = () => {
 							</div>
 							<div className="doneAndPay">
 							<Icon icon="mdi:cash-check" color="darkgreen" width="35" height="35" />
-							<span class="doneAndPay_tooltip">Resolve And Pay</span>
+							<span className="doneAndPay_tooltip">Resolve And Pay</span>
 							</div>
 							
 						</div>

@@ -62,11 +62,11 @@ function App() {
 				<Route exact path="/" element={<Signin />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
-				<Route exact path="/debugger/solve-doubt" element={<DebuggerDoubtPage />} />
+				<Route exact path="/debugger/solve-doubt/:doubtId" element={<DebuggerDoubtPage />} />
 				<Route exact path="/debugger/profile" element={<Profile type="debugger" />} />
 				<Route exact path="/student/profile" element={<Profile type="student" />} />
 				<Route exact path="/student/new-doubt" element={<AddNewDoubt />} />
-				<Route exact path="/student/solve-doubt" element={<StudentDoubtPage />} />
+				<Route exact path="/student/solve-doubt/:doubtId" element={<StudentDoubtPage />} />
 				<Route exact path="/student/edit-doubt" element={<StudentEditDoubt />} />
 				<Route exact path="/test" element={<Test />} />
 				<Route exact path="/once" element={<Once />}/>
@@ -75,9 +75,6 @@ function App() {
 		
 	);
 }
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
 
 export  default App;
 
