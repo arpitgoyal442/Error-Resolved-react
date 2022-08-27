@@ -169,7 +169,7 @@ const DoubtPage = () => {
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare />
+							{/* <ScreenShare /> */}
 						
 						</div>
 					</div>

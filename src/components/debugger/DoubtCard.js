@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactLoading from "react-loading";
 
 import Modal from "react-modal";
@@ -8,8 +8,12 @@ import axios from "axios";
 
 import {useNavigate} from "react-router-dom";
 
+import { socket } from "../../socket.js";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 Modal.setAppElement("#root");
@@ -17,6 +21,12 @@ Modal.setAppElement("#root");
 function DoubtCard(props) {
 
 	const navigate=useNavigate();
+
+	console.log("props aboutDoubt is")
+	console.log(props.aboutDoubt)
+
+	const [doubtStatus,setDoubtStatus]=useState(props.isRequested?"Requested":"Request");
+	const [solvingNow,setSolvingNow]=useState(props.solvingNow);
 
 
 	// console.log(props.aboutDoubt._id+"is in doubtCard ");
@@ -39,7 +49,7 @@ function DoubtCard(props) {
 	const makeRequest=()=>{
 
 
-		if(props.isRequested)
+		if(doubtStatus==="Requested")
 		{
 			toast.info('Already Requested Kindly wait for response', {
 				position: "bottom-right",
@@ -61,6 +71,7 @@ function DoubtCard(props) {
 			axios.post("http://localhost:9000/debugger/request/"+debuggerId,{doubtId:doubtId,studentId:studentId})
 			.then((data)=>{
 
+				setDoubtStatus("Requested")
 				
 
 				toast('Requested Successfully ', {
@@ -73,6 +84,21 @@ function DoubtCard(props) {
 				
 					theme:'dark'
 					});
+
+
+					// console.log(data);
+
+					
+					// let socketData={
+					// 	studentId:props.aboutDoubt.studentId,
+					// 	msg:props.debuggerName+" is requesting to solve your " + props.aboutDoubt.topic+" doubt"
+					// }
+
+					socket.emit("request-doubt",data.data)
+
+					
+
+					
 
 					
 				 
@@ -89,6 +115,21 @@ function DoubtCard(props) {
 		}
 
 	}
+
+
+	useEffect(()=>{
+
+		socket.on("student-accept-request",(data)=>{
+
+			console.log("student-accept-request inside DoubtCard");
+			console.log(data.doubtId+"  "+props.aboutDoubt._id)
+			if(data.doubtId==props.aboutDoubt._id)
+			setSolvingNow(true);
+
+
+		})
+
+	},[])
 
 	const openDoubt=()=>{
 
@@ -130,8 +171,8 @@ function DoubtCard(props) {
 					View
 				</button>
 
-				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
-				{props.solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
+				{ !solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{doubtStatus}</button>}
+				{solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
 			</div>
 
 			<Modal

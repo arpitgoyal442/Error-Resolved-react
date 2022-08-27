@@ -9,8 +9,6 @@ function DropdownContent({ closeDropdown,notification , userData }) {
 
 	let userType=window.localStorage.getItem("userType");
 
-	// console.log("Notification is");
-	// console.log(notification);
 
 	const [modal, setModal] = useState(false);
 	const onModal = () => {
@@ -37,7 +35,7 @@ function DropdownContent({ closeDropdown,notification , userData }) {
 				style={{
 					overlay: {
 						backgroundColor: "rgba(105,105,105,0.3)",
-						// backgroundColor:"red",
+						
 						zIndex: "1",
 
 						

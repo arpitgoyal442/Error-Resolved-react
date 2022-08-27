@@ -5,6 +5,8 @@ import {useNavigate} from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { socket } from "../../socket";
+
 function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 	const navigate=useNavigate();
@@ -36,6 +38,14 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 				onClose:offModal,
 				theme:"dark"
 				});
+
+				let socketData={
+					debuggerId:dataToSend.debuggerId,
+					doubtId:dataToSend.doubtId,
+					message:"Congratulations 🎉🎉 "+dataToSend.studentName+" has accepted your Request for "+dataToSend.doubtTopic+" doubt"
+				}
+
+				socket.emit("request-accept",socketData)
 
 
 		})

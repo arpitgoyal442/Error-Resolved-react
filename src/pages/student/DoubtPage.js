@@ -48,15 +48,15 @@ const DoubtPage = () => {
 		// eslint-disable-next-line
 	}, [])
 
-	useEffect(()=>{
+	// useEffect(()=>{
 
-		if(socket)
-		{
-			socket.emit("add-user",currentUser);
-		}
+	// 	if(socket)
+	// 	{
+	// 		socket.emit("add-user",currentUser);
+	// 	}
 
 
-	},[currentUser])
+	// },[currentUser])
 
 
 
@@ -154,7 +154,7 @@ const DoubtPage = () => {
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare />
+							{/* <ScreenShare /> */}
 						</div>
 					</div>
 					

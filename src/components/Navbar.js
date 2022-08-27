@@ -7,6 +7,8 @@ import DropdownContent from "./student/DropdownContent";
 import { GoogleLogout } from 'react-google-login';
 import axios from "axios";
 
+import { socket } from "../socket";
+
 
 
 
@@ -41,7 +43,8 @@ function Navbar() {
 
 			let userProfile = await axios.get(fetchUrl).catch((err) => { return err; });
 
-			// console.log(userProfile.data);
+			// console.log("Notifications are: ")
+			// console.log(userProfile.data.notifications);
 
 
 
@@ -72,6 +75,30 @@ function Navbar() {
 		const unsubscribe = window.addEventListener("scroll", handleScroll);
 		return unsubscribe;
 	}, [])
+
+
+	useEffect(()=>{
+
+
+		socket.on("debugger-requesting",(data)=>{
+
+			console.log("debugge-requesting socket");
+			console.log(data)
+			setAllNotifications((pre)=>[...pre,data])
+		})
+
+	},[])
+
+	useEffect(()=>{
+
+		socket.on("student-accept-request",(data)=>{
+
+			console.log("student-accept-request");
+			console.log(data)
+
+			setAllNotifications((pre)=>[...pre,data]);
+		})
+	},[])
 
 	const handleScroll = () => {
 		if (window.scrollY > 0) navRef?.current?.classList?.add("navbar_shadow");

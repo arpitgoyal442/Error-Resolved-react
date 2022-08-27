@@ -13,13 +13,6 @@ import { socket } from "../../socket.js";
 function DebuggerHome() {
 
 
-	
-
-
-	// const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
-
-	
-
 	const [doubts,setDoubts]=useState([]);                    // To Store all doubts
 	const [requestedDoubts,setRequestedDoubts]=useState([]);  // To store already Requested Doubts
 	const [sort, setSort] = useState(1),
@@ -28,13 +21,19 @@ function DebuggerHome() {
 		[requested, setRequested] = useState(0),
 		[topic, setTopic] = useState([]),
 		[showModal, setShowModal] = useState(false),
-		[deletedDoubts,setDeletedDoubts]=useState([]);
+		[deletedDoubts,setDeletedDoubts]=useState([]),
+		[debuggerName,setDebuggerName]=useState(""),
+		[currentUser,setCurrentUser]=useState(null);
+
 		
 
 	
 
 
 	useEffect( ()=>{
+
+		setCurrentUser(localStorage.getItem("userId"));
+
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
 
@@ -60,6 +59,7 @@ function DebuggerHome() {
 		.then( 
 			data=>{
 				console.log(data.data.requestedDoubts);
+				setDebuggerName(data.data.name);
 				 setRequestedDoubts(data.data.requestedDoubts);
 			}
 		)
@@ -89,6 +89,26 @@ function DebuggerHome() {
 		}
 
 	},[]);
+
+
+	useEffect(()=>{
+
+		if(socket)
+		{
+			socket.emit("add-user",currentUser);
+		}
+
+
+	},[currentUser])
+
+
+	// useEffect(()=>{
+
+	// 	socket.on("student-accept-request",(data)=>{
+	// 		setRequestedDoubts((pre)=>[...pre,data.doubtId])
+	// 	})
+
+	// },[])
 
 
 
@@ -132,7 +152,7 @@ function DebuggerHome() {
 							{
 
                              
-							 return <DoubtCard  aboutDoubt={doubt}
+							 return <DoubtCard  aboutDoubt={doubt} debuggerName={debuggerName}
 							
 							  key={index}  
 							 isRequested={  ( requestedDoubts.includes(doubt._id) )?true:false }
