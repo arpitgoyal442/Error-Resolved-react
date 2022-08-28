@@ -7,10 +7,15 @@ import axios from "axios";
 import StudentDoubtCard from "../../components/student/DoubtCard.js";
 import { socket } from "../../socket.js";
 
+import {URL} from "../../Globals/Constants.js"
+
 
 
 
 function DebuggerHome() {
+
+
+	
 
 
 	const [doubts,setDoubts]=useState([]);                    // To Store all doubts
@@ -37,7 +42,7 @@ function DebuggerHome() {
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
 
-		 axios.get("http://localhost:9000/doubt/all",{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
+		 axios.get(`${URL}/doubt/all`,{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
 		.then((data)=>{
 			console.log(data.data);
 
@@ -55,7 +60,7 @@ function DebuggerHome() {
 	useEffect(()=>{
 		let userId=window.localStorage.getItem("userId")
 
-		axios.get("http://localhost:9000/debugger/profile/"+userId)
+		axios.get(`${URL}/debugger/profile/`+userId)
 		.then( 
 			data=>{
 				console.log(data.data.requestedDoubts);

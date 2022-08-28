@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { socket } from "../../socket";
 
+import { URL } from "../../Globals/Constants";
+
 
 const topics = [
 	"Java",
@@ -104,7 +106,7 @@ function Add() {
 
 		console.log(myFormData);
 		
-		axios.post("http://localhost:9000/doubt/add",myFormData
+		axios.post(`${URL}/doubt/add`,myFormData
 			
 		).then((result)=>{
 

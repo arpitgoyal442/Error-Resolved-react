@@ -1,6 +1,8 @@
 import openSocket from "socket.io-client";
 import Peer from "peerjs";
 
+import {URL} from "../Globals/Constants.js"
+
 let socketInstance = null;
 let peers = {};
 
@@ -8,7 +10,7 @@ const initializePeerConnection = () => {
 	return new Peer({ host: "peerjs-server.herokuapp.com", secure: true, port: 443 });
 };
 const initializeSocketConnection = () => {
-	return openSocket.connect("http://localhost:9000", {
+	return openSocket.connect(URL, {
 		secure: true,
 		reconnection: true,
 		rejectUnauthorized: false,

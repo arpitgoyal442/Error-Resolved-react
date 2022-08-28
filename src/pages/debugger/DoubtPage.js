@@ -16,6 +16,8 @@ import { useEffect,useRef } from "react";
 import { socket } from "../../socket.js";
 import { Icon } from '@iconify/react';
 
+import { URL } from "../../Globals/Constants.js";
+
 
 
 
@@ -39,7 +41,8 @@ const DoubtPage = () => {
 
 		setCurentUser(localStorage.getItem("userId"));
 
-		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
+		
+		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
 
 			
 			setAllMessages(data.data.chats);
@@ -132,7 +135,8 @@ const DoubtPage = () => {
 
 		
 
-		axios.post("http://localhost:9000/doubt/message/" + doubtId, newMessage)
+		
+		axios.post(`${URL}/doubt/message/${doubtId}`, newMessage)
 			.then((data) => {
 
 				console.log("Message Sent Success");

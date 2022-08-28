@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { socket } from "../../socket";
+import {URL} from "../../Globals/Constants.js"
 
 function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
@@ -25,7 +26,7 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 		}
 
-		axios.post("http://localhost:9000/student/acceptrequest",dataToSend)
+		axios.post(`${URL}/student/acceptrequest`,dataToSend)
 		.then((data)=>{console.log(data);
 
 			toast('😀 Accepted Sucessfully', {

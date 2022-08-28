@@ -2,6 +2,8 @@ import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
 
+import {URL} from "../Globals/Constants.js"
+
 
 function Signin() {
 
@@ -35,7 +37,7 @@ function Signin() {
 		console.log(userData);
 
 		// Make post request
-		axios.post('http://localhost:9000/login', userData)
+		axios.post(`${URL}/login`, userData)
 		.then(
 
 
@@ -81,7 +83,7 @@ function Signin() {
 		
 
 		// Make post request
-		axios.post('http://localhost:9000/login', userData)
+		axios.post(`${URL}/login`, userData)
 		.then(
 
 

@@ -14,6 +14,8 @@ import { Icon } from '@iconify/react';
 
 import { socket } from "../../socket.js";
 
+import { URL } from "../../Globals/Constants.js";
+
 
 
 
@@ -34,7 +36,8 @@ const DoubtPage = () => {
 
 		setCurentUser(localStorage.getItem("userId"));
 
-		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
+		
+		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
 
 			
 			setAllMessages(data.data.chats);
@@ -48,15 +51,7 @@ const DoubtPage = () => {
 		// eslint-disable-next-line
 	}, [])
 
-	// useEffect(()=>{
-
-	// 	if(socket)
-	// 	{
-	// 		socket.emit("add-user",currentUser);
-	// 	}
-
-
-	// },[currentUser])
+	
 
 
 
@@ -123,8 +118,9 @@ const DoubtPage = () => {
 		
 
 	
+		
 
-		axios.post("http://localhost:9000/doubt/message/"+doubtId,newMessage)
+		axios.post(`${URL}/doubt/message/${doubtId}`,newMessage)
 		.then((data)=>{
 
 			console.log("Message Sent Success");

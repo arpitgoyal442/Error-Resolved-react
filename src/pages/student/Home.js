@@ -6,6 +6,7 @@ import DoubtCard from "../../components/student/DoubtCard";
 import { useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket";
+import {URL} from "../../Globals/Constants.js"
 
 
 
@@ -35,7 +36,9 @@ function StudentHome() {
 		setCurrentUser(localStorage.getItem("userId"));
 
 		let studentId = window.localStorage.getItem("userId");
-		axios.get("http://localhost:9000/student/doubts/" + studentId)
+
+		
+		axios.get(`${URL}/student/doubts/${studentId}`)
 			.then((data) => {
 
 				setAllDoubts(data.data);

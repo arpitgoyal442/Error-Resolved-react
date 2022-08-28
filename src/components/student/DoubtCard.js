@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { socket } from "../../socket";
 
+import {URL} from "../../Globals/Constants.js"
+
 
 function StudentDoubtCard({doubtInfo}) {
 
@@ -16,7 +18,10 @@ function StudentDoubtCard({doubtInfo}) {
 
 	const onDeleteClick=()=>{
 
-		axios.delete("http://localhost:9000/doubt/"+doubtInfo._id)
+
+		
+
+		axios.delete(`${URL}/doubt/${doubtInfo._id}`)
 		.then(()=>{
 
 

@@ -9,6 +9,8 @@ import axios from "axios";
 
 import { socket } from "../socket";
 
+import {URL,front_URL} from "../Globals/Constants.js"
+
 
 
 
@@ -34,9 +36,9 @@ function Navbar() {
 			let userId = window.localStorage.getItem("userId");
 			let fetchUrl = "";
 			if (userType == 1)
-				fetchUrl = "http://localhost:9000/student/profile/" + userId;
+				fetchUrl = `${URL}/student/profile/` + userId;
 
-			else fetchUrl = "http://localhost:9000/debugger/profile/" + userId;
+			else fetchUrl = `${URL}/debugger/profile/` + userId;
 
 
 
@@ -110,7 +112,7 @@ function Navbar() {
 
 		window.localStorage.removeItem('userId')
 
-		window.location.href = "http://localhost:3000"
+		window.location.href = front_URL
 
 
 	}

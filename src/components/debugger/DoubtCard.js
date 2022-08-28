@@ -10,6 +10,8 @@ import {useNavigate} from "react-router-dom";
 
 import { socket } from "../../socket.js";
 
+import { URL } from "../../Globals/Constants.js";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -68,7 +70,9 @@ function DoubtCard(props) {
 			let doubtId=props.aboutDoubt._id;
 			let studentId=props.aboutDoubt.studentId;
 
-			axios.post("http://localhost:9000/debugger/request/"+debuggerId,{doubtId:doubtId,studentId:studentId})
+			
+			
+			axios.post(`${URL}/debugger/request/${debuggerId}`,{doubtId:doubtId,studentId:studentId})
 			.then((data)=>{
 
 				setDoubtStatus("Requested")
@@ -128,7 +132,7 @@ function DoubtCard(props) {
 
 
 		})
-
+            // eslint-disable-next-line
 	},[])
 
 	const openDoubt=()=>{
