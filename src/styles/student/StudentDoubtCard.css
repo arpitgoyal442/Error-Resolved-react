@@ -44,12 +44,12 @@
   top: 0.5rem;
   right: 0.5rem;
 }
-.studentDoubtCard:hover .studentDoubtCard_dropdown{
+/* .studentDoubtCard:hover .studentDoubtCard_dropdown{
   display: flex;
-}
+} */
 .studentDoubtCard_dropdown {
   height: 95%;
-  display: flex;
+  display:flex;
   flex-direction: column;
   justify-content: space-evenly;
 	position: absolute;
@@ -73,6 +73,10 @@
 
   color:black;
 }
+
+
+
+
 
 
 

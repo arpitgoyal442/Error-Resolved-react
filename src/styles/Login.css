@@ -25,6 +25,7 @@
 {
 	width: 50%;
 	
+	
 }
 
 .signin_right{
@@ -33,9 +34,7 @@
 	
 }
 
-.signin_right{
-	/* background-color: #0b0b0b; */
-}
+
 
 
 
@@ -87,6 +86,19 @@
 	align-items: center;
 }
 
+@media screen and (max-width: 600px) {
+
+	.signinCard{
+		width:90vw;
+		height: 80vh;
+	}
+
+	.signin_img{
+
+		object-fit: fill;
+	}
+	
+  }
 
 
 

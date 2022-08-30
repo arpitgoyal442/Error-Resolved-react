@@ -17,14 +17,8 @@ function StudentDoubtCard({doubtInfo}) {
 
 
 	const onDeleteClick=()=>{
-
-
-		
-
 		axios.delete(`${URL}/doubt/${doubtInfo._id}`)
 		.then(()=>{
-
-
 			socket.emit("delete-doubt",doubtInfo);
 
 			toast('Deleted Successfully', {
@@ -37,9 +31,6 @@ function StudentDoubtCard({doubtInfo}) {
 				
 				theme:"dark"
 				});
-
-
-
 
 		})
 		.catch(()=>{
@@ -63,12 +54,12 @@ function StudentDoubtCard({doubtInfo}) {
 	}
 
 	return (
-		<div className="studentDoubtCard">
+		<div  className="studentDoubtCard">
 			<p className="studentDoubtCard_date">{doubtInfo.postedTime}</p>
 			<h4 className="studentDoubtCard_topic">{doubtInfo.topic}</h4>
 			<ToastContainer/>
 			<ul className="studentDoubtCard_dropdown">
-				<Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
+				{doubtInfo.debuggerId!=null && <Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
 					<div>
 					<span
 						className="iconify-inline"
@@ -76,7 +67,8 @@ function StudentDoubtCard({doubtInfo}) {
 						
 					></span>
 					</div>
-				</Link>
+				</Link>}
+				
 				<Link to="/student/edit-doubt" state={{aboutDoubt:doubtInfo}}>
 					<div>
 					<span

@@ -90,21 +90,7 @@ function DoubtCard(props) {
 					});
 
 
-					// console.log(data);
-
-					
-					// let socketData={
-					// 	studentId:props.aboutDoubt.studentId,
-					// 	msg:props.debuggerName+" is requesting to solve your " + props.aboutDoubt.topic+" doubt"
-					// }
-
 					socket.emit("request-doubt",data.data)
-
-					
-
-					
-
-					
 				 
 				console.log("Successfull request");
 				console.log(data);
@@ -148,7 +134,7 @@ function DoubtCard(props) {
 			
 				
 				<ReactLoading
-					type={props.aboutDoubt.status=== "active" ? "blank" : "bars"}
+					type={ props.aboutDoubt.status=== "active" || props.aboutDoubt.debuggerId===window.localStorage.getItem("userId") ? "blank" : "bars"}
 					color="gray"
 					height="9%"
 					width="9%"

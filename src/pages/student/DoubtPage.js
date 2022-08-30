@@ -68,6 +68,16 @@ const DoubtPage = () => {
 
 	},[])
 
+	useEffect(()=>{
+
+		if(socket)
+		{
+			socket.emit("add-user",currentUser);
+		}
+
+
+	},[currentUser])
+
 
 	useEffect(()=>{
 
