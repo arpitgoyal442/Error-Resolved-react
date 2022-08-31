@@ -1,6 +1,7 @@
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom"
+import { Icon } from '@iconify/react';
 
 import {URL} from "../Globals/Constants.js"
 
@@ -126,7 +127,7 @@ function Signin() {
 							            
 								clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
 								render={renderProps => (
-									<button onClick={renderProps.onClick} disabled={renderProps.disabled}>Continue As Student </button>
+									<button onClick={renderProps.onClick} disabled={renderProps.disabled}>   Continue As Student </button>
 								)}
 								onSuccess={loginSuccessStudent}
 								onFailure={(err) => console.log(err)}

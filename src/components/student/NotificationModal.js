@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { socket } from "../../socket";
 import {URL} from "../../Globals/Constants.js"
 
-function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
+function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 	const navigate=useNavigate();
 
@@ -17,6 +17,7 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 		let dataToSend={
 
+			notificationId:notificationId,
 			debuggerId:debuggerInfo._id,
 			debuggerName:debuggerInfo.name,
 			doubtId:doubtInfo._id,
@@ -25,6 +26,8 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 			studentName:studentInfo.userName
 
 		}
+
+		alert(notificationId)
 
 		axios.post(`${URL}/student/acceptrequest`,dataToSend)
 		.then((data)=>{console.log(data);

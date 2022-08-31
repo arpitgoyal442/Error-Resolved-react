@@ -55,7 +55,7 @@ function DropdownContent({ closeDropdown,notification , userData }) {
 					},
 				}}
 			>
-				<NotificationModal studentInfo={userData} debuggerInfo={notification.debuggerData} doubtInfo={notification.doubtData} offModal={offModal} />
+				<NotificationModal notificationId={notification._id} studentInfo={userData} debuggerInfo={notification.debuggerData} doubtInfo={notification.doubtData} offModal={offModal} />
 			</Modal> }
 
 

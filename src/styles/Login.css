@@ -62,7 +62,7 @@
 
 	background-color: #008891;
 	color: white;
-	width: 40%;
+	width: fit-content;
 	height: fit-content;
 	min-width:fit-content;
 	padding: 6px;
