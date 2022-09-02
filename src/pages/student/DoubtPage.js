@@ -153,7 +153,7 @@ const DoubtPage = () => {
 	return (
 		<>
 			<Navbar />
-			<MobileDoubtPage />
+			<MobileDoubtPage aboutDoubt={aboutDoubt} />
 			<div className="doubtPage hidden md:grid">
 				<div className="left">
 					<div className="doubtPage_main">

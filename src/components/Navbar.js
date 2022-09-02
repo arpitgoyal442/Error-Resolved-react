@@ -23,7 +23,7 @@ function Navbar() {
 
 
 
-	const [profileDropdown, setProfileDropdown] = useState(false);
+	
 	const [showNotification, setNotification] = useState(false),
 
 		navRef = useRef(null);
@@ -130,20 +130,15 @@ function Navbar() {
 
 				<div className="dropdown" >
 
-					<div onClick={() => {
-						showNotification ? setNotification(false) : setNotification(true);
-					}} className="w-8 h-8 relative">
+					<div  className="w-8 h-8 relative">
 						<p className="grid place-items-center w-4 h-4 text-xs text-white font-semibold rounded-full bg-highlight absolute top-0 right-0 -translate-y-1/3">{allNotifications.length}</p>
-						<BellIcon />
+						<BellIcon   className="bellIcon" />
 					</div>
 
 					<div
 						className="dropdown-content "
-						style={{ display: showNotification ? "block" : "none" }}
+						
 					>
-
-
-
 						<ul>
 
 							{allNotifications.map((notification, index) => {
@@ -158,19 +153,14 @@ function Navbar() {
 
 				<div className="dropdown">
 
-					<div onClick={() => {
-						profileDropdown ? setProfileDropdown(false) : setProfileDropdown(true);
-					}} className=" navbar_profile">
+					<div className=" navbar_profile">
 
 
-						<img src={imageUrl}  referrerPolicy="no-referrer"  alt="profile" />
+						<img  src={imageUrl}  referrerPolicy="no-referrer"  alt="profile" />
 
 					</div>
 
-					<div
-						className="dropdown-content"
-						style={{ display: profileDropdown ? "block" : "none" }}
-					>
+					<div className="dropdown-content">
 						<ul>
 							<div>
 								<GoogleLogout

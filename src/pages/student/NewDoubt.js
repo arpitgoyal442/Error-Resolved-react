@@ -156,8 +156,15 @@ function Add() {
 
 
 	return (
+
+		
+		
+		
 		<div className="addDoubt">
-			<Navbar />
+
+            <Navbar />
+			
+			
 			<div className="addDoubt_body">
 				<ToastContainer/>
 				<h1 className="addDoubt_mainHead">Add Doubt</h1>
@@ -210,6 +217,8 @@ function Add() {
 				</div>
 			</div>
 		</div>
+
+		
 	);
 }
 

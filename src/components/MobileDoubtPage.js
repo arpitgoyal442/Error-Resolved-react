@@ -1,17 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import CameraIcon from "@heroicons/react/solid/VideoCameraIcon";
 import MicIcon from "@heroicons/react/solid/MicrophoneIcon";
 import ChatIcon from "@heroicons/react/solid/ChatAltIcon";
 import AttachIcon from "@heroicons/react/solid/PaperClipIcon";
 import XIcon from "@heroicons/react/solid/XIcon";
 import Document from "./doubtComponents/Document";
+import axios from "axios";
+import { socket } from "../socket";
+import { URL } from "../Globals/Constants.js"
 
-const MobileDoubtPage = () => {
+
+const MobileDoubtPage = ({ aboutDoubt }) => {
+
+	// Trying
+
+	
+
+
+
+
 	const [showChat, setShowChat] = useState(false),
 		[viewType, setViewType] = useState(1); // 1 = screen, 2 = code, 3 = document
+
+
+
 	return (
 		<>
-			{showChat && <MobileChat closeChat={() => setShowChat(false)} />}
+			{showChat && <MobileChat  aboutDoubt={aboutDoubt} closeChat={() => setShowChat(false)} />}
 			<div className="md:hidden p-3 flex h-[90vh] flex-col">
 				{/* Topic */}
 				<div className="rounded-md bg-darkest p-2 text-center font-semibold">Java Doubt</div>
@@ -59,7 +74,141 @@ const MobileDoubtPage = () => {
 
 export default MobileDoubtPage;
 
-const MobileChat = ({ closeChat }) => {
+const MobileChat = ({ aboutDoubt,closeChat }) => {
+
+
+
+	//
+
+	const scrollRef = useRef();
+
+	const [message, setMessage] = useState("");
+	const [allMessages,setAllMessages] = useState([]);
+
+	const [currentUser, setCurentUser] = useState(null);
+	const [arriveMessage, setArriveMessage] = useState(null);
+
+
+	useEffect(() => {
+
+		setCurentUser(localStorage.getItem("userId"));
+		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
+			setAllMessages(data.data.chats);
+		}).catch((err) => {
+			console.log(err);
+		})
+
+		// eslint-disable-next-line
+	}, [])
+
+	useEffect(() => {
+
+		if (socket) {
+			socket.emit("add-user", currentUser);
+		}
+	}, [currentUser])
+
+
+
+	useEffect(() => {
+		console.log("Socket here is " + socket)
+		if (socket) {
+			socket.on("msg-recieve", data => {
+				console.log("Message Received from sender");
+				console.log(data);
+				setArriveMessage(data);
+			})
+		}
+
+
+
+	}, [])
+
+
+	useEffect(() => {
+
+		arriveMessage && setAllMessages((pre) => [...pre, arriveMessage])
+
+
+	}, [arriveMessage])
+
+
+	useEffect(() => {
+
+
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+
+	}, [allMessages])
+
+
+
+	let currentId=window.localStorage.getItem("userId");
+	let studentId = aboutDoubt.studentId;
+	let studentName = aboutDoubt.studentName;
+	let doubtId = aboutDoubt._id;
+	// let debuggerId = window.localStorage.getItem("userId");
+	// let debuggerName = window.localStorage.getItem("userName");
+
+	let debuggerId=aboutDoubt.debuggerId;
+	let debuggerName=aboutDoubt.debuggerName;
+
+
+	const sendMessage = (e) => {
+
+
+
+		e.preventDefault();
+
+		if (message === "")
+			return;
+
+		let newMessage = {
+
+			receiverId: (currentId==studentId)?debuggerId:studentId,
+			receiverName:  (currentId==studentId)?debuggerName:studentName,
+			senderId: currentId,
+
+			senderName:(currentId==studentId)?studentName:debuggerName ,
+			message: message,
+			sentTime: new Date().toLocaleTimeString(),
+			sentDate: new Date().toLocaleDateString()
+
+		}
+
+
+
+
+
+		axios.post(`${URL}/doubt/message/${doubtId}`, newMessage)
+			.then((data) => {
+
+				console.log("Message Sent Success");
+				console.log(data);
+
+				setAllMessages((pre) => [...pre, newMessage]);
+
+				socket.emit("send-msg", newMessage.receiverId, newMessage);
+
+				setMessage("");
+
+			}).catch((err) => {
+				console.log("Error in sending Message");
+
+				console.log(err);
+			})
+
+
+
+	}
+
+
+	// End Trying
+
+
+
+	//
+
+
 	return (
 		<div className="bg-light absolute top-0 left-0 w-screen h-screen pt-navbar flex flex-col">
 			<div className="w-full bg-darkest py-2 px-4 flex items-center justify-between">
@@ -67,18 +216,63 @@ const MobileChat = ({ closeChat }) => {
 				<XIcon onClick={closeChat} className="h-4 w-4" />
 			</div>
 			{/* Messages */}
-			<div className="flex flex-col flex-1"></div>
+			<div className="flex flex-col flex-1 mobileMessages">
+
+				{/*  */}
+
+				{allMessages.map((message, index) => {
+
+
+
+
+					// if(message.senderId==window.localStorage.getItem("userId"))
+					return <div ref={scrollRef} key={index} className={message.senderId == currentId ? "mobileChatDiv mobileChat_receiver" : "mobileChatDiv mobileChat_sender"}>
+						<h5>{message.senderName}</h5>
+						<p>{message.message}</p>
+						<span >{message.sentTime}</span>
+						<br />
+					</div>;
+
+					
+
+
+
+				})}
+
+
+
+				{/*  */}
+
+
+
+
+				{/* <div className="mobileChatDiv mobileChat_sender">
+					<h5>Arpit Goyal</h5>
+					<p>Hello Buddy, How Are You</p>
+					<span>12-3-2011</span>
+				</div>
+
+				<div className="mobileChatDiv mobileChat_receiver">
+					<h5>Arpit Goyal</h5>
+					<p>Hello Buddy, How Are You</p>
+					<span>12-3-2011</span>
+				</div> */}
+
+
+			</div>
 			{/* Input */}
 			<div className="border-t border-t-black p-2 flex items-center space-x-2">
 				<AttachIcon className="h-6 w-6" />
 				<div className="bg-white rounded-full flex items-center flex-1 p-2 pl-4">
-					<input className="flex-1 outline-none" type="text" placeholder="Write Message..." />
+					<input  value={message} onChange={(e) => { setMessage(e.target.value) }} className="flex-1 outline-none" type="text" placeholder="Write Message..." />
+					<div  onClick={sendMessage}>
 					<span
 						className="iconify-inline"
 						data-icon="fluent:send-20-filled"
 						data-width="20"
 						data-height="20"
 					></span>
+					</div>
 				</div>
 			</div>
 		</div>

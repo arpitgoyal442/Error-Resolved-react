@@ -3,7 +3,7 @@ import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
 import Document from "../../components/doubtComponents/Document.js";
 
-import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -14,7 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect,useRef } from "react";
 import { socket } from "../../socket.js";
-import { Icon } from '@iconify/react';
+
 
 import { URL } from "../../Globals/Constants.js";
 
@@ -40,17 +40,10 @@ const DoubtPage = () => {
 	useEffect(() => {
 
 		setCurentUser(localStorage.getItem("userId"));
-
-		
 		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
-
-			
 			setAllMessages(data.data.chats);
-
 		}).catch((err) => {
 			console.log(err);
-
-
 		})
 
 		// eslint-disable-next-line
@@ -62,8 +55,6 @@ const DoubtPage = () => {
 		{
 			socket.emit("add-user",currentUser);
 		}
-
-
 	},[currentUser])
 
 
@@ -166,7 +157,7 @@ const DoubtPage = () => {
 	return (
 		<>
 			<Navbar />
-			<MobileDoubtPage />
+			<MobileDoubtPage aboutDoubt={aboutDoubt} />
 			<div  className="doubtPage hidden md:grid">
 				<div className="left">
 					<div className="doubtPage_main">

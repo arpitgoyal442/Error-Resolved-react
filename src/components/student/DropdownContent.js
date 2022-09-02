@@ -20,7 +20,7 @@ function DropdownContent({ closeDropdown,notification , userData }) {
 	};
 	return (
 		<div>
-			<p id="notificationTile" onClick={onModal}>
+			<p style={{margin:"5px" , borderBottom:"1px solid grey"}} id="notificationTile" onClick={onModal}>
 				
 				{notification.message}
 				

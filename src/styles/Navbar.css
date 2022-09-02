@@ -65,6 +65,18 @@
 	z-index: 1;
 	right: 0;
 }
+
+.dropdown-content:hover{
+
+	display: "block";
+}
+
+.bellIcon:hover .dropdown-content{
+
+	display: block;
+}
+
+
 .dropdown-content::-webkit-scrollbar {
 	display: none;
 }
@@ -93,6 +105,20 @@
 	
 	font-weight: 500;
 }
+
+
+.navbar_profile:hover .dropdown-content{
+
+	display: block;
+}
+
+.dropdown-content:hover{
+
+	display: block;
+}
+
+
+
 
 
 

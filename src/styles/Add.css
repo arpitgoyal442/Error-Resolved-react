@@ -3,9 +3,17 @@
 	color: black;
 	font-weight: 600;
 }
+
+.addDoubt{
+
+	height: 100vh;
+	width: 100%;
+	
+}
 .addDoubt_body {
 	width: 100vw;
-	height: 85.5vh;
+	height: 100vh;
+	
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -60,6 +68,7 @@
 .addDoubt_body_form {
 	width: 80%;
 	height: 95%;
+	/* height: 100%; */
 	padding: 2%;
 	display: flex;
 	flex-direction: column;
@@ -82,4 +91,13 @@
 .addDoubt_body_form button :hover {
 	background-color: rgb(104, 253, 203);
 	cursor: pointer;
+}
+
+
+.addDoubt{
+	overflow-y: hidden;
+}
+
+.addDoubt_body{
+	overflow-y: scroll;
 }
