@@ -27,7 +27,7 @@ function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,o
 
 		}
 
-		alert(notificationId)
+		
 
 		axios.post(`${URL}/student/acceptrequest`,dataToSend)
 		.then((data)=>{console.log(data);

@@ -6,7 +6,14 @@
 
     /* background-color: #78a8ac; */
     /* padding: 10px; */
-     
+
+
+    /* width: 50vw;
+    height: 50vh;
+    background-color:#baf3f7;
+    position: absolute;
+
+    z-index: 10000; */
     
     
 }
@@ -126,4 +133,14 @@
         border-radius: 100%;
         justify-self: center;
     }
+
+
+    .notificationHandle{
+
+        /* width: 80vw;
+        height: 80vh; */
+    }
+
+
 }
+

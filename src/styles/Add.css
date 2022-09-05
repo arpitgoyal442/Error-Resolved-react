@@ -1,4 +1,4 @@
-.addDoubt_body label {
+/* .addDoubt_body label {
 	font-size: larger;
 	color: black;
 	font-weight: 600;
@@ -69,7 +69,7 @@
 	width: 80%;
 	height: 95%;
 	/* height: 100%; */
-	padding: 2%;
+	/* padding: 2%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -100,4 +100,4 @@
 
 .addDoubt_body{
 	overflow-y: scroll;
-}
+} */ 
