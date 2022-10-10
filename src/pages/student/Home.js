@@ -50,6 +50,7 @@ function StudentHome() {
 		if (socket) {
 
 			socket.on("deleted-doubt", (doubtInfo) => {
+				console.log(doubtInfo);
 				setDeletedDoubts((pre) => [...pre, doubtInfo._id]);
 			});
 
@@ -130,10 +131,10 @@ function StudentHome() {
 				<div className="studentRight">
 					<div className="doubtCards">
 
-						{allDoubts.map((doubt, index) => {
+						{allDoubts.map((doubt) => {
 
 							if (deletedDoubts.includes(doubt._id) == false) {
-								return <DoubtCard key={index} doubtInfo={doubt} />
+								return <DoubtCard key={doubt._id} doubtInfo={doubt} />
 							}
 
 

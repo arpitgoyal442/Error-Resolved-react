@@ -146,7 +146,7 @@ function DoubtCard(props) {
 
 			<div className="doubtCard_body">
 				<div>
-					<h5 className="heading">Amount</h5>
+					<h5 className="heading">Budget</h5>
 					<p>₹ {props.aboutDoubt.price}</p>
 				</div>
 				<div>

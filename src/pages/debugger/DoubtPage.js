@@ -99,6 +99,19 @@ const DoubtPage = () => {
 	let debuggerId = window.localStorage.getItem("userId");
 	let debuggerName = window.localStorage.getItem("userName");
 
+	let newmessage={
+
+		receiverId: studentId,
+			receiverName: studentName,
+			senderId: debuggerId,
+
+			senderName: debuggerName,
+			message: "",
+			sentTime: "",
+			sentDate: new Date().toLocaleDateString()
+
+	}
+
 
 
 	const sendMessage = (e) => {
@@ -110,32 +123,35 @@ const DoubtPage = () => {
 		if(message==="")
 		return;
 
-		let newMessage = {
+		newmessage.message=message;
+		newmessage.sentTime=new Date().toLocaleTimeString();
 
-			receiverId: studentId,
-			receiverName: studentName,
-			senderId: debuggerId,
+		// let newMessage = {
 
-			senderName: debuggerName,
-			message: message,
-			sentTime: new Date().toLocaleTimeString(),
-			sentDate: new Date().toLocaleDateString()
+		// 	receiverId: studentId,
+		// 	receiverName: studentName,
+		// 	senderId: debuggerId,
 
-		}
+		// 	senderName: debuggerName,
+		// 	message: message,
+		// 	sentTime: new Date().toLocaleTimeString(),
+		// 	sentDate: new Date().toLocaleDateString()
+
+		// }
 
 
 		
 
 		
-		axios.post(`${URL}/doubt/message/${doubtId}`, newMessage)
+		axios.post(`${URL}/doubt/message/${doubtId}`, newmessage)
 			.then((data) => {
 
 				console.log("Message Sent Success");
 				console.log(data);
 
-				setAllMessages((pre)=>[...pre,newMessage]);
+				setAllMessages((pre)=>[...pre,newmessage]);
 
-				socket.emit("send-msg",newMessage.receiverId,newMessage);
+				socket.emit("send-msg",newmessage.receiverId,newmessage);
 
 				setMessage("");
 

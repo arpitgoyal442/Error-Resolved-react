@@ -21,9 +21,6 @@ function Navbar() {
 
 	const [userData, setUserData] = useState();
 
-
-
-	
 	const [showNotification, setNotification] = useState(false),
 
 		navRef = useRef(null);
@@ -40,17 +37,7 @@ function Navbar() {
 
 			else fetchUrl = `${URL}/debugger/profile/` + userId;
 
-
-
-
 			let userProfile = await axios.get(fetchUrl).catch((err) => { return err; });
-
-			// console.log("Notifications are: ")
-			// console.log(userProfile.data.notifications);
-
-
-
-
 			setAllNotifications(userProfile.data.notifications);
 			setImageUrl(userProfile.data.imageUrl);
 
@@ -165,14 +152,14 @@ function Navbar() {
 							<div>
 								<GoogleLogout
 									clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
-									// buttonText="Logout"
+									
 									render={renderProps => (
 										<button onClick={renderProps.onClick} disabled={renderProps.disabled}><span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon" /> </span> Logout </button>
 									)}
 									onLogoutSuccess={onLogout}
 								>
 								</GoogleLogout>
-								{/* <span onClick={onLogout} className="logouticon"> <LogoutIcon className="h-9 w-9 text-gray-500 logouticon"/> </span> Logout */}
+								
 							</div>
 
 							<div>

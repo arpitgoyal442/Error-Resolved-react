@@ -59,8 +59,15 @@ const DoubtPage = () => {
 
 		if(socket)
 		{
+			
+			console.log("outside msg-received")
 			socket.on("msg-recieve",data=>{
+
+				console.log("Message received is "+data)
+
+				
 				setArriveMessage(data);
+				// console.log(data)
 			})
 		}
 
@@ -81,7 +88,9 @@ const DoubtPage = () => {
 
 	useEffect(()=>{
 
-		arriveMessage && setAllMessages((pre)=>[...pre,arriveMessage])
+		arriveMessage && setAllMessages((pre)=>[...pre,arriveMessage]);
+
+		
 
 
 	},[arriveMessage])
@@ -104,6 +113,18 @@ const DoubtPage = () => {
 	let doubtId=aboutDoubt._id;
 	let debuggerId=aboutDoubt.debuggerId;
 	let debuggerName=aboutDoubt.debuggerName;
+	let newMessage={
+
+		receiverId:debuggerId,
+		receiverName:debuggerName,
+		senderId:studentId,
+		
+		senderName:studentName,
+		message:"",
+		sentTime:new Date().toLocaleTimeString(),
+		sentDate:new Date().toLocaleDateString()
+
+	}
 	
 
 	
@@ -112,18 +133,10 @@ const DoubtPage = () => {
 
 		e.preventDefault();
 
-		let newMessage={
+		newMessage.message=message;
+		newMessage.sentTime=new Date().toLocaleTimeString();
 
-			receiverId:debuggerId,
-			receiverName:debuggerName,
-			senderId:studentId,
-			
-			senderName:studentName,
-			message:message,
-			sentTime:new Date().toLocaleTimeString(),
-			sentDate:new Date().toLocaleDateString()
-	
-		}
+		
 	
 		
 
@@ -178,7 +191,7 @@ const DoubtPage = () => {
 							
 						
 
-							// if(message.senderId==window.localStorage.getItem("userId"))
+							
 							return  <div ref={scrollRef} key={index}  className={message.senderId==studentId?"message receiver":"message sender"}>
 								<h5>{message.senderName}</h5>
 							<p>{message.message}</p>

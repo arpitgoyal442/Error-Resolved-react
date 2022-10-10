@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { socket } from "../../socket";
 
 import {URL} from "../../Globals/Constants.js"
+import {front_URL} from "../../Globals/Constants"
 
 
 function StudentDoubtCard({doubtInfo}) {
+
+	let navigate=useNavigate();
 
 	
 
@@ -28,7 +32,7 @@ function StudentDoubtCard({doubtInfo}) {
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				
+				// onClose:()=>{navigate("/student")},				
 				theme:"dark"
 				});
 

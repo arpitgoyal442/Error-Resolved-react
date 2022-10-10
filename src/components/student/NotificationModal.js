@@ -1,7 +1,7 @@
 import StarFilled from "@heroicons/react/solid/StarIcon";
 import StarEmpty from "@heroicons/react/outline/StarIcon";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,7 +10,7 @@ import {URL} from "../../Globals/Constants.js"
 
 function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
-	const navigate=useNavigate();
+	
 
 
 	let onAccept=()=>{
@@ -26,8 +26,6 @@ function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,o
 			studentName:studentInfo.userName
 
 		}
-
-		
 
 		axios.post(`${URL}/student/acceptrequest`,dataToSend)
 		.then((data)=>{console.log(data);

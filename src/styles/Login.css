@@ -118,15 +118,19 @@
 
 .mobile_login_button{
 
-	width: 70%;
+	width: fit-content;
 	padding: 5px;
 	background-color:#015a61;
 	color: whitesmoke;
 	font-size:large;
 	margin-bottom: 20px;
-	margin-left: 15%;
+	
 	border-radius: 10px;
-	padding-left: 20%;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: auto;
+	margin-right: auto;
 
 }
 
@@ -141,20 +145,10 @@
 	.mobileView{
 		display: block;
 		background-color: #008891;
-		/* background-color: red; */
-
-		/* align-items: center;
-		justify-content: center;
-		 */
-	}
-
-	.mobileView_card{
-		/* display: flex; */
-/* 
-		height: 80%;
-		width: 90%; */
 		
 	}
+
+	
 	
   }
 

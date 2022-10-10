@@ -1,7 +1,7 @@
 import { GoogleLogin } from 'react-google-login';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
-import { Icon } from '@iconify/react';
+
 
 import { URL } from "../Globals/Constants.js"
 
@@ -59,11 +59,6 @@ function Signin() {
 
 			)
 			.catch(err => { console.log(err) })
-
-
-
-
-
 
 	}
 

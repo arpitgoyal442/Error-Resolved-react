@@ -30,19 +30,6 @@ function DropdownContent({ closeDropdown, notification, userData }) {
 
 		},
 		content: {
-			// padding: "10",
-			// marginLeft: "25%",
-			// marginTop: "15vh",
-			// marginBottom: "15vh",
-			// border: "1px solid black",
-			// background: "#fff",
-			// WebkitOverflowScrolling: "touch",
-			// borderRadius: "4px",
-
-			// scrollbarWidth: "0",
-			// width: "50%",
-			// minWidth:"400px"
-
 		      maxWidth:'90vw',
 			  maxHeight:'90vh',
 
@@ -81,7 +68,7 @@ function DropdownContent({ closeDropdown, notification, userData }) {
 				<NotificationModal notificationId={notification._id} studentInfo={userData} debuggerInfo={notification.debuggerData} doubtInfo={notification.doubtData} offModal={offModal} />
 			</Modal>}
 
-			{/* <NotificationModal notificationId={notification._id} studentInfo={userData} debuggerInfo={notification.debuggerData} doubtInfo={notification.doubtData} offModal={offModal} /> */}
+		
 
 
 		</div>

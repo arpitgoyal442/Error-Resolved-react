@@ -140,40 +140,57 @@ const MobileChat = ({ aboutDoubt,closeChat }) => {
 
 	}, [allMessages])
 
+	let debuggerId=aboutDoubt.debuggerId;
+	let debuggerName=aboutDoubt.debuggerName;
 
 
 	let currentId=window.localStorage.getItem("userId");
 	let studentId = aboutDoubt.studentId;
 	let studentName = aboutDoubt.studentName;
 	let doubtId = aboutDoubt._id;
-	// let debuggerId = window.localStorage.getItem("userId");
-	// let debuggerName = window.localStorage.getItem("userName");
+	let receiverId= (currentId==studentId)?debuggerId:studentId;
+	let receiverName= (currentId==studentId)?debuggerName:studentName;
+	let senderName=(currentId==studentId)?studentName:debuggerName;
 
-	let debuggerId=aboutDoubt.debuggerId;
-	let debuggerName=aboutDoubt.debuggerName;
+	
+
+
+	let newMessage={
+
+		   receiverId: receiverId,
+			receiverName: receiverName,
+			senderId: currentId,
+
+			senderName:senderName ,
+			message: message,
+			sentTime: new Date().toLocaleTimeString(),
+			sentDate: new Date().toLocaleDateString()
+
+	}
 
 
 	const sendMessage = (e) => {
-
-
-
 		e.preventDefault();
 
 		if (message === "")
 			return;
 
-		let newMessage = {
+			newMessage.message=message;
+			newMessage.sentTime=new Date().toLocaleTimeString();
+			newMessage.sentDate=new Date().toLocaleDateString();
 
-			receiverId: (currentId==studentId)?debuggerId:studentId,
-			receiverName:  (currentId==studentId)?debuggerName:studentName,
-			senderId: currentId,
+		// let newMessage = {
 
-			senderName:(currentId==studentId)?studentName:debuggerName ,
-			message: message,
-			sentTime: new Date().toLocaleTimeString(),
-			sentDate: new Date().toLocaleDateString()
+		// 	receiverId: receiverId,
+		// 	receiverName: receiverName,
+		// 	senderId: currentId,
 
-		}
+		// 	senderName:senderName ,
+		// 	message: message,
+		// 	sentTime: new Date().toLocaleTimeString(),
+		// 	sentDate: new Date().toLocaleDateString()
+
+		// }
 
 
 
@@ -202,12 +219,7 @@ const MobileChat = ({ aboutDoubt,closeChat }) => {
 	}
 
 
-	// End Trying
-
-
-
-	//
-
+	
 
 	return (
 		<div className="bg-light absolute top-0 left-0 w-screen h-screen pt-navbar flex flex-col">
@@ -241,22 +253,7 @@ const MobileChat = ({ aboutDoubt,closeChat }) => {
 
 
 
-				{/*  */}
-
-
-
-
-				{/* <div className="mobileChatDiv mobileChat_sender">
-					<h5>Arpit Goyal</h5>
-					<p>Hello Buddy, How Are You</p>
-					<span>12-3-2011</span>
-				</div>
-
-				<div className="mobileChatDiv mobileChat_receiver">
-					<h5>Arpit Goyal</h5>
-					<p>Hello Buddy, How Are You</p>
-					<span>12-3-2011</span>
-				</div> */}
+				
 
 
 			</div>
