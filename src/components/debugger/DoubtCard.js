@@ -177,8 +177,7 @@ function DoubtCard(props) {
 					},
 					content: {
 						padding: "0",
-						marginLeft: "28%",
-						marginRight:"35%",
+						
 						marginTop: "35vh",
 						
 
@@ -193,8 +192,10 @@ function DoubtCard(props) {
 						
 
 						scrollbarWidth: "0",
+						marginLeft:"auto",
+						marginRight:"auto",
 
-						width: "40%",
+						width: ( window.innerWidth>=600) ?"40%":"80%",
 						
 					},
 				}}
