@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MaterialIcon, {colorPalette} from 'material-icons-react';
 
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -65,11 +66,14 @@ function StudentDoubtCard({doubtInfo}) {
 			<ul className="studentDoubtCard_dropdown">
 				{doubtInfo.debuggerId!=null && <Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
 					<div>
-					<span
+
+						<span >
+					<MaterialIcon   icon="meeting_room" size={25} color="gray"  /></span>
+					{/* <span
 						className="iconify-inline"
 						data-icon="akar-icons:eye"
 						
-					></span>
+					></span> */}
 					</div>
 				</Link>}
 				

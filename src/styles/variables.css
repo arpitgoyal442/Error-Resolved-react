@@ -2,8 +2,13 @@ html{
   --lightest: #FFFFFF;
   --light: #E7E6E1;
   --darkest: #A9A9A9;
+  /* --light:#1D4354; */
   --highlight: #008891;
+  /* --highlight:#1D4354; */
+ 
   --secondary-highlight: #2BA3A3;
+  /* --secondary-highlight:#1D4354; */
+  
   --active-background: #ea4335;
   --navbar-height: 10vh;
 }

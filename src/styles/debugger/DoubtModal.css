@@ -15,7 +15,8 @@
 
 
 .doubt_modal_studentname{
-  margin-left:30% ;
+  margin-left:auto ;
+  margin-right: auto;
   margin-bottom: 20px;
 }
 
@@ -29,8 +30,6 @@
 }
 
 .modal h2{
-     /* color:rgb(85, 84, 84);  */
-     
 
      font-weight: 500;
 

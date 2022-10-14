@@ -13,6 +13,8 @@
 	color: #212222;
 	border-bottom: 1px solid var(--darkest);
 	background-color: var(--lightest);
+	/* background-color: #1D4354; */
+	/* color: whitesmoke; */
 }
 .navbar_shadow{
 	border-bottom: none;
@@ -33,9 +35,11 @@
 }
 .navbar h2 span {
 	color: var(--highlight);
+	/* color: red; */
 }
 .navbar h2 {
 	font-weight: 400;
+	/* color: whitesmoke; */
 }
 .navbarIcons {
 	display: flex;

@@ -119,7 +119,7 @@ function Navbar() {
 
 					<div  className="w-8 h-8 relative">
 						<p className="grid place-items-center w-4 h-4 text-xs text-white font-semibold rounded-full bg-highlight absolute top-0 right-0 -translate-y-1/3">{allNotifications.length}</p>
-						<BellIcon   className="bellIcon" />
+						<BellIcon    className="bellIcon" />
 					</div>
 
 					<div

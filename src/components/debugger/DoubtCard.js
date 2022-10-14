@@ -195,7 +195,7 @@ function DoubtCard(props) {
 						marginLeft:"auto",
 						marginRight:"auto",
 
-						width: ( window.innerWidth>=600) ?"40%":"80%",
+						width: ( window.innerWidth>=600) ?"40%":"83%",
 						
 					},
 				}}

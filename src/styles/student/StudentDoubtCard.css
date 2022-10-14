@@ -7,6 +7,8 @@
   cursor: pointer;
   background-color: var(--light);
   transition: all 100ms ease-in-out;
+  min-height:100px;
+  
 }
 .studentDoubtCard h4{
 
@@ -53,18 +55,18 @@
   flex-direction: column;
   justify-content: space-evenly;
 	position: absolute;
-  top: 2.5%;
+  top: 2%;
 	right: 0.5rem;
+  
 }
 
 .studentDoubtCard_dropdown .iconify-inline{
-  /* background-color: var(--highlight); */
-  /* color: white; */
- color: gray;
+
+  color: gray;
   border-radius: 50%;
-  /* padding: 5px; */
+ 
   width: 30px;
-  height: 25px;
+  height: 25px; 
 
   
 }
@@ -72,6 +74,11 @@
 .studentDoubtCard_dropdown .iconify-inline:hover{
 
   color:black;
+}
+
+
+.meet_icon:hover{
+  color: black;
 }
 
 

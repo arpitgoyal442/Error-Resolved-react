@@ -1,5 +1,5 @@
 .leftbar {
-    position: sticky;
+    /* position: sticky; */
     top: 10vh;
 	flex: 0.2;
     padding: 1rem;

@@ -107,14 +107,6 @@ function DebuggerHome() {
 	},[currentUser])
 
 
-	// useEffect(()=>{
-
-	// 	socket.on("student-accept-request",(data)=>{
-	// 		setRequestedDoubts((pre)=>[...pre,data.doubtId])
-	// 	})
-
-	// },[])
-
 
 
 	
@@ -122,6 +114,8 @@ function DebuggerHome() {
 	return (
 		<>
 			<Navbar  />
+
+
 			<div className="debuggerHome">
 				<Filters
 					sort={sort}
@@ -148,6 +142,7 @@ function DebuggerHome() {
 						topic={topic}
 						setTopic={setTopic}
 					/>
+					  
 					<div onClick={() => setShowModal(true)} className="debuggerHome_doubtsContainer">
 
                          
