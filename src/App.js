@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Signin from "./pages/signin.js";
-import DebuggerHome from "./pages/debugger/Home.js";
+import DebuggerHome from "./pages/debugger/NewHome.js";
 import StudentHome from "./pages/student/Home.js";
 import AddNewDoubt from "./pages/student/NewDoubt.js";
 import StudentDoubtPage from "./pages/student/DoubtPage.js";
