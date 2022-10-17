@@ -7,6 +7,8 @@ import axios from "axios";
 import StudentDoubtCard from "../../components/student/DoubtCard.js";
 import { socket } from "../../socket.js";
 
+import {URL} from "../../Globals/Constants.js"
+
 
 
 
@@ -16,10 +18,6 @@ function DebuggerHome() {
 	
 
 
-	// const location=useLocation(); // To get Notifications and Image coming from sigin page for our navbar
-
-	
-
 	const [doubts,setDoubts]=useState([]);                    // To Store all doubts
 	const [requestedDoubts,setRequestedDoubts]=useState([]);  // To store already Requested Doubts
 	const [sort, setSort] = useState(1),
@@ -28,17 +26,23 @@ function DebuggerHome() {
 		[requested, setRequested] = useState(0),
 		[topic, setTopic] = useState([]),
 		[showModal, setShowModal] = useState(false),
-		[deletedDoubts,setDeletedDoubts]=useState([]);
+		[deletedDoubts,setDeletedDoubts]=useState([]),
+		[debuggerName,setDebuggerName]=useState(""),
+		[currentUser,setCurrentUser]=useState(null);
+
 		
 
 	
 
 
 	useEffect( ()=>{
+
+		setCurrentUser(localStorage.getItem("userId"));
+
 		// Fetch all Doubts
 		let userId=window.localStorage.getItem("userId")
 
-		 axios.get("http://localhost:9000/doubt/all",{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
+		 axios.get(`${URL}/doubt/all`,{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
 		.then((data)=>{
 			console.log(data.data);
 
@@ -56,10 +60,11 @@ function DebuggerHome() {
 	useEffect(()=>{
 		let userId=window.localStorage.getItem("userId")
 
-		axios.get("http://localhost:9000/debugger/profile/"+userId)
+		axios.get(`${URL}/debugger/profile/`+userId)
 		.then( 
 			data=>{
 				console.log(data.data.requestedDoubts);
+				setDebuggerName(data.data.name);
 				 setRequestedDoubts(data.data.requestedDoubts);
 			}
 		)
@@ -91,12 +96,26 @@ function DebuggerHome() {
 	},[]);
 
 
+	useEffect(()=>{
+
+		if(socket)
+		{
+			socket.emit("add-user",currentUser);
+		}
+
+
+	},[currentUser])
+
+
+
 
 	
 	
 	return (
 		<>
 			<Navbar  />
+
+
 			<div className="debuggerHome">
 				<Filters
 					sort={sort}
@@ -123,6 +142,7 @@ function DebuggerHome() {
 						topic={topic}
 						setTopic={setTopic}
 					/>
+					  
 					<div onClick={() => setShowModal(true)} className="debuggerHome_doubtsContainer">
 
                          
@@ -132,7 +152,7 @@ function DebuggerHome() {
 							{
 
                              
-							 return <DoubtCard  aboutDoubt={doubt}
+							 return <DoubtCard  aboutDoubt={doubt} debuggerName={debuggerName}
 							
 							  key={index}  
 							 isRequested={  ( requestedDoubts.includes(doubt._id) )?true:false }

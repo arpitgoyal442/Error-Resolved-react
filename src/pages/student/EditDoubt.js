@@ -6,6 +6,7 @@ import axios from "axios";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { URL,front_URL } from "../../Globals/Constants";
 
 
 
@@ -96,7 +97,9 @@ function EditDoubt() {
 
 
 
-		axios.put("http://localhost:9000/doubt/" + aboutDoubt._id, myFormData).then((d) => {
+		
+
+		axios.put(`${URL}/doubt/${aboutDoubt._id}`, myFormData).then((d) => {
 
 			toast('Updated Successfully', {
 				position: "bottom-right",
@@ -105,7 +108,7 @@ function EditDoubt() {
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				onClose:()=>{window.location.href="http://localhost:3000/student"; },
+				onClose:()=>{window.location.href=`${front_URL}/student`; },
 				theme:"dark"
 				});
 

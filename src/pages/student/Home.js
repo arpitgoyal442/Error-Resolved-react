@@ -6,12 +6,13 @@ import DoubtCard from "../../components/student/DoubtCard";
 import { useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket";
+import {URL} from "../../Globals/Constants.js"
 
 
 
 function StudentHome() {
 
-	
+
 
 	const [status, setStatus] = useState(1);
 	// 1 -> all, 2 -> pending, 3 -> unresolved, 4 -> resolved
@@ -19,48 +20,62 @@ function StudentHome() {
 
 
 
-	const [allDoubts,setAllDoubts]=useState([]);
-	const [notifications,setNotifications]=useState([]);
-	const [imageUrl,setImageUrl]=useState("");
-	const [deletedDoubts,setDeletedDoubts]=useState([]);
+	const [allDoubts, setAllDoubts] = useState([]);
+	const [notifications, setNotifications] = useState([]);
+	const [imageUrl, setImageUrl] = useState("");
+	const [deletedDoubts, setDeletedDoubts] = useState([]);
+	const [currentUser, setCurrentUser] = useState(null)
 
 
 
 
 
 	// To fetch All Doubts of Students
-	useEffect(()=>{
+	useEffect(() => {
 
-		let studentId=window.localStorage.getItem("userId");
-		axios.get("http://localhost:9000/student/doubts/"+studentId)
-		.then((data)=>{
+		setCurrentUser(localStorage.getItem("userId"));
 
-			setAllDoubts(data.data);
-		})
-		.catch((err)=>{console.log(err)})
-	},[])
+		let studentId = window.localStorage.getItem("userId");
 
-	useEffect(()=>{
-		if(socket)
-		{
-			
-			socket.on("deleted-doubt",(doubtInfo)=>{
-				setDeletedDoubts((pre)=>[...pre,doubtInfo._id]);
+		
+		axios.get(`${URL}/student/doubts/${studentId}`)
+			.then((data) => {
+
+				setAllDoubts(data.data);
+			})
+			.catch((err) => { console.log(err) })
+	}, [])
+
+	useEffect(() => {
+		if (socket) {
+
+			socket.on("deleted-doubt", (doubtInfo) => {
+				console.log(doubtInfo);
+				setDeletedDoubts((pre) => [...pre, doubtInfo._id]);
 			});
 
 
-			
+
 		}
 
 
-	},[])
+	}, [])
+
+	useEffect(() => {
+
+		if (socket) {
+			socket.emit("add-user", currentUser);
+		}
+
+
+	}, [currentUser])
 
 
 
 
 	return (
 		<>
-			<Navbar  notifications={notifications} imageUrl={imageUrl} />
+			<Navbar notifications={notifications} imageUrl={imageUrl} />
 			<main className="studentHome">
 				{/* mobile-view options panel */}
 				<div className="studentMobile">
@@ -71,20 +86,20 @@ function StudentHome() {
 						</div>
 					</Link>
 					<div className="filters">
-						<div onClick={() => setFilter(1)} className={`filter_btn ${filter===1 && "active"}`}>All</div>
-						<div onClick={() => setFilter(2)} className={`filter_btn ${filter===2 && "active"}`}>Pending</div>
-						<div onClick={() => setFilter(3)} className={`filter_btn ${filter===3 && "active"}`}>Unresolved</div>
-						<div onClick={() => setFilter(4)} className={`filter_btn ${filter===4 && "active"}`}>Resolved</div>
+						<div onClick={() => setFilter(1)} className={`filter_btn ${filter === 1 && "active"}`}>All</div>
+						<div onClick={() => setFilter(2)} className={`filter_btn ${filter === 2 && "active"}`}>Pending</div>
+						<div onClick={() => setFilter(3)} className={`filter_btn ${filter === 3 && "active"}`}>Unresolved</div>
+						<div onClick={() => setFilter(4)} className={`filter_btn ${filter === 4 && "active"}`}>Resolved</div>
 					</div>
 				</div>
 				{/* left */}
 				<div className="studentLeft">
-				<Link to="/student/new-doubt" >
+					<Link to="/student/new-doubt" >
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
 						</div>
-					 </Link> 
+					</Link>
 					<div className="filters">
 						<button
 							onClick={() => setFilter(1)}
@@ -116,20 +131,19 @@ function StudentHome() {
 				<div className="studentRight">
 					<div className="doubtCards">
 
-						{allDoubts.map((doubt,index)=>{
+						{allDoubts.map((doubt) => {
 
-							if(deletedDoubts.includes(doubt._id)==false)
-							{
-							  return <DoubtCard  key={index} doubtInfo={doubt} />
+							if (deletedDoubts.includes(doubt._id) == false) {
+								return <DoubtCard key={doubt._id} doubtInfo={doubt} />
 							}
 
-							
+
 						})}
 
 
 
-						
-						
+
+
 					</div>
 				</div>
 			</main>

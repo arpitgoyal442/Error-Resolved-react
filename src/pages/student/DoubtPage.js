@@ -14,6 +14,8 @@ import { Icon } from '@iconify/react';
 
 import { socket } from "../../socket.js";
 
+import { URL } from "../../Globals/Constants.js";
+
 
 
 
@@ -34,7 +36,8 @@ const DoubtPage = () => {
 
 		setCurentUser(localStorage.getItem("userId"));
 
-		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
+		
+		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
 
 			
 			setAllMessages(data.data.chats);
@@ -48,6 +51,30 @@ const DoubtPage = () => {
 		// eslint-disable-next-line
 	}, [])
 
+	
+
+
+
+	useEffect(()=>{
+
+		if(socket)
+		{
+			
+			console.log("outside msg-received")
+			socket.on("msg-recieve",data=>{
+
+				console.log("Message received is "+data)
+
+				
+				setArriveMessage(data);
+				// console.log(data)
+			})
+		}
+
+
+
+	},[])
+
 	useEffect(()=>{
 
 		if(socket)
@@ -59,24 +86,11 @@ const DoubtPage = () => {
 	},[currentUser])
 
 
-
 	useEffect(()=>{
 
-		if(socket)
-		{
-			socket.on("msg-recieve",data=>{
-				setArriveMessage(data);
-			})
-		}
+		arriveMessage && setAllMessages((pre)=>[...pre,arriveMessage]);
 
-
-
-	},[])
-
-
-	useEffect(()=>{
-
-		arriveMessage && setAllMessages((pre)=>[...pre,arriveMessage])
+		
 
 
 	},[arriveMessage])
@@ -99,6 +113,18 @@ const DoubtPage = () => {
 	let doubtId=aboutDoubt._id;
 	let debuggerId=aboutDoubt.debuggerId;
 	let debuggerName=aboutDoubt.debuggerName;
+	let newMessage={
+
+		receiverId:debuggerId,
+		receiverName:debuggerName,
+		senderId:studentId,
+		
+		senderName:studentName,
+		message:"",
+		sentTime:new Date().toLocaleTimeString(),
+		sentDate:new Date().toLocaleDateString()
+
+	}
 	
 
 	
@@ -107,24 +133,17 @@ const DoubtPage = () => {
 
 		e.preventDefault();
 
-		let newMessage={
+		newMessage.message=message;
+		newMessage.sentTime=new Date().toLocaleTimeString();
 
-			receiverId:debuggerId,
-			receiverName:debuggerName,
-			senderId:studentId,
-			
-			senderName:studentName,
-			message:message,
-			sentTime:new Date().toLocaleTimeString(),
-			sentDate:new Date().toLocaleDateString()
-	
-		}
+		
 	
 		
 
 	
+		
 
-		axios.post("http://localhost:9000/doubt/message/"+doubtId,newMessage)
+		axios.post(`${URL}/doubt/message/${doubtId}`,newMessage)
 		.then((data)=>{
 
 			console.log("Message Sent Success");
@@ -147,14 +166,14 @@ const DoubtPage = () => {
 	return (
 		<>
 			<Navbar />
-			<MobileDoubtPage />
+			<MobileDoubtPage aboutDoubt={aboutDoubt} />
 			<div className="doubtPage hidden md:grid">
 				<div className="left">
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare />
+							{/* <ScreenShare /> */}
 						</div>
 					</div>
 					
@@ -172,7 +191,7 @@ const DoubtPage = () => {
 							
 						
 
-							// if(message.senderId==window.localStorage.getItem("userId"))
+							
 							return  <div ref={scrollRef} key={index}  className={message.senderId==studentId?"message receiver":"message sender"}>
 								<h5>{message.senderName}</h5>
 							<p>{message.message}</p>

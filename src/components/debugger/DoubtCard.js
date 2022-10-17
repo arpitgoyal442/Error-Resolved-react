@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactLoading from "react-loading";
 
 import Modal from "react-modal";
@@ -8,8 +8,14 @@ import axios from "axios";
 
 import {useNavigate} from "react-router-dom";
 
+import { socket } from "../../socket.js";
+
+import { URL } from "../../Globals/Constants.js";
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+
 
 
 Modal.setAppElement("#root");
@@ -17,6 +23,12 @@ Modal.setAppElement("#root");
 function DoubtCard(props) {
 
 	const navigate=useNavigate();
+
+	console.log("props aboutDoubt is")
+	console.log(props.aboutDoubt)
+
+	const [doubtStatus,setDoubtStatus]=useState(props.isRequested?"Requested":"Request");
+	const [solvingNow,setSolvingNow]=useState(props.solvingNow);
 
 
 	// console.log(props.aboutDoubt._id+"is in doubtCard ");
@@ -39,7 +51,7 @@ function DoubtCard(props) {
 	const makeRequest=()=>{
 
 
-		if(props.isRequested)
+		if(doubtStatus==="Requested")
 		{
 			toast.info('Already Requested Kindly wait for response', {
 				position: "bottom-right",
@@ -58,9 +70,12 @@ function DoubtCard(props) {
 			let doubtId=props.aboutDoubt._id;
 			let studentId=props.aboutDoubt.studentId;
 
-			axios.post("http://localhost:9000/debugger/request/"+debuggerId,{doubtId:doubtId,studentId:studentId})
+			
+			
+			axios.post(`${URL}/debugger/request/${debuggerId}`,{doubtId:doubtId,studentId:studentId})
 			.then((data)=>{
 
+				setDoubtStatus("Requested")
 				
 
 				toast('Requested Successfully ', {
@@ -74,7 +89,8 @@ function DoubtCard(props) {
 					theme:'dark'
 					});
 
-					
+
+					socket.emit("request-doubt",data.data)
 				 
 				console.log("Successfull request");
 				console.log(data);
@@ -90,6 +106,21 @@ function DoubtCard(props) {
 
 	}
 
+
+	useEffect(()=>{
+
+		socket.on("student-accept-request",(data)=>{
+
+			console.log("student-accept-request inside DoubtCard");
+			console.log(data.doubtId+"  "+props.aboutDoubt._id)
+			if(data.doubtId==props.aboutDoubt._id)
+			setSolvingNow(true);
+
+
+		})
+            // eslint-disable-next-line
+	},[])
+
 	const openDoubt=()=>{
 
 		navigate(`/debugger/solve-doubt/${props.aboutDoubt._id}` ,{state:{aboutDoubt:props.aboutDoubt}});
@@ -103,7 +134,7 @@ function DoubtCard(props) {
 			
 				
 				<ReactLoading
-					type={props.aboutDoubt.status=== "active" ? "blank" : "bars"}
+					type={ props.aboutDoubt.status=== "active" || props.aboutDoubt.debuggerId===window.localStorage.getItem("userId") ? "blank" : "bars"}
 					color="gray"
 					height="9%"
 					width="9%"
@@ -115,7 +146,7 @@ function DoubtCard(props) {
 
 			<div className="doubtCard_body">
 				<div>
-					<h5 className="heading">Amount</h5>
+					<h5 className="heading">Budget</h5>
 					<p>₹ {props.aboutDoubt.price}</p>
 				</div>
 				<div>
@@ -130,8 +161,8 @@ function DoubtCard(props) {
 					View
 				</button>
 
-				{ !props.solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{props.isRequested?"Requested":"Request"}</button>}
-				{props.solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
+				{ !solvingNow && props.aboutDoubt.status === "active" && <button  onClick={makeRequest} className="doubtCard_request">{doubtStatus}</button>}
+				{solvingNow && <button onClick={openDoubt} className="doubtCard_open">Open</button> }
 			</div>
 
 			<Modal
@@ -146,8 +177,7 @@ function DoubtCard(props) {
 					},
 					content: {
 						padding: "0",
-						marginLeft: "28%",
-						marginRight:"35%",
+						
 						marginTop: "35vh",
 						
 
@@ -162,8 +192,10 @@ function DoubtCard(props) {
 						
 
 						scrollbarWidth: "0",
+						marginLeft:"auto",
+						marginRight:"auto",
 
-						width: "40%",
+						width: ( window.innerWidth>=600) ?"40%":"83%",
 						
 					},
 				}}

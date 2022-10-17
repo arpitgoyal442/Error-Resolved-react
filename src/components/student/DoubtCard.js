@@ -2,24 +2,28 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MaterialIcon, {colorPalette} from 'material-icons-react';
+
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { socket } from "../../socket";
 
+import {URL} from "../../Globals/Constants.js"
+import {front_URL} from "../../Globals/Constants"
+
 
 function StudentDoubtCard({doubtInfo}) {
+
+	let navigate=useNavigate();
 
 	
 
 
 	const onDeleteClick=()=>{
-
-		axios.delete("http://localhost:9000/doubt/"+doubtInfo._id)
+		axios.delete(`${URL}/doubt/${doubtInfo._id}`)
 		.then(()=>{
-
-
 			socket.emit("delete-doubt",doubtInfo);
 
 			toast('Deleted Successfully', {
@@ -29,12 +33,9 @@ function StudentDoubtCard({doubtInfo}) {
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				
+				// onClose:()=>{navigate("/student")},				
 				theme:"dark"
 				});
-
-
-
 
 		})
 		.catch(()=>{
@@ -58,20 +59,24 @@ function StudentDoubtCard({doubtInfo}) {
 	}
 
 	return (
-		<div className="studentDoubtCard">
+		<div  className="studentDoubtCard">
 			<p className="studentDoubtCard_date">{doubtInfo.postedTime}</p>
 			<h4 className="studentDoubtCard_topic">{doubtInfo.topic}</h4>
 			<ToastContainer/>
 			<ul className="studentDoubtCard_dropdown">
-				<Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
+				{doubtInfo.debuggerId!=null && <Link to={`/student/solve-doubt/${doubtInfo._id}`} state={{aboutDoubt:doubtInfo}}>
 					<div>
-					<span
+
+						<span >
+					<MaterialIcon   icon="meeting_room" size={25} color="gray"  /></span>
+					{/* <span
 						className="iconify-inline"
 						data-icon="akar-icons:eye"
 						
-					></span>
+					></span> */}
 					</div>
-				</Link>
+				</Link>}
+				
 				<Link to="/student/edit-doubt" state={{aboutDoubt:doubtInfo}}>
 					<div>
 					<span

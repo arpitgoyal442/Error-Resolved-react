@@ -25,6 +25,7 @@
 {
 	width: 50%;
 	
+	
 }
 
 .signin_right{
@@ -33,9 +34,7 @@
 	
 }
 
-.signin_right{
-	/* background-color: #0b0b0b; */
-}
+
 
 
 
@@ -63,7 +62,8 @@
 
 	background-color: #008891;
 	color: white;
-	width: 40%;
+	width: fit-content;
+	
 	height: fit-content;
 	min-width:fit-content;
 	padding: 6px;
@@ -86,6 +86,72 @@
 	justify-content: space-around;
 	align-items: center;
 }
+.mobileView{
+
+	display: none;
+	width: 100vw;
+	height: 100vh;
+
+	
+}
+
+.mobileView_card{
+
+	
+}
+
+.mobileView img{
+
+	width: 50%;
+	height: 50%;
+	margin-left: 25%;
+	/* border: 2px solid black; */
+}
+
+.mobileView h1{
+
+	text-align: center;
+	color: azure;
+	margin-bottom: 15%;
+	/* font-family:s */
+}
+
+
+.mobile_login_button{
+
+	width: fit-content;
+	padding: 5px;
+	background-color:#015a61;
+	color: whitesmoke;
+	font-size:large;
+	margin-bottom: 20px;
+	
+	border-radius: 10px;
+	
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+@media screen and (max-width: 600px) {
+
+
+	.signin{
+		display: none;
+		
+	}
+
+	.mobileView{
+		display: block;
+		background-color: #008891;
+		
+	}
+
+	
+	
+  }
 
 
 

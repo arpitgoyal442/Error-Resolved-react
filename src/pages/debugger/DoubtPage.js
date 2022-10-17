@@ -3,7 +3,7 @@ import MobileDoubtPage from "../../components/MobileDoubtPage.js";
 import Navbar from "../../components/Navbar.js";
 import Document from "../../components/doubtComponents/Document.js";
 
-import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -14,7 +14,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect,useRef } from "react";
 import { socket } from "../../socket.js";
-import { Icon } from '@iconify/react';
+
+
+import { URL } from "../../Globals/Constants.js";
 
 
 
@@ -38,16 +40,10 @@ const DoubtPage = () => {
 	useEffect(() => {
 
 		setCurentUser(localStorage.getItem("userId"));
-
-		axios.get("http://localhost:9000/doubt/chats/" + aboutDoubt._id).then((data) => {
-
-			
+		axios.get(`${URL}/doubt/chats/${aboutDoubt._id}`).then((data) => {
 			setAllMessages(data.data.chats);
-
 		}).catch((err) => {
 			console.log(err);
-
-
 		})
 
 		// eslint-disable-next-line
@@ -59,8 +55,6 @@ const DoubtPage = () => {
 		{
 			socket.emit("add-user",currentUser);
 		}
-
-
 	},[currentUser])
 
 
@@ -105,6 +99,19 @@ const DoubtPage = () => {
 	let debuggerId = window.localStorage.getItem("userId");
 	let debuggerName = window.localStorage.getItem("userName");
 
+	let newmessage={
+
+		receiverId: studentId,
+			receiverName: studentName,
+			senderId: debuggerId,
+
+			senderName: debuggerName,
+			message: "",
+			sentTime: "",
+			sentDate: new Date().toLocaleDateString()
+
+	}
+
 
 
 	const sendMessage = (e) => {
@@ -116,31 +123,35 @@ const DoubtPage = () => {
 		if(message==="")
 		return;
 
-		let newMessage = {
+		newmessage.message=message;
+		newmessage.sentTime=new Date().toLocaleTimeString();
 
-			receiverId: studentId,
-			receiverName: studentName,
-			senderId: debuggerId,
+		// let newMessage = {
 
-			senderName: debuggerName,
-			message: message,
-			sentTime: new Date().toLocaleTimeString(),
-			sentDate: new Date().toLocaleDateString()
+		// 	receiverId: studentId,
+		// 	receiverName: studentName,
+		// 	senderId: debuggerId,
 
-		}
+		// 	senderName: debuggerName,
+		// 	message: message,
+		// 	sentTime: new Date().toLocaleTimeString(),
+		// 	sentDate: new Date().toLocaleDateString()
+
+		// }
 
 
 		
 
-		axios.post("http://localhost:9000/doubt/message/" + doubtId, newMessage)
+		
+		axios.post(`${URL}/doubt/message/${doubtId}`, newmessage)
 			.then((data) => {
 
 				console.log("Message Sent Success");
 				console.log(data);
 
-				setAllMessages((pre)=>[...pre,newMessage]);
+				setAllMessages((pre)=>[...pre,newmessage]);
 
-				socket.emit("send-msg",newMessage.receiverId,newMessage);
+				socket.emit("send-msg",newmessage.receiverId,newmessage);
 
 				setMessage("");
 
@@ -162,14 +173,14 @@ const DoubtPage = () => {
 	return (
 		<>
 			<Navbar />
-			<MobileDoubtPage />
+			<MobileDoubtPage aboutDoubt={aboutDoubt} />
 			<div  className="doubtPage hidden md:grid">
 				<div className="left">
 					<div className="doubtPage_main">
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare />
+							{/* <ScreenShare /> */}
 						
 						</div>
 					</div>

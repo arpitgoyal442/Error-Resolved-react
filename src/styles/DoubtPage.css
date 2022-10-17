@@ -192,3 +192,61 @@
 .doneAndPay:hover .doneAndPay_tooltip {
 	visibility: visible;
   }
+
+
+
+  /*  MobileChat */
+
+  .mobileMessages{
+
+	overflow-y: scroll;
+  }
+
+  .mobileChatDiv {
+
+
+	width: 60%;
+	padding: 5px;
+	
+
+	
+  }
+
+
+
+  .mobileChatDiv p{
+
+	padding: 5px;
+	
+	font-size: medium;
+
+	border-radius: 10px
+  }
+
+
+  
+
+  .mobileChat_sender p{
+
+
+	background-color: antiquewhite;
+	
+  }
+
+
+  .mobileChat_receiver{
+
+	margin-left: auto;
+  }
+
+  .mobileChat_receiver p{
+
+	/* margin-left: auto; */
+
+	color: white;
+
+	background-color: var(--highlight);
+
+
+  }
+

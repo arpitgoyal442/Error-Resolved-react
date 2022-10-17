@@ -1,19 +1,23 @@
 import StarFilled from "@heroicons/react/solid/StarIcon";
 import StarEmpty from "@heroicons/react/outline/StarIcon";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
+import { socket } from "../../socket";
+import {URL} from "../../Globals/Constants.js"
 
-	const navigate=useNavigate();
+function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,offModal}) {
+
+	
 
 
 	let onAccept=()=>{
 
 		let dataToSend={
 
+			notificationId:notificationId,
 			debuggerId:debuggerInfo._id,
 			debuggerName:debuggerInfo.name,
 			doubtId:doubtInfo._id,
@@ -23,7 +27,7 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 		}
 
-		axios.post("http://localhost:9000/student/acceptrequest",dataToSend)
+		axios.post(`${URL}/student/acceptrequest`,dataToSend)
 		.then((data)=>{console.log(data);
 
 			toast('😀 Accepted Sucessfully', {
@@ -36,6 +40,14 @@ function NotificationHandle({debuggerInfo,doubtInfo,studentInfo,offModal}) {
 				onClose:offModal,
 				theme:"dark"
 				});
+
+				let socketData={
+					debuggerId:dataToSend.debuggerId,
+					doubtId:dataToSend.doubtId,
+					message:"Congratulations 🎉🎉 "+dataToSend.studentName+" has accepted your Request for "+dataToSend.doubtTopic+" doubt"
+				}
+
+				socket.emit("request-accept",socketData)
 
 
 		})
