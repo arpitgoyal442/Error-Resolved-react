@@ -1,10 +1,24 @@
 import React from "react";
 import FilterIcon from "@heroicons/react/outline/FilterIcon";
 import NewDoubtCard from "../../components/debugger/NewDoubtCard";
+import Navbar from "../../components/Navbar";
+import SideModal from "../../components/SideModal";
 
 const DebuggerPage = () => {
 	return (
-		<div className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
+		<>
+		<Navbar/>
+
+		<SideModal/>
+
+         {/* <div className="sideModal">
+			dfdgf
+		 </div> */}
+
+		<div  className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
+
+			
+
 			<h1 className="text-xl sm:text-3xl font-medium sm:mb-2 -mx-2 xs:mx-0 sm:px-12">All Doubts</h1>
 			<div className="flex items-center justify-between -mx-2 xs:mx-0 sm:px-12">
 				<p className="sm:text-lg">2,125 doubts</p>
@@ -32,6 +46,7 @@ const DebuggerPage = () => {
         <NewDoubtCard />
       </div>
 		</div>
+		</>
 	);
 };
 

@@ -1,0 +1,28 @@
+.sideModal{
+   
+        width: 50%;
+        
+        /* z-index: 1000000000; */
+        position: fixed;
+        left: 100%;
+        /* risght: 0%; */
+        height: 91.2vh;
+        background-color:rgb(239, 237, 237);
+        animation: sanime 0.5s ease-in-out 1s 1 forwards ;
+    
+}
+
+
+@keyframes sanime {
+
+    0%{
+        left: 100%;
+    }
+
+    100%{
+        left: 50%;
+    }
+
+
+    
+}

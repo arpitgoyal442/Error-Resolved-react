@@ -13,7 +13,7 @@ const NewDoubtCard = () => {
       <div className="-my-4 w-[1.5px] bg-light flex-shrink-0"></div>
 			{/* right */}
 			<div className="flex-1 pl-2">
-				<p className="text-blue-700 line-clamp-1 mb-1">
+				<p className="text-blue-700 line-clamp-1 mb-1" >
 					Lorem ipsum dolor sit, amet constur adipisicing elit. Ipsum, eum!
 				</p>
 				<p className="text-gray-500 line-clamp-2">

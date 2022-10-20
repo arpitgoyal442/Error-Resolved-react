@@ -39,6 +39,8 @@ import "./styles/student/NotificationHandle.css";
 import "./styles/student/EditDoubt.css";
 import "./styles/login2.css"
 import "./styles/test.css";
+import "./styles/OurAdvantage.css"
+import "./styles/SideModal.css";
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 
@@ -64,7 +66,7 @@ function App() {
 		
 		<BrowserRouter>
 			<Routes>
-				<Route exact path="/" element={<Signin />} />
+				<Route exact path="/" element={<Login2 />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
 				<Route exact path="/debugger/solve-doubt/:doubtId" element={<DebuggerDoubtPage />} />
