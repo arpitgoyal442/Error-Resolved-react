@@ -3,25 +3,56 @@ import FilterIcon from "@heroicons/react/outline/FilterIcon";
 import NewDoubtCard from "../../components/debugger/NewDoubtCard";
 import Navbar from "../../components/Navbar";
 import SideModal from "../../components/SideModal";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const DebuggerPage = () => {
+
+	const [showModal,setShowModal]=useState(false);
+	const [myt,setmyt]=useState("Java");
+
+
+	// useEffect(()=>{
+
+
+	   const clickh=()=>{
+
+		setShowModal(true)
+
+		if(showModal)
+		{
+			setmyt("C++ Doubt")
+			console.log(document.getElementsByClassName("sideModal")[0].classList)
+			document.getElementsByClassName("sideModal")[0].classList.remove("hideModal");
+			document.getElementsByClassName("sideModal")[0].classList.add("showModal");
+		}
+
+		else {
+
+			console.log(document.getElementsByClassName("sideModal")[0].classList)
+		}
+	}
+
+	// },[showModal])
+
 	return (
 		<>
 		<Navbar/>
 
-		<SideModal/>
+        
+		<SideModal topic={myt} />
 
          {/* <div className="sideModal">
 			dfdgf
 		 </div> */}
 
-		<div  className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
+		<div   className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
 
 			
 
 			<h1 className="text-xl sm:text-3xl font-medium sm:mb-2 -mx-2 xs:mx-0 sm:px-12">All Doubts</h1>
 			<div className="flex items-center justify-between -mx-2 xs:mx-0 sm:px-12">
-				<p className="sm:text-lg">2,125 doubts</p>
+				<p onClick={clickh} className="sm:text-lg">2,125 doubts</p>
 				<div className="flex items-center space-x-4">
 					<div className="border rounded-md hidden sm:flex">
 						<div className="p-2 cursor-pointer hover:bg-gray-100 active:bg-light text-sm md:text-md border-r">
