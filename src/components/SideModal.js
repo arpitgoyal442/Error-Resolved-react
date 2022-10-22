@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect } from 'react'
+import { Icon } from '@iconify/react';
 
 function SideModal() {
 
@@ -20,7 +21,11 @@ function SideModal() {
 
 
     return (
-        <div className='sideModal' onClick={hideModal}>
+        <div className='sideModal' >
+
+<span onClick={hideModal} className='close_modal'>
+                <Icon icon="ant-design:left-outlined" color="grey" width="25" height="25" inline={true} />
+                </span>
 
 
             <div className="sideModal_left">
@@ -61,6 +66,42 @@ function SideModal() {
 
             <div className="sideModal_right">
 
+                {/* <span className='close_modal'>
+                <Icon icon="entypo:circle-with-cross" color="#008891" width="30" height="30" inline={true} />
+                </span> */}
+
+                <h1 className='sideModal_right_topic'>About the Client</h1>
+
+
+                 <span className='user_icon'>
+                <Icon icon="carbon:user-avatar-filled" color="grey" width="50" height="50" inline={true} /></span>
+
+                <p className='client_name'>Arpit Goyal</p>
+
+                <div>
+                    
+                    <span>
+                <Icon icon="carbon:star-filled" color="#008891" width="20" height="20" inline={true} /></span>
+                <span> <Icon icon="carbon:star-filled" color="#008891" width="20" height="20" inline={true} /></span>
+                <span> <Icon icon="carbon:star-filled" color="#008891" width="20" height="20" inline={true} /></span>
+                <span> <Icon icon="carbon:star-filled" color="#008891" width="20" height="20" inline={true} /></span>
+                <Icon icon="carbon:star-half" color="#008891" width="20" height="20" inline={true} />
+                </div>
+
+                <span className='client_location'>
+                <Icon icon="entypo:location-pin" color="grey" width="30" height="30" inline={true} />
+                <p>Haryana</p>
+                </span>
+
+
+               <p className='request_btn'>Make Request</p>
+               <p className='message_btn'> Send Message</p>
+
+               
+               <span>
+
+               </span>
+               
             </div>
 
 

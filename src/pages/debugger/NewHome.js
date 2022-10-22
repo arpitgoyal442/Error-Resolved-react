@@ -12,15 +12,19 @@ const DebuggerPage = () => {
 	const [myt,setmyt]=useState("Java");
 
 
-	// useEffect(()=>{
+	
 
 
 	   const clickh=()=>{
 
+		
+
 		setShowModal(true)
+		
 
 		if(showModal)
 		{
+			console.log("inside if")
 			setmyt("C++ Doubt")
 			console.log(document.getElementsByClassName("sideModal")[0].classList)
 			document.getElementsByClassName("sideModal")[0].classList.remove("hideModal");
@@ -33,7 +37,7 @@ const DebuggerPage = () => {
 		}
 	}
 
-	// },[showModal])
+	
 
 	return (
 		<>
@@ -42,9 +46,7 @@ const DebuggerPage = () => {
         
 		<SideModal topic={myt} />
 
-         {/* <div className="sideModal">
-			dfdgf
-		 </div> */}
+        
 
 		<div   className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
 
