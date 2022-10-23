@@ -97,11 +97,23 @@
 
 }
 
+.doubt_topic:hover{
+
+	cursor: pointer;
+}
+
 .doubtCard_request:hover {
 	background-color: var(--secondary-highlight);
 }
 
 
-/* .doubtCard_view{
-	color: whitesmoke;
-} */
+
+
+.newdoubtcard{
+	display: flex;
+
+}
+
+.newdoubtcard_left{
+	flex: 0.3;
+}

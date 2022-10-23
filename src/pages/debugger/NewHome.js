@@ -5,46 +5,49 @@ import Navbar from "../../components/Navbar";
 import SideModal from "../../components/SideModal";
 import { useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
+import {URL} from "../../Globals/Constants.js"
 
 const DebuggerPage = () => {
 
-	const [showModal,setShowModal]=useState(false);
-	const [myt,setmyt]=useState("Java");
-
-
-	
-
-
-	   const clickh=()=>{
-
+	const [doubts,setDoubts]=useState([]);  
+	const [sort, setSort] = useState(1),
+		[solvingNow, setSolvingNow] = useState(false),
+		[active, setActive] = useState(0),
+		[requested, setRequested] = useState(0),
+		[topic, setTopic] = useState([]),
 		
+		[currentUser,setCurrentUser]=useState(null);
 
-		setShowModal(true)
-		
 
-		if(showModal)
-		{
-			console.log("inside if")
-			setmyt("C++ Doubt")
-			console.log(document.getElementsByClassName("sideModal")[0].classList)
-			document.getElementsByClassName("sideModal")[0].classList.remove("hideModal");
-			document.getElementsByClassName("sideModal")[0].classList.add("showModal");
-		}
+		useEffect( ()=>{
 
-		else {
-
-			console.log(document.getElementsByClassName("sideModal")[0].classList)
-		}
-	}
-
+			setCurrentUser(localStorage.getItem("userId"));
 	
+			// Fetch all Doubts
+			let userId=window.localStorage.getItem("userId")
+	
+			 axios.get(`${URL}/doubt/all`,{params:{sort:sort,active:active,requested:requested,topic:topic,solvingNow:solvingNow,topics:topic,debuggerId:userId}})
+			.then((data)=>{
+				console.log(data.data);
+	
+				// Pending : Remove Doubts which are posted by this debugger(when he was loggedin as student)
+				 
+				setDoubts(data.data);
+				
+			})
+			.catch((err)=>{console.log("Unable to Fetch Doubts"); console.log(err)});
+	
+			
+		},[active,topic,requested,solvingNow,sort]);
+
 
 	return (
 		<>
 		<Navbar/>
 
         
-		<SideModal topic={myt} />
+		<SideModal topic="Java Doubt" />
 
         
 
@@ -54,7 +57,7 @@ const DebuggerPage = () => {
 
 			<h1 className="text-xl sm:text-3xl font-medium sm:mb-2 -mx-2 xs:mx-0 sm:px-12">All Doubts</h1>
 			<div className="flex items-center justify-between -mx-2 xs:mx-0 sm:px-12">
-				<p onClick={clickh} className="sm:text-lg">2,125 doubts</p>
+				<p  className="sm:text-lg">2,125 doubts</p>
 				<div className="flex items-center space-x-4">
 					<div className="border rounded-md hidden sm:flex">
 						<div className="p-2 cursor-pointer hover:bg-gray-100 active:bg-light text-sm md:text-md border-r">
@@ -73,10 +76,12 @@ const DebuggerPage = () => {
 			</div>
       <hr className="mt-5 -mx-6 " />
       <div className="">
-        <NewDoubtCard />
-        <NewDoubtCard />
-        <NewDoubtCard />
-        <NewDoubtCard />
+
+         {doubts.map((doubt)=>{
+
+			 return <NewDoubtCard doubt={doubt}/>
+		 })}
+
       </div>
 		</div>
 		</>

@@ -32,9 +32,6 @@ function DebuggerHome() {
 
 		
 
-	
-
-
 	useEffect( ()=>{
 
 		setCurrentUser(localStorage.getItem("userId"));

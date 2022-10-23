@@ -12,7 +12,7 @@ function SideModal() {
     document.getElementsByClassName("sideModal")[0].classList.remove("showModal");
     document.getElementsByClassName("sideModal")[0].classList.add("hideModal");
 
-    console.log(console.log(document.getElementsByClassName("sideModal")[0].classList))
+    // console.log(console.log(document.getElementsByClassName("sideModal")[0].classList))
    }
    
 
@@ -32,7 +32,11 @@ function SideModal() {
 
                 <h1 className='sideModal_left_topic'>Java Doubt</h1>
 
+                
+                
+            
                 <span>
+                   
                     <p className='subhead'>Budget: ₹45/-</p>
                     <p className='subhead'>Required Skills :</p>
 
