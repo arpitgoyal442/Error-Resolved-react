@@ -47,7 +47,7 @@ const DebuggerPage = () => {
 		<Navbar/>
 
         
-		<SideModal topic="Java Doubt" />
+		{/* <SideModal topic="Java Doubt" /> */}
 
         
 
@@ -77,9 +77,9 @@ const DebuggerPage = () => {
       <hr className="mt-5 -mx-6 " />
       <div className="">
 
-         {doubts.map((doubt)=>{
+         {doubts.map((doubt,index)=>{
 
-			 return <NewDoubtCard doubt={doubt}/>
+			 return <NewDoubtCard doubt={doubt} index={index}/>
 		 })}
 
       </div>

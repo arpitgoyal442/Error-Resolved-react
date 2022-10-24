@@ -1,24 +1,30 @@
 import React from "react";
 import { useState } from "react";
 import { Icon } from '@iconify/react';
+import SideModal from "../SideModal";
 
-const NewDoubtCard = ({doubt}) => {
+const NewDoubtCard = ({doubt,index}) => {
 
+
+	
 	
 	console.log(doubt?doubt:"");
 
 	const show=()=>{
 
+		
+
+			console.log(document.getElementsByClassName("sideModal")[index].classList)
+			document.getElementsByClassName("sideModal")[index].classList.remove("hideModal");
+			document.getElementsByClassName("sideModal")[index].classList.add("showModal");
 			
-			console.log(document.getElementsByClassName("sideModal")[0].classList)
-			document.getElementsByClassName("sideModal")[0].classList.remove("hideModal");
-			document.getElementsByClassName("sideModal")[0].classList.add("showModal");
 	
 	}
 
 	return (
     <>
 		<div   className="p-4 flex w-full newdoubtcard">
+			<SideModal doubt={doubt} index={index}  />
 			{/* left */}
 			<div  className="pr-2 text-right newdoubtcard_left">
 				<p className="text-blue-700 font-medium">{doubt.studentName}</p>

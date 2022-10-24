@@ -8,6 +8,7 @@
         position: fixed;
         left: 100%;
         padding: 10px;
+        top: 8.5vh;
       
         height: 91.2vh;
         background-color:#F1F2F4;
@@ -18,7 +19,7 @@
 
 .showModal{
 
-    animation: show_anime 0.5s ease-in-out 1s 1 forwards ;
+    animation: show_anime 0.5s ease-in-out  1 forwards ;
 
 
 }
@@ -223,14 +224,27 @@
 .close_modal:hover{
     cursor: pointer;
 }
-/* 
+
 @media only screen and (max-width: 600px) {
 
     .sideModal{
         width: 100%;
         left: 100%;
     }
-} */
+
+    @keyframes show_anime {
+
+        
+        
+    
+        100%{
+            left: 0%;
+        }
+    
+    
+        
+    }
+} 
 
 
 
