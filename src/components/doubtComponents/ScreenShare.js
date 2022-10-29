@@ -4,65 +4,131 @@ import CameraIcon from "@heroicons/react/solid/VideoCameraIcon";
 import MicIcon from "@heroicons/react/solid/MicrophoneIcon";
 import DesktopComputerIcon from "@heroicons/react/solid/DesktopComputerIcon";
 
-const ScreenShare = () => {
-	const [mediaType, setMediaType] = useState(false);
-	let socketInstance = useRef(null);
-	const userVideo = useRef(null),
-		partnerVideo = useRef(null);
-	useEffect(() => {
-		if (userVideo.current && partnerVideo.current) startConnection();
+//
 
-		return () => {
-			socketInstance?.current?.destroyConnection?.();
-		}
-	}, []);
-	const startConnection = () => {
-		const params = { quality: 15 };
-		const userId = localStorage.getItem("userId");
-		if (userId && !socketInstance.current){
-			console.log("Start Connection")
-			socketInstance.current = createSocketConnectionInstance(userId, { params }, userVideo, partnerVideo);
-		}
-	};
-	const disconnectHandler = (props) => {
-		socketInstance.current?.destroyConnection();
-		props.history.push("/");
-	};
-	const toggleScreenShare = (displayStream) => {
-		const { reInitializeStream, toggleVideoTrack } = socketInstance.current;
-		displayStream === "displayMedia" &&
-			toggleVideoTrack({
-				video: false,
-				audio: true,
-			});
-		reInitializeStream(displayStream !== "displayMedia", true, displayStream).then(() => {
-			setMediaType((prev) => !prev);
+import Peer from "peerjs"
+//
+
+const ScreenShare = () => {
+
+
+	const [peerId, setPeerId] = useState(null);
+	const remoteVideoRef = useRef(null);
+	const peerInstance=useRef(null);
+	const currentUserMediaRef=useRef(null);
+  
+	const[remotePeerIdValue,setRemotePeerIdValue]=useState('')
+	// let peer=null;
+  
+  
+  
+  
+	useEffect(() => {
+  
+	  const peer = new Peer();
+	  peer.on('open', function (id) {
+		setPeerId(id);
+	  });
+  
+	 
+  
+  
+  
+	  peer.on('call',(call)=>{
+  
+		var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  
+		getUserMedia({audio:true,video:true},(mediaStream)=>{
+  
+		  currentUserMediaRef.current.srcObject=mediaStream;
+		currentUserMediaRef.current.play();
+  
+		  call.answer(mediaStream);
+		  call.on('stream',(remoteStream)=>{
+  
+			remoteVideoRef.current.srcObject = remoteStream;
+			remoteVideoRef.current.play();
+  
+  
+  
+		  })
+		})
+  
+  
+  
+  
+  
+	  })
+	  
+  
+  
+	  peerInstance.current=peer;
+  
+  
+  
+  
+	   
+  
+  
+	}, [])
+  
+  
+  
+	const call = () => {
+  
+	  let remotePeerId=remotePeerIdValue;
+  
+	  var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+	  getUserMedia({ video: true, audio: true }, function (mediaStream) {
+  
+		currentUserMediaRef.current.srcObject=mediaStream;
+		currentUserMediaRef.current.play();
+  
+		var call = peerInstance.current.call(remotePeerId, mediaStream);
+  
+		call.on('stream', function (remoteStream) {
+		  remoteVideoRef.current.srcObject = remoteStream;
+		  remoteVideoRef.current.play();
 		});
-	};
+	  }, function (err) {
+		console.log('Failed to get local stream', err);
+	  });
+  
+  
+	}
+  
+  
+	console.log(peerId);
+	
+	
 
 	return (
 		<div className="h-full flex flex-col">
+			
 			<div className="flex-1 grid place-items-center relative p-4">
+			
 				<div className="z-10 absolute aspect aspect-square h-40 bottom-4 right-4 bg-gray-300 rounded-full">
+				
 					{/* <img className='rounded-full border' src="https://avatars.dicebear.com/api/avataaars/lorem.svg" alt="avatar" /> */}
-					<video src="/video.mp4" className="h-full w-full rounded-full" muted autoPlay ref={userVideo} />
+					<video  ref={currentUserMediaRef}   className="h-full w-full rounded-full"  />
 				</div>
 				<video
 					className="h-full max-h-[100%] overflow-hidden bg-gray-200 rounded-md"
-					muted
-					autoPlay
-					ref={partnerVideo}
+					ref={remoteVideoRef}
+					
+					
 				/>
 			</div>
 			<div className="h-16 flex items-center justify-center space-x-6">
 				<div className="bg-highlight p-2 rounded-full">
-					<CameraIcon className="h-6 w-6 cursor-pointer" />
+					<CameraIcon className="h-6 w-6 cursor-pointer" onClick={call} />
 				</div>
 				<div className="bg-highlight p-2 rounded-full">
 					<MicIcon className="h-6 w-6 cursor-pointer" />
 				</div>
 				<div className="bg-highlight p-2 rounded-full">
-					<DesktopComputerIcon onClick={() => toggleScreenShare(mediaType ? "userMedia" : "displayMedia")} className="h-6 w-6 cursor-pointer" />
+				{/* <input type="text" value={remotePeerIdValue} onChange={e=>{setRemotePeerIdValue(e.target.value)}} /> */}
+					{/* <DesktopComputerIcon onClick={() => toggleScreenShare(mediaType ? "userMedia" : "displayMedia")} className="h-6 w-6 cursor-pointer" /> */}
 				</div>
 			</div>
 		</div>

@@ -14,6 +14,7 @@ import Once from "./components/Once.js";
 import DebuggerDoubtPage from "./pages/debugger/DoubtPage.js";
 import StudentEditDoubt from "./pages/student/EditDoubt.js";
 import Login2 from "./pages/Login2.js";
+import NewAddDoubt from "./pages/student/NewAddDoubt.js";
 
 import "./styles/Login.css";
 import "./styles/Navbar.css";
@@ -41,6 +42,7 @@ import "./styles/login2.css"
 import "./styles/test.css";
 import "./styles/OurAdvantage.css"
 import "./styles/SideModal.css";
+import "./styles/student/NewAddDoubt.css"
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 

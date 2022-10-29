@@ -164,10 +164,14 @@ function Add() {
 
             <Navbar />
 			
+
 			
 			<div className="addDoubt_body">
 				<ToastContainer/>
 				<h1 className="addDoubt_mainHead">Add Doubt</h1>
+
+
+				
 
 				<div className="addDoubt_form">
 					<div className="addDoubt_language">
