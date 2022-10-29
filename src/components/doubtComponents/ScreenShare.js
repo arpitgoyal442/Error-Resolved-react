@@ -35,7 +35,8 @@ const ScreenShare = () => {
   
   
 	  peer.on('call',(call)=>{
-  
+
+		
 		var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   
 		getUserMedia({audio:true,video:true},(mediaStream)=>{
@@ -43,6 +44,10 @@ const ScreenShare = () => {
 		  currentUserMediaRef.current.srcObject=mediaStream;
 		currentUserMediaRef.current.play();
   
+
+		
+		  if( window.confirm("Accept Video Call ?"))
+		  {
 		  call.answer(mediaStream);
 		  call.on('stream',(remoteStream)=>{
   
@@ -52,6 +57,7 @@ const ScreenShare = () => {
   
   
 		  })
+		}
 		})
   
   
@@ -77,9 +83,10 @@ const ScreenShare = () => {
 	const call = () => {
   
 	  let remotePeerId=remotePeerIdValue;
+	  
   
 	  var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-	  getUserMedia({ video: true, audio: true }, function (mediaStream) {
+	  getUserMedia({ video: true, audio: true   }, function (mediaStream) {
   
 		currentUserMediaRef.current.srcObject=mediaStream;
 		currentUserMediaRef.current.play();
@@ -127,7 +134,7 @@ const ScreenShare = () => {
 					<MicIcon className="h-6 w-6 cursor-pointer" />
 				</div>
 				<div className="bg-highlight p-2 rounded-full">
-				{/* <input type="text" value={remotePeerIdValue} onChange={e=>{setRemotePeerIdValue(e.target.value)}} /> */}
+				<input type="text" value={remotePeerIdValue} onChange={e=>{setRemotePeerIdValue(e.target.value)}} />
 					{/* <DesktopComputerIcon onClick={() => toggleScreenShare(mediaType ? "userMedia" : "displayMedia")} className="h-6 w-6 cursor-pointer" /> */}
 				</div>
 			</div>
