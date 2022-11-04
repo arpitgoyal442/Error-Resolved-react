@@ -98,7 +98,7 @@ function DoubtCard(props) {
 			.catch((err)=>{
 
 				console.log("Error in request");
-				console.log(err);
+				console.log(err); 
 
 			})
 			

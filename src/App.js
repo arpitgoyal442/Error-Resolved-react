@@ -43,6 +43,7 @@ import "./styles/test.css";
 import "./styles/OurAdvantage.css"
 import "./styles/SideModal.css";
 import "./styles/student/NewAddDoubt.css"
+import "./styles/debugger/NewDebuggerHome.css"
 import { useEffect } from "react";
 import { gapi } from "gapi-script";
 

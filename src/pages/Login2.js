@@ -12,10 +12,55 @@ import { URL } from "../Globals/Constants.js"
 
 function Login2() {
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
 
-    const loginSuccess = (data) => {
+    
+
+    const loginSuccessDebugger = (data) => {
+
+		// make request to backend to send userId
+
+		console.log(data);
+
+		let userdata = data.profileObj;
+
+		const userData = {
+			email: userdata.email,
+			name: userdata.name,
+			img: userdata.imageUrl,
+			userType: 2
+
+		}
+
+		console.log(userData);
+
+		// Make post request
+		axios.post(`${URL}/login`, userData)
+			.then(
+
+
+				resdata => {
+
+					console.log(resdata.data);
+
+					window.localStorage.setItem("userId", resdata.data._id);
+					window.localStorage.setItem("userType", 2);
+					window.localStorage.setItem("userName", resdata.data.name);
+
+					navigate("/debugger");
+
+					console.log("User data: ");
+					console.log(resdata);
+
+				}
+
+			)
+			.catch(err => { console.log(err) })
+
+	}
+
+	const loginSuccessStudent = (data) => {
 
 
 		let userdata = data.profileObj;
@@ -40,17 +85,13 @@ function Login2() {
 					window.localStorage.setItem("userType", 1);
 					window.localStorage.setItem("userName", resdata.data.name);
 
-					navigate('/debugger');
-
-
-
+					navigate('/student');
 				}
-
 			)
 			.catch(err => { console.log(err) })
-
-
 	}
+
+
     return (
 
         <div className='login'>
@@ -70,16 +111,11 @@ function Login2() {
                         render={renderProps => (
                             <p className='login_button' onClick={renderProps.onClick} disabled={renderProps.disabled}> Log In </p>
                         )}
-                        onSuccess={loginSuccess}
+                        onSuccess={loginSuccessDebugger}
                         onFailure={(err) => console.log(err)}
                         cookiePolicy={'single_host_origin'}
                         isSignedIn={true}
                     />
-
-
-                    {/* <p className='login_button'>Log In</p> */}
-
-
                 </span>
 
             </div>
@@ -93,8 +129,30 @@ function Login2() {
                         <p>Someone is out there who wants to  help you and whom you can help.</p>
 
                         <span className="services_buttons">
-                            <p className='solve_button'>Solve Queries</p>
-                            <p>Add Doubts</p>
+                            <GoogleLogin
+
+                                clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
+                                render={renderProps => (
+                                    <p onClick={renderProps.onClick} className='solve_button'>Solve Queries</p>
+                                )}
+                                onSuccess={loginSuccessDebugger}
+                                onFailure={(err) => console.log(err)}
+                                cookiePolicy={'single_host_origin'}
+                                isSignedIn={true}
+                            />
+
+                            <GoogleLogin
+
+                                clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
+                                render={renderProps => (
+                                    <p  onClick={renderProps.onClick} disabled={renderProps.disabled}> Add Doubts </p>
+                                )}
+                                onSuccess={loginSuccessStudent}
+                                onFailure={(err) => console.log(err)}
+                                cookiePolicy={'single_host_origin'}
+                                isSignedIn={true}
+                            />
+                           
                         </span>
 
 
@@ -119,7 +177,7 @@ function Login2() {
                         <h1 className='main_headings'>Don't Let Your Bugs Eat up the Whole Day</h1>
 
                         <div>
-                            {/* <h2>Simply Do : </h2> */}
+                           
                             <ul>
                                 <li>Add Your Doubt </li>
                                 <li>Get Responses From Experts </li>

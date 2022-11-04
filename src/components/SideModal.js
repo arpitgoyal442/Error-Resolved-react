@@ -1,24 +1,95 @@
 import React from 'react'
-import { useEffect } from 'react'
+import { useEffect,useState } from 'react'
 import { Icon } from '@iconify/react';
+import {URL} from "../Globals/Constants.js"
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import { socket } from '../socket.js';
+
+
+
 
 function SideModal({ doubt,index}) {
 
+    const [isRequested,setIsRequested]=useState(false)
 
-    console.log("Doubt inside SideModal");
-    console.log(doubt.topic+" "+doubt.shortDescription+" "+index)
+    useEffect(()=>{
 
 
-    const hideModal = () => {
-
+        if(doubt.incomingRequests.includes(window.localStorage.getItem("userId")))
+        setIsRequested(true);
 
 
         
-        
-        document.getElementsByClassName("sideModal")[index].classList.remove("showModal");
-        document.getElementsByClassName("sideModal")[index].classList.add("hideModal");
 
-        // console.log(console.log(document.getElementsByClassName("sideModal")[0].classList))
+
+    },[])
+
+    const hideModal = (e) => {
+        
+        document.getElementById(doubt._id).classList.remove("showModal");
+        document.getElementById(doubt._id).classList.add("hideModal");
+
+       
+    }
+
+    const makeRequest=()=>{
+
+        if(isRequested)
+		{
+			toast.info('Already Requested Kindly wait for response', {
+				position: "bottom-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+			
+				theme:'dark'
+				});
+		}
+
+		else {
+			let debuggerId=window.localStorage.getItem("userId");
+			let doubtId=doubt._id;
+			let studentId=doubt.studentId;
+
+            console.log("On making request");
+            console.log(debuggerId+"---"+doubtId+"--"+studentId);
+			
+			
+			axios.post(`${URL}/debugger/request/${debuggerId}`,{doubtId:doubtId,studentId:studentId})
+			.then((data)=>{
+
+                setIsRequested(true)
+
+				toast('Requested Successfully ', {
+					position: "bottom-right",
+					autoClose: 1500,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+				
+					theme:'dark'
+					});
+
+
+					socket.emit("request-doubt",data.data)
+				 
+				console.log("Successfull request");
+				console.log(data);
+			})
+			.catch((err)=>{
+
+				console.log("Error in request");
+				console.log(err); 
+
+			})
+			
+		}
     }
 
 
@@ -27,7 +98,8 @@ function SideModal({ doubt,index}) {
 
 
     return (
-        <div className='sideModal' >
+        <div className='sideModal' id={doubt._id} >
+            <ToastContainer/>
 
             <span onClick={hideModal} className='close_modal'>
                 <Icon icon="ant-design:left-outlined" color="grey" width="25" height="25" inline={true} />
@@ -106,7 +178,7 @@ function SideModal({ doubt,index}) {
                 </span>
 
 
-                <p className='request_btn'>Make Request</p>
+                <p onClick={makeRequest} className='request_btn'>{isRequested?"Already Requested":"Make Request"}</p>
                 <p className='message_btn'> Send Message</p>
 
 

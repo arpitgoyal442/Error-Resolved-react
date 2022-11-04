@@ -3,13 +3,17 @@ import { createSocketConnectionInstance } from "../../utils/connection";
 import CameraIcon from "@heroicons/react/solid/VideoCameraIcon";
 import MicIcon from "@heroicons/react/solid/MicrophoneIcon";
 import DesktopComputerIcon from "@heroicons/react/solid/DesktopComputerIcon";
+import { socket } from "../../socket";
 
 //
 
 import Peer from "peerjs"
 //
 
-const ScreenShare = () => {
+const ScreenShare = ({receiverId}) => {
+
+
+	// console.log("Receiver id is"+receiverId)
 
 
 	const [peerId, setPeerId] = useState(null);
@@ -18,24 +22,28 @@ const ScreenShare = () => {
 	const currentUserMediaRef=useRef(null);
   
 	const[remotePeerIdValue,setRemotePeerIdValue]=useState('')
-	// let peer=null;
-  
-  
-  
-  
+
+    
 	useEffect(() => {
   
 	  const peer = new Peer();
 	  peer.on('open', function (id) {
 		setPeerId(id);
+
+		// Emitting the current PeerId so that remote user can have this id
+		if(socket)
+		{
+			  console.log("As refresh i am sending the peer id as : "+ id)
+              socket.emit("peerId",{peerId:id,receiverUserId:receiverId});
+		}
+
 	  });
-  
-	 
-  
-  
+
+
   
 	  peer.on('call',(call)=>{
 
+		console.log("inside getting call")
 		
 		var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
   
@@ -46,8 +54,8 @@ const ScreenShare = () => {
   
 
 		
-		  if( window.confirm("Accept Video Call ?"))
-		  {
+		//   if( window.confirm("Accept Video Call ?"))
+		//   {
 		  call.answer(mediaStream);
 		  call.on('stream',(remoteStream)=>{
   
@@ -57,7 +65,7 @@ const ScreenShare = () => {
   
   
 		  })
-		}
+		// }
 		})
   
   
@@ -69,11 +77,20 @@ const ScreenShare = () => {
   
   
 	  peerInstance.current=peer;
-  
-  
-  
-  
-	   
+
+
+	  if(socket)
+		{
+			// console.log("inside if of socket listener")
+			// socket.on("remotePeerId",data=>{
+			// 	console.log("Message Received from sender");
+			// 	console.log(data);
+			// 	setRemotePeerIdValue(data.remotePeerId);
+
+			// 	console.log("remote Peer Id is"+data.remotePeerId)
+				
+			// })
+		}
   
   
 	}, [])
@@ -83,6 +100,8 @@ const ScreenShare = () => {
 	const call = () => {
   
 	  let remotePeerId=remotePeerIdValue;
+
+	//   console.log("inside Call"+remotePeerIdValue)
 	  
   
 	  var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;

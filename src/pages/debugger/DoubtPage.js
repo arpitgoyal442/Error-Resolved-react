@@ -180,7 +180,7 @@ const DoubtPage = () => {
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare />
+							<ScreenShare  receiverId={newmessage.receiverId} />
 						
 						</div>
 					</div>

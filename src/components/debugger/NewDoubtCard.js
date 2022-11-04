@@ -2,29 +2,30 @@ import React from "react";
 import { useState } from "react";
 import { Icon } from '@iconify/react';
 import SideModal from "../SideModal";
+import { useNavigate} from "react-router-dom";
 
-const NewDoubtCard = ({doubt,index}) => {
+const NewDoubtCard = ({doubt,solvingNow}) => {
+
+	const navigate=useNavigate();
 
 
 	
-	
-	console.log(doubt?doubt:"");
 
 	const show=()=>{
-
-		
-
-			console.log(document.getElementsByClassName("sideModal")[index].classList)
-			document.getElementsByClassName("sideModal")[index].classList.remove("hideModal");
-			document.getElementsByClassName("sideModal")[index].classList.add("showModal");
-			
+			 document.getElementById(doubt._id).classList.remove("hideModal");
+			 document.getElementById(doubt._id).classList.add("showModal");	
 	
 	}
 
+	const enterToSolve=()=>{
+		navigate(`/debugger/solve-doubt/${doubt._id}` ,{state:{aboutDoubt:doubt}});
+	}
+
+
 	return (
-    <>
-		<div   className="p-4 flex w-full newdoubtcard">
-			<SideModal doubt={doubt} index={index}  />
+    <   >
+		<div    className="p-4 flex w-full newdoubtcard">
+			<SideModal doubt={doubt}   />
 			{/* left */}
 			<div  className="pr-2 text-right newdoubtcard_left">
 				<p className="text-blue-700 font-medium">{doubt.studentName}</p>
@@ -36,7 +37,7 @@ const NewDoubtCard = ({doubt,index}) => {
       <div className="-my-4 w-[1.5px] bg-light flex-shrink-0 newdoubtcard_right"></div>
 			{/* right */}
 			<div className="flex-1 pl-2">
-				<p  onClick={show} className="text-blue-700 line-clamp-1 mb-1 doubt_topic" >
+				<p onClick={solvingNow?enterToSolve:show}   className="text-blue-700 line-clamp-1 mb-1 doubt_topic" >
 
 					{doubt.topic}
 

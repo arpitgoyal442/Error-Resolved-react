@@ -1,0 +1,31 @@
+.newHome_subhead
+{
+    display: inline-block;
+    /* color: rgb(48, 48, 48); */
+   font-family: serif ;
+   color: rgb(160, 158, 158);
+   font-size: 22px;
+}
+
+.allDoubts{
+    
+    /* border-radius: 20px;
+    background-color: rgb(243, 240, 240);
+    color: black; */
+}
+
+.newHome_subhead_highlight{
+
+    /* color: rgb(160, 158, 158); */
+    /* background-color: var(--highlight); */
+    border-radius: 20px;
+    background-color: rgb(243, 240, 240);
+    color: black;
+
+    /* color: white; */
+}
+
+.newHome_subhead:hover{
+    color:rgb(48, 48, 48) ;
+    cursor: pointer;
+}
