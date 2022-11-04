@@ -1,27 +1,20 @@
 .sideModal{
    
         width: 50%;
-       
-        
-        
         display: flex;
         position: fixed;
         left: 100%;
         padding: 10px;
         top: 8.5vh;
-      
         height: 91.2vh;
+        overflow-x: hidden;
         background-color:#F1F2F4;
-        /* animation: sidemodal_anime 0.5s ease-in-out 1s 1 forwards ; */
     
 }
 
 
 .showModal{
-
     animation: show_anime 0.5s ease-in-out  1 forwards ;
-
-
 }
 
 .hideModal{
@@ -228,8 +221,9 @@
 @media only screen and (max-width: 600px) {
 
     .sideModal{
-        width: 100%;
-        left: 100%;
+        width: 100vw;
+       
+        /* left: 100%; */
     }
 
     @keyframes show_anime {

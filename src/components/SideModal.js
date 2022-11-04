@@ -154,7 +154,7 @@ function SideModal({ doubt,index}) {
                 <Icon icon="entypo:circle-with-cross" color="#008891" width="30" height="30" inline={true} />
                 </span> */}
 
-                <h1 className='sideModal_right_topic'>About the Client</h1>
+                <h1 className='sideModal_right_topic'>Client's Info</h1>
 
 
                 <span className='user_icon'>
