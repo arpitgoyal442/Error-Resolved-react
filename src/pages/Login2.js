@@ -158,10 +158,10 @@ function Login2() {
 
                     </div>
                     <div className="services_right">
-                        <p className='oherror manthoughts'>Oh Error!</p>
-                        <p className='mockInterview manthoughts'>Mock Interview</p>
-                        <p className='learnTopic manthoughts'>Learn Topic</p>
-                        <p className='gotYou manthoughts'> I Got YOu</p>
+                        <p className='oherror manthoughts thoughts'>Oh Error!</p>
+                        <p className='mockInterview manthoughts  thoughts'>Mock Interview</p>
+                        <p className='learnTopic manthoughts  thoughts'>Learn Topic</p>
+                        <p className='gotYou manthoughts  thoughts'> I Got YOu</p>
                         <img src="/landing4.svg" alt="" />
                     </div>
                 </div>

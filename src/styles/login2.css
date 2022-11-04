@@ -2,6 +2,7 @@
 
     width: 100%;
     height: 100vh;
+    overflow-x: hidden;
     
 
 }
@@ -65,17 +66,13 @@
     display: flex;
     flex-wrap: wrap-reverse;
     padding: 100px;
-
-  
     width: 100%;
     justify-content: space-between;
    
 }
 
 .services_left{
-   
     flex: 0.5;
-   
 }
 
 .services_right{
@@ -85,15 +82,6 @@
     
    
 }
-.services_right p{
-
-    /* font-size:10px; */
-
-}
-
-
-
-
 
 .services_left p{
     font-size: 1.5rem;
@@ -292,6 +280,33 @@
         font-size: 12px;
     }
 
+    .services_right img{
+
+        
+        
+        margin-bottom: 30px;
+        position: relative;
+        /* margin-top: -30px; */
+        left: -50px;
+       
+      
+    }
+
+    .login_body_services{
+        margin-top: -50px;
+    }
+
+    .thoughts{
+
+        display: none;
+    }
+
+    .services_left{
+
+        position: relative;
+        left: -50px;
+    }
+
     .learnTopic{
         left: -46px;
     }
@@ -299,13 +314,34 @@
 
         /* margin-right: 10px; */
         border: 1px solid gray;
-        width: 160px;
+        width: fit-content;
         font-size:20px;
-        /* width: 33vw; */
-        /* padding: 2px 8px; */
-       /* border-radius: 10px; */
+       
 
+    }
 
+    .providing_left img{
+
+        margin-left: 5vw;
+        width: 100px;
+        height: auto;
+       
+
+    }
+
+    .main_headings{
+
+        font-size: 30px;
+    }
+
+    .services_left h1{
+
+        width: 80vw;
+    }
+
+    .login_navbar h2{
+
+        font-size: 20px;
     }
 }
 
