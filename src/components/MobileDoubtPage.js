@@ -12,13 +12,6 @@ import { URL } from "../Globals/Constants.js"
 
 const MobileDoubtPage = ({ aboutDoubt }) => {
 
-	// Trying
-
-	
-
-
-
-
 	const [showChat, setShowChat] = useState(false),
 		[viewType, setViewType] = useState(1); // 1 = screen, 2 = code, 3 = document
 
@@ -179,22 +172,7 @@ const MobileChat = ({ aboutDoubt,closeChat }) => {
 			newMessage.sentTime=new Date().toLocaleTimeString();
 			newMessage.sentDate=new Date().toLocaleDateString();
 
-		// let newMessage = {
-
-		// 	receiverId: receiverId,
-		// 	receiverName: receiverName,
-		// 	senderId: currentId,
-
-		// 	senderName:senderName ,
-		// 	message: message,
-		// 	sentTime: new Date().toLocaleTimeString(),
-		// 	sentDate: new Date().toLocaleDateString()
-
-		// }
-
-
-
-
+		
 
 		axios.post(`${URL}/doubt/message/${doubtId}`, newMessage)
 			.then((data) => {

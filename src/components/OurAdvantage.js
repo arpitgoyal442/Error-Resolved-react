@@ -14,14 +14,7 @@ function OurAdvantage({title,icon,para}) {
       
         </span>
 
-
         <p>{para}</p>
-
-
-
-
-
-        
       
     </div>
   )

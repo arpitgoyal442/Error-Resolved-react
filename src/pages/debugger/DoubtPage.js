@@ -96,16 +96,19 @@ const DoubtPage = () => {
 	let studentId = aboutDoubt.studentId;
 	let studentName = aboutDoubt.studentName;
 	let doubtId = aboutDoubt._id;
-	let debuggerId = window.localStorage.getItem("userId");
-	let debuggerName = window.localStorage.getItem("userName");
+	let debuggerId=aboutDoubt.debuggerId;
+	let debuggerName=aboutDoubt.debuggerName;
 
-	let newmessage={
+	// let debuggerId = window.localStorage.getItem("userId");
+	// let debuggerName = window.localStorage.getItem("userName");
 
-		receiverId: studentId,
-			receiverName: studentName,
-			senderId: debuggerId,
+	let newMessage={
 
-			senderName: debuggerName,
+		receiverId: (window.localStorage.getItem("userId")==studentId?debuggerId:studentId),
+			receiverName: (window.localStorage.getItem("userId")==studentId?debuggerName:studentName),
+			senderId: (window.localStorage.getItem("userId")==studentId?studentId:debuggerId),
+
+			senderName: (window.localStorage.getItem("userId")==studentId?studentName:debuggerName),
 			message: "",
 			sentTime: "",
 			sentDate: new Date().toLocaleDateString()
@@ -123,35 +126,19 @@ const DoubtPage = () => {
 		if(message==="")
 		return;
 
-		newmessage.message=message;
-		newmessage.sentTime=new Date().toLocaleTimeString();
-
-		// let newMessage = {
-
-		// 	receiverId: studentId,
-		// 	receiverName: studentName,
-		// 	senderId: debuggerId,
-
-		// 	senderName: debuggerName,
-		// 	message: message,
-		// 	sentTime: new Date().toLocaleTimeString(),
-		// 	sentDate: new Date().toLocaleDateString()
-
-		// }
-
+		newMessage.message=message;
+		newMessage.sentTime=new Date().toLocaleTimeString();
 
 		
-
-		
-		axios.post(`${URL}/doubt/message/${doubtId}`, newmessage)
+		axios.post(`${URL}/doubt/message/${doubtId}`, newMessage)
 			.then((data) => {
 
 				console.log("Message Sent Success");
 				console.log(data);
 
-				setAllMessages((pre)=>[...pre,newmessage]);
+				setAllMessages((pre)=>[...pre,newMessage]);
 
-				socket.emit("send-msg",newmessage.receiverId,newmessage);
+				socket.emit("send-msg",newMessage.receiverId,newMessage);
 
 				setMessage("");
 
@@ -180,7 +167,7 @@ const DoubtPage = () => {
 						<div className="doubtPage_mainHead">{aboutDoubt.topic}</div>
 						<div className="doubtPage_mainBody">
 							{/* <Document /> */}
-							<ScreenShare  receiverId={newmessage.receiverId} />
+							<ScreenShare  receiverId={newMessage.receiverId} />
 						
 						</div>
 					</div>
@@ -189,7 +176,7 @@ const DoubtPage = () => {
 				<div className="right">
 					<div className="doubtPage_chatHead">
 						<img src="/userimg.jpg" alt="njn" />
-						<p>{aboutDoubt.studentName}</p>
+						<p>{newMessage.receiverName}</p>
 					</div>
 					<hr />
 					<div   className="doubtPage_messages">
@@ -200,7 +187,7 @@ const DoubtPage = () => {
 
 
 							// if(message.senderId==window.localStorage.getItem("userId"))
-							return <div  ref={scrollRef} key={index} className={message.senderId == debuggerId ? "message receiver" : "message sender"}>
+							return <div  ref={scrollRef} key={index} className={message.senderId == newMessage.senderId ? "message receiver" : "message sender"}>
 								<h6>{message.senderName}</h6>
 								<p>{message.message}</p>
 								<span className="time">{message.sentTime}</span>

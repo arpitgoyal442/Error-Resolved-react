@@ -109,11 +109,18 @@
 
 
 
+
 .newdoubtcard{
 	display: flex;
+	/* width: fit-content; */
+	/* background-color: grey; */
 
 }
+
+
 
 .newdoubtcard_left{
 	flex: 0.3;
 }
+
+

@@ -87,16 +87,6 @@ const DebuggerPage = () => {
 	return (
 		<>
 			<Navbar />
-
-
-			<div>
-				{/* <p className="solvingNow">Solving Currently </p>  */}
-
-			</div>
-
-
-
-
 			<div className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
 
 

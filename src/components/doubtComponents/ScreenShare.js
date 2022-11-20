@@ -81,15 +81,15 @@ const ScreenShare = ({receiverId}) => {
 
 	  if(socket)
 		{
-			console.log("inside if of socket listener")
-			socket.on("remotePeerId",data=>{
-				console.log("Message Received from sender");
-				console.log(data);
-				setRemotePeerIdValue(data.remotePeerId);
+			// console.log("inside if of socket listener")
+			// socket.on("remotePeerId",data=>{
+			// 	console.log("Message Received from sender");
+			// 	console.log(data);
+			// 	setRemotePeerIdValue(data.remotePeerId);
 
-				console.log("remote Peer Id is"+data.remotePeerId)
+			// 	console.log("remote Peer Id is"+data.remotePeerId)
 				
-			})
+			// })
 		}
   
   
@@ -124,7 +124,7 @@ const ScreenShare = ({receiverId}) => {
 	}
   
   
-	console.log(peerId);
+	// console.log(peerId);
 	
 	
 
@@ -138,7 +138,7 @@ const ScreenShare = ({receiverId}) => {
 					{/* <img className='rounded-full border' src="https://avatars.dicebear.com/api/avataaars/lorem.svg" alt="avatar" /> */}
 					<video  ref={currentUserMediaRef}   className="h-full w-full rounded-full"  />
 				</div>
-				<video
+				<video 
 					className="h-full max-h-[100%] overflow-hidden bg-gray-200 rounded-md"
 					ref={remoteVideoRef}
 					
@@ -153,7 +153,7 @@ const ScreenShare = ({receiverId}) => {
 					<MicIcon className="h-6 w-6 cursor-pointer" />
 				</div>
 				<div className="bg-highlight p-2 rounded-full">
-				{/* <input type="text" value={remotePeerIdValue} onChange={e=>{setRemotePeerIdValue(e.target.value)}} /> */}
+				<input type="text" value={remotePeerIdValue} onChange={e=>{setRemotePeerIdValue(e.target.value)}} />
 					{/* <DesktopComputerIcon onClick={() => toggleScreenShare(mediaType ? "userMedia" : "displayMedia")} className="h-6 w-6 cursor-pointer" /> */}
 				</div>
 			</div>

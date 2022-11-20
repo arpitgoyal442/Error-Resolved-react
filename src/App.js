@@ -1,4 +1,4 @@
-import ReactDOM from "react-dom/client";
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -6,10 +6,11 @@ import Signin from "./pages/signin.js";
 import DebuggerHome from "./pages/debugger/NewHome.js";
 import StudentHome from "./pages/student/Home.js";
 import AddNewDoubt from "./pages/student/NewDoubt.js";
-import StudentDoubtPage from "./pages/student/DoubtPage.js";
+
 import Test from "./components/Test.js";
 import Profile from "./pages/Profile.js";
-import Once from "./components/Once.js";
+import DoubtPage from "./pages/DoubtPage.js";
+
 
 import DebuggerDoubtPage from "./pages/debugger/DoubtPage.js";
 import StudentEditDoubt from "./pages/student/EditDoubt.js";
@@ -72,14 +73,14 @@ function App() {
 				<Route exact path="/" element={<Login2 />} />
 				<Route exact path="/debugger" element={<DebuggerHome />} />
 				<Route exact path="/student" element={<StudentHome />} />
-				<Route exact path="/debugger/solve-doubt/:doubtId" element={<DebuggerDoubtPage />} />
+				{/* <Route exact path="/debugger/solve-doubt/:doubtId" element={<DebuggerDoubtPage />} /> */}
 				<Route exact path="/debugger/profile" element={<Profile type="debugger" />} />
 				<Route exact path="/student/profile" element={<Profile type="student" />} />
 				<Route exact path="/student/new-doubt" element={<AddNewDoubt />} />
-				<Route exact path="/student/solve-doubt/:doubtId" element={<StudentDoubtPage />} />
+				<Route exact path="/solve-doubt/:doubtId" element={<DoubtPage />} />
 				<Route exact path="/student/edit-doubt" element={<StudentEditDoubt />} />
 				<Route exact path="/test" element={<Test />} />
-				<Route exact path="/once" element={<Once />}/>
+				
 			</Routes>
 		</BrowserRouter>
 		

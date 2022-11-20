@@ -1,7 +1,7 @@
-import ScreenShare from "../../components/doubtComponents/ScreenShare.js";
-import MobileDoubtPage from "../../components/MobileDoubtPage.js";
-import Navbar from "../../components/Navbar.js";
-import Document from "../../components/doubtComponents/Document.js";
+import ScreenShare from "../components/doubtComponents/ScreenShare.js";
+import MobileDoubtPage from "../components/MobileDoubtPage.js";
+import Navbar from "../components/Navbar.js";
+import Document from "../components/doubtComponents/Document.js";
 
 import { useLocation } from "react-router-dom";
 
@@ -12,9 +12,9 @@ import { useEffect,useRef } from "react";
 import { Icon } from '@iconify/react';
 
 
-import { socket } from "../../socket.js";
+import { socket } from "../socket.js";
 
-import { URL } from "../../Globals/Constants.js";
+import { URL } from "../Globals/Constants.js";
 
 
 
@@ -115,14 +115,14 @@ const DoubtPage = () => {
 	let debuggerName=aboutDoubt.debuggerName;
 	let newMessage={
 
-		receiverId:debuggerId,
-		receiverName:debuggerName,
-		senderId:studentId,
-		
-		senderName:studentName,
-		message:"",
-		sentTime:new Date().toLocaleTimeString(),
-		sentDate:new Date().toLocaleDateString()
+		receiverId: (window.localStorage.getItem("userId")==studentId?debuggerId:studentId),
+			receiverName: (window.localStorage.getItem("userId")==studentId?debuggerName:studentName),
+			senderId: (window.localStorage.getItem("userId")==studentId?studentId:debuggerId),
+
+			senderName: (window.localStorage.getItem("userId")==studentId?studentName:debuggerName),
+			message: "",
+			sentTime: "",
+			sentDate: new Date().toLocaleDateString()
 
 	}
 	
@@ -133,14 +133,11 @@ const DoubtPage = () => {
 
 		e.preventDefault();
 
+		if(message==="")
+		return;
+
 		newMessage.message=message;
 		newMessage.sentTime=new Date().toLocaleTimeString();
-
-		
-	
-		
-
-	
 		
 
 		axios.post(`${URL}/doubt/message/${doubtId}`,newMessage)
@@ -181,7 +178,7 @@ const DoubtPage = () => {
 				<div className="right">
 					<div className="doubtPage_chatHead">
 						<img src="/userimg.jpg" alt="njn" />
-						<p>{aboutDoubt.debuggerName}</p>
+						<p>{newMessage.receiverName}</p>
 					</div>
 					<hr />
 					<div className="doubtPage_messages">
@@ -192,7 +189,7 @@ const DoubtPage = () => {
 						
 
 							
-							return  <div ref={scrollRef} key={index}  className={message.senderId==studentId?"message receiver":"message sender"}>
+							return  <div ref={scrollRef} key={index}  className={message.senderId==newMessage.senderId?"message receiver":"message sender"}>
 								<h5>{message.senderName}</h5>
 							<p>{message.message}</p>
 							<span className="time">{message.sentTime}</span>
