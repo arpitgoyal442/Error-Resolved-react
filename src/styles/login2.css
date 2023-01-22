@@ -110,6 +110,11 @@
     border-radius: 50px;
  }
 
+ .services_buttons p:hover{
+
+    cursor: pointer;
+ }
+
  .solve_button{
 
     background-color: var(--secondary-highlight);

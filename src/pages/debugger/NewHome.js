@@ -87,7 +87,7 @@ const DebuggerPage = () => {
 	return (
 		<>
 			<Navbar />
-			<div className="bg-white mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
+			<div className="mx-auto w-screen max-w-4xl flex-1 py-4 px-6">
 
 
 

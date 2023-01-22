@@ -45,7 +45,7 @@ const NewDoubtCard = ({doubt,solvingNow}) => {
 
 					{/* Lorem ipsum dolor sit, amet constur adipisicing elit. Ipsum, eum! */}
 				</p>
-				<p className="text-gray-500  line-clamp-2 newDoubtCard_shortDesc">
+				<p className="text-gray-500  line-clamp-2 newDoubtCard_shortDesc break-all">
 					{doubt.shortDescription}
 					
 				</p>

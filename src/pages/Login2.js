@@ -125,8 +125,11 @@ function Login2() {
 
                 <div className="login_body_services">
                     <div className="services_left">
+
+
                         <h1 className='main_headings'>Connecting Who  Knows <br />  And Knowing </h1>
-                        <p>Someone is out there who wants to  help you and whom you can help.</p>
+                        {/* <marquee behavior="" direction="right">Hsdsbdfdf</marquee> */}
+                        <p >Someone is out there who wants to  help you and whom you can help.</p>
 
                         <span className="services_buttons">
                             <GoogleLogin
@@ -145,7 +148,7 @@ function Login2() {
 
                                 clientId="742891759403-b4os8ce5v61fquu720763ci8gru3oauj.apps.googleusercontent.com"
                                 render={renderProps => (
-                                    <p  onClick={renderProps.onClick} disabled={renderProps.disabled}> Add Doubts </p>
+                                    <p  onClick={renderProps.onClick} disabled={renderProps.disabled}> Add Query </p>
                                 )}
                                 onSuccess={loginSuccessStudent}
                                 onFailure={(err) => console.log(err)}
