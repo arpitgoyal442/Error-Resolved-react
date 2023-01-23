@@ -33,17 +33,18 @@
 	height: 40px;
 	border-radius: 50%;
 }
-.navbar h2 span {
+.navbar__homeLink {
+	color: black;
+	text-decoration: none !important;
+}
+.navbar h2 del {
 	color: var(--highlight);
-	/* color: red; */
 }
 .navbar h2 {
 	font-weight: 400;
-	/* color: whitesmoke; */
 }
 .navbarIcons {
 	display: flex;
-
 	align-items: center;
 }
 .navbarIcons:hover {

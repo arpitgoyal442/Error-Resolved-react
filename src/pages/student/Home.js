@@ -6,72 +6,49 @@ import DoubtCard from "../../components/student/DoubtCard";
 import { useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket";
-import {URL} from "../../Globals/Constants.js"
-
-
+import { URL } from "../../Globals/Constants.js";
 
 function StudentHome() {
-
-
-
 	const [status, setStatus] = useState(1);
 	// 1 -> all, 2 -> pending, 3 -> unresolved, 4 -> resolved
 	const [filter, setFilter] = useState(1);
-
-
 
 	const [allDoubts, setAllDoubts] = useState([]);
 	const [notifications, setNotifications] = useState([]);
 	const [imageUrl, setImageUrl] = useState("");
 	const [deletedDoubts, setDeletedDoubts] = useState([]);
-	const [currentUser, setCurrentUser] = useState(null)
-
-
-
-
+	const [currentUser, setCurrentUser] = useState(null);
 
 	// To fetch All Doubts of Students
 	useEffect(() => {
-
 		setCurrentUser(localStorage.getItem("userId"));
 
 		let studentId = window.localStorage.getItem("userId");
 
-		
-		axios.get(`${URL}/student/doubts/${studentId}`)
+		axios
+			.get(`${URL}/student/doubts/${studentId}`)
 			.then((data) => {
-
 				setAllDoubts(data.data);
 			})
-			.catch((err) => { console.log(err) })
-	}, [])
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	useEffect(() => {
 		if (socket) {
-
 			socket.on("deleted-doubt", (doubtInfo) => {
 				console.log(doubtInfo);
 				setDeletedDoubts((pre) => [...pre, doubtInfo._id]);
 			});
-
-
-
 		}
-
-
-	}, [])
+	}, []);
 
 	useEffect(() => {
-
 		if (socket) {
 			socket.emit("add-user", currentUser);
 		}
-
-
-	}, [currentUser])
-
-
-
+	}, [currentUser]);
 
 	return (
 		<>
@@ -79,22 +56,42 @@ function StudentHome() {
 			<main className="studentHome">
 				{/* mobile-view options panel */}
 				<div className="studentMobile">
-					<Link to="/student/new-doubt" >
+					<Link to="/student/new-doubt">
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
 						</div>
 					</Link>
 					<div className="filters">
-						<div onClick={() => setFilter(1)} className={`filter_btn ${filter === 1 && "active"}`}>All</div>
-						<div onClick={() => setFilter(2)} className={`filter_btn ${filter === 2 && "active"}`}>Pending</div>
-						<div onClick={() => setFilter(3)} className={`filter_btn ${filter === 3 && "active"}`}>Unresolved</div>
-						<div onClick={() => setFilter(4)} className={`filter_btn ${filter === 4 && "active"}`}>Resolved</div>
+						<div
+							onClick={() => setFilter(1)}
+							className={`filter_btn ${filter === 1 && "active"}`}
+						>
+							All
+						</div>
+						<div
+							onClick={() => setFilter(2)}
+							className={`filter_btn ${filter === 2 && "active"}`}
+						>
+							Pending
+						</div>
+						<div
+							onClick={() => setFilter(3)}
+							className={`filter_btn ${filter === 3 && "active"}`}
+						>
+							Unresolved
+						</div>
+						<div
+							onClick={() => setFilter(4)}
+							className={`filter_btn ${filter === 4 && "active"}`}
+						>
+							Resolved
+						</div>
 					</div>
 				</div>
 				{/* left */}
 				<div className="studentLeft">
-					<Link to="/student/new-doubt" >
+					<Link to="/student/new-doubt">
 						<div className="newDoubt">
 							<PlusIcon height={"1.5rem"} width={"1.5rem"} />
 							<p>New Doubt</p>
@@ -130,20 +127,11 @@ function StudentHome() {
 				{/* right */}
 				<div className="studentRight">
 					<div className="doubtCards">
-
 						{allDoubts.map((doubt) => {
-
 							if (deletedDoubts.includes(doubt._id) == false) {
-								return <DoubtCard key={doubt._id} doubtInfo={doubt} />
+								return <DoubtCard key={doubt._id} doubtInfo={doubt} />;
 							}
-
-
 						})}
-
-
-
-
-
 					</div>
 				</div>
 			</main>

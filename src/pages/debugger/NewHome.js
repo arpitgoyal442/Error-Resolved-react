@@ -35,12 +35,8 @@ const DebuggerPage = () => {
 
 		axios.get(`${URL}/doubt/all`, { params: { sort: sort, active: active, requested: requested, topic: topic, solvingNow: solvingNow, topics: topic, debuggerId: userId } })
 			.then((data) => {
-				console.log(data.data);
-
 				// Pending : Remove Doubts which are posted by this debugger(when he was loggedin as student)
-
 				setDoubts(data.data);
-
 			})
 			.catch((err) => { console.log("Unable to Fetch Doubts"); console.log(err) });
 

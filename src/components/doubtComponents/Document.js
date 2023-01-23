@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import WebViewer from "@pdftron/webviewer";
 
 const Document = () => {
-	const [docs, setDocs] = useState(["/docx.docx", "/pdf.pdf"]),
-		docInstance = useRef(null),
+	// const [docs, _] = useState(["/pdf.pdf", "/docx.docx"]),
+		const docInstance = useRef(null),
 		viewer = useRef(null);
 
 	useEffect(() => {
@@ -11,7 +11,7 @@ const Document = () => {
 			{
 				disableElements: ["panToolButton", "selectToolButton", "toolsButton", "searchButton"],
 				path: "/webviewer/lib",
-				initialDoc: docs,
+				initialDoc: ["/pdf.pdf", "/docx.docx"],
 				isReadOnly: true,
 				disableLogs: true,
 			},
@@ -25,7 +25,7 @@ const Document = () => {
 			docInstance?.current?.dispose();
 			viewer.current = null;
 		}
-	}, [docs]);
+	}, []);
 
 	return (
 		<div className="w-full h-0 min-h-full rounded-b-[10px] overflow-hidden">

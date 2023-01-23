@@ -3,14 +3,13 @@
     width: 100%;
     height: 100vh;
     overflow-x: hidden;
-    
-
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .login_navbar{
-
-
-    height: 10vh;
+    height: auto;
+	max-height: 10vh;
+	min-height: 60px;
     position: sticky;
     z-index: 10000000;
     /* margin-top: -10px; */
@@ -19,16 +18,16 @@
     width: 100%;
     align-items: center;
     /* background-color: red; */
-   
     border-bottom: 1px solid rgb(183, 181, 181);
 }
 
 .login_navbar h2{
+    font-size: 22px;
+    font-weight: 400;
     margin-left: 50px;
-    font-family: ui-monospace;
-    font-size: 25px;
-    /* font-size: 1rem; */
     color: rgb(94,109,96);
+    text-transform: uppercase;
+    color: black;
 }
 
 .login_navbar h2 del{
@@ -85,12 +84,9 @@
 
 .services_left p{
     font-size: 1.5rem;
-    font-family: serif;
     color: rgb(94,109,96);
-    font-weight: 500;
     margin-top: 20px;
     width: 300px;
-    letter-spacing: -0.002em;
 }
 
 .services_buttons{
@@ -183,7 +179,7 @@
 
     font-size: 3rem;
     /* width: 380px; */
-    font-family: serif;
+    /* font-family: serif; */
     color:var(--highlight);
 
 }
@@ -227,11 +223,8 @@
 
 .providing_right ul li{
     list-style:circle;
-
     font-size: 1.5rem;
-    font-family: serif;
     color: rgb(94,109,96);
-    font-weight: 500;
     margin-top: 20px;
     width: 300px;
     letter-spacing: -0.002em;
@@ -272,7 +265,7 @@
 }
 
 .login_body_whyWe_cards{
-
+    text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
