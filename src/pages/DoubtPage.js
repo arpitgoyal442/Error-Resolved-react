@@ -77,8 +77,6 @@ const DoubtPage = () => {
 		axios
 			.post(`${URL}/doubt/message/${doubtId}`, newMessage)
 			.then((data) => {
-				console.log("Message Sent Success");
-				console.log(data);
 				setAllMessages((pre) => [...pre, newMessage]);
 				socket.emit("send-msg", newMessage.receiverId, newMessage);
 				setMessage("");
@@ -116,8 +114,8 @@ const DoubtPage = () => {
 									key={index}
 									className={
 										message.senderId == newMessage.senderId
-											? "message receiver"
-											: "message sender"
+											? "message sender"
+											: "message receiver"
 									}
 								>
 									<h5>{message.senderName}</h5>
