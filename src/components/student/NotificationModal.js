@@ -8,6 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { socket } from "../../socket";
 import {URL} from "../../Globals/Constants.js"
 
+//  Mailing
+// import nodemailer from 'nodemailer';
+
+// 
 function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,offModal}) {
 
 	
@@ -20,6 +24,7 @@ function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,o
 			notificationId:notificationId,
 			debuggerId:debuggerInfo._id,
 			debuggerName:debuggerInfo.name,
+			debuggerEmail:debuggerInfo.email,
 			doubtId:doubtInfo._id,
 			doubtTopic:doubtInfo.topic,
 			studentId:studentInfo.userId,
@@ -49,6 +54,34 @@ function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,o
 
 				socket.emit("request-accept",socketData)
 
+				//  Sending mail to debugger
+				// const transporter = nodemailer.createTransport({
+				// 	service: 'gmail',
+				// 	auth: {
+				// 	  user: 'arpitgoyal442@gmail.com',
+				// 	  pass: process.env.GMAIL_PASSWORD,
+				// 	},
+				//   });
+			  
+				  // Compose the email
+				//   const mailOptions = {
+				// 	from: 'arpitgoyal442@gmail.com',
+				// 	to: recipient,
+				// 	subject: "Your Request is Accepted 🎉",
+				// 	text: "Congratulations ,"+ studentInfo.userName + "has accpted your request to solve "+doubtInfo.topic+"doubt ! Go ahead and give it your best",
+				//   };
+			  
+				  // Send the email
+				//   transporter.sendMail(mailOptions, (error, info) => {
+				// 	if (error) {
+				// 	  console.log('Error:', error);
+				// 	} else {
+				// 	  console.log('Email sent:', info.response);
+				// 	}
+				//   });
+
+				// 
+
 
 		})
 		.catch((err)=>{console.log(err)});
@@ -56,6 +89,13 @@ function NotificationHandle({notificationId,debuggerInfo,doubtInfo,studentInfo,o
 
 	}
 
+	//  Mailing
+	const sendEmail = () => {
+		// Create a nodemailer transporter using your SMTP settings
+		
+	  };
+	
+	// 
 
 
 	return (

@@ -15,6 +15,7 @@
     "gapi-script": "^1.2.0",
     "material-icons-react": "^1.0.4",
     "netlify-cli": "^12.1.0",
+    "nodemailer": "^6.9.2",
     "peerjs": "^1.4.7",
     "prop-types": "^15.6.0",
     "react": "^18.1.0",
